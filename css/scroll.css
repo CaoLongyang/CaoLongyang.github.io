@@ -1,5 +1,5 @@
 /* ============================================================
-   scroll.css — 手卷本体、卷轴、火漆、展开动画
+   scroll.css — 手卷本体、卷轴、捆带、火漆、展开动画
    ============================================================ */
 
 /* ---------- 手卷容器 ---------- */
@@ -21,11 +21,11 @@
   background:
     linear-gradient(90deg,
       var(--wood-lo) 0%,
-      var(--wood) 18%,
-      var(--wood-hi) 42%,
-      #b08a5c 50%,
-      var(--wood-hi) 58%,
-      var(--wood) 82%,
+      var(--wood) 16%,
+      var(--wood-hi) 40%,
+      #b18a5b 50%,
+      var(--wood-hi) 60%,
+      var(--wood) 84%,
       var(--wood-lo) 100%);
   box-shadow:
     0 18px 40px -18px rgba(0,0,0,.85),
@@ -80,115 +80,153 @@ body.opened .view{
   width:72px;
   z-index:2;
   pointer-events:none;
+  transition:opacity 900ms var(--ease) 1200ms;
 }
 .view::before{
   left:0;
   background:linear-gradient(90deg,
-    rgba(30,22,14,.55) 0%,
-    rgba(30,22,14,.26) 26%,
-    rgba(30,22,14,.08) 56%,
+    rgba(30,22,14,.5) 0%,
+    rgba(30,22,14,.22) 26%,
+    rgba(30,22,14,.07) 56%,
     transparent 100%);
-  box-shadow:inset 3px 0 0 rgba(255,248,232,.18);
+  box-shadow:inset 3px 0 0 rgba(255,248,232,.16);
 }
 .view::after{
   right:0;
   background:linear-gradient(270deg,
-    rgba(30,22,14,.55) 0%,
-    rgba(30,22,14,.26) 26%,
-    rgba(30,22,14,.08) 56%,
+    rgba(30,22,14,.5) 0%,
+    rgba(30,22,14,.22) 26%,
+    rgba(30,22,14,.07) 56%,
     transparent 100%);
-  box-shadow:inset -3px 0 0 rgba(255,248,232,.18);
+  box-shadow:inset -3px 0 0 rgba(255,248,232,.16);
 }
-
-/* 完全展开后卷边变淡，因为纸摊平了 */
 body.opened .view::before,
-body.opened .view::after{
-  opacity:.55;
-  transition:opacity 900ms var(--ease) 1200ms;
+body.opened .view::after{opacity:.55}
+
+/* ---------- 捆带 ---------- */
+.band-wrap{
+  position:absolute;
+  left:50%;
+  top:50%;
+  z-index:9;
+  transform:translate(-50%,-50%);
+  transition:
+    opacity 360ms var(--ease) 380ms,
+    transform 700ms var(--ease) 380ms;
+}
+body.opened .band-wrap{
+  opacity:0;
+  transform:translate(-50%,-50%) translateY(90px) scaleY(.5);
 }
 
-/* ---------- 火漆封印 ---------- */
+.band{
+  position:relative;
+  width:calc(var(--pw-closed) + 2px);
+  height:106px;
+  background:
+    linear-gradient(90deg,
+      #2e1f10 0%,
+      #4d3720 8%,
+      #7d5f3c 30%,
+      #9a7a50 48%,
+      #a8875b 52%,
+      #7d5f3c 70%,
+      #4d3720 92%,
+      #2e1f10 100%);
+  box-shadow:
+    0 16px 22px -10px rgba(0,0,0,.55),
+    0 -16px 22px -10px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,232,196,.2),
+    inset 0 -1px 0 rgba(0,0,0,.5);
+  filter:url(#bandEdge);
+}
+/* 带子上的压线 */
+.band::before,
+.band::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;
+  height:1px;
+  background:rgba(0,0,0,.3);
+}
+.band::before{top:10px}
+.band::after{bottom:10px}
+
+/* ---------- 火漆 ---------- */
 .seal-wrap{
   position:absolute;
   left:50%;
   top:50%;
-  z-index:10;
+  z-index:11;
   transform:translate(-50%,-50%);
-  transition:opacity 320ms var(--ease),transform 320ms var(--ease);
+  transition:opacity 300ms var(--ease);
 }
 body.opened .seal-wrap{
   opacity:0;
   pointer-events:none;
-  transform:translate(-50%,-50%) scale(1.35);
 }
 
 .seal{
   position:relative;
-  width:86px;
-  height:86px;
   display:block;
-  filter:drop-shadow(0 10px 18px rgba(0,0,0,.6));
-  animation:breathe 5.5s ease-in-out infinite;
+  width:96px;
+  height:96px;
+  filter:drop-shadow(0 5px 10px rgba(0,0,0,.5));
+  animation:breathe 6.5s ease-in-out infinite;
+  transition:filter 240ms var(--ease);
 }
 @keyframes breathe{
   0%,100%{transform:scale(1)}
-  50%{transform:scale(1.018)}
+  50%{transform:scale(1.02)}
 }
-.seal:hover{animation-play-state:paused}
+.seal:hover{
+  animation-play-state:paused;
+  filter:drop-shadow(0 9px 15px rgba(0,0,0,.6));
+}
 
-/* 蜡的质感 */
-.shard{
+/* 蜡：压扁的一坨，靠滤镜啃出浇出来的毛边 */
+.wax{
+  position:absolute;
+  inset:5px -3px;
+  border-radius:50% 49% 48% 52% / 48% 47% 53% 52%;
+  background:
+    radial-gradient(76% 70% at 40% 26%,
+      #96361a 0%,
+      #7d2811 42%,
+      #611c09 76%,
+      #471305 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,176,140,.22),
+    inset 0 14px 22px rgba(255,150,110,.13),
+    inset 0 -18px 26px rgba(0,0,0,.55),
+    inset 0 0 0 11px rgba(0,0,0,.07);
+  filter:url(#waxEdge);
+}
+
+/* 压出来的字 */
+.wax-mark{
   position:absolute;
   inset:0;
-  border-radius:50%;
-  background:
-    radial-gradient(58% 58% at 36% 30%,#c9502c 0%,#a83a1c 42%,#7d2810 78%,#5e1d0a 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,190,150,.22),
-    inset 0 -6px 12px rgba(0,0,0,.35);
   display:grid;
   place-items:center;
-  transform-origin:50% 50%;
-  transition:transform 620ms var(--ease),opacity 620ms var(--ease);
-  will-change:transform,opacity;
-}
-.shard span{
   font-family:var(--serif);
-  font-size:34px;
-  color:#f0d8bb;
-  text-shadow:0 1px 0 rgba(0,0,0,.45),0 -1px 0 rgba(255,220,190,.18);
+  font-size:36px;
+  line-height:1;
+  color:#3f0f03;
+  text-shadow:0 1px 1px rgba(255,166,130,.3);
   transform:translateY(-1px);
   user-select:none;
 }
 
-/* 四块碎片，用 clip-path 切出锯齿边 */
-.shard:nth-child(1){clip-path:polygon(0 0,54% 0,47% 46%,0 55%)}
-.shard:nth-child(2){clip-path:polygon(54% 0,100% 0,100% 53%,47% 46%)}
-.shard:nth-child(3){clip-path:polygon(0 55%,47% 46%,55% 100%,0 100%)}
-.shard:nth-child(4){clip-path:polygon(47% 46%,100% 53%,100% 100%,55% 100%)}
-
-/* 裂开 */
-.seal.breaking .shard:nth-child(1){transform:translate(-34px,26px) rotate(-26deg);opacity:0}
-.seal.breaking .shard:nth-child(2){transform:translate(30px,-18px) rotate(20deg);opacity:0}
-.seal.breaking .shard:nth-child(3){transform:translate(-24px,34px) rotate(16deg);opacity:0}
-.seal.breaking .shard:nth-child(4){transform:translate(36px,22px) rotate(-18deg);opacity:0}
-
-/* 裂开瞬间的一圈蜡屑 */
-.seal::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  border:2px solid rgba(240,200,170,.5);
-  opacity:0;
-  pointer-events:none;
+/* 揭开：先抬起来，再掉下去 */
+.seal.peeling{
+  animation:peel 1150ms cubic-bezier(.45,.05,.25,1) forwards;
 }
-.seal.breaking::after{
-  animation:burst 620ms var(--ease) forwards;
-}
-@keyframes burst{
-  0%{opacity:.8;transform:scale(1)}
-  100%{opacity:0;transform:scale(2.1)}
+@keyframes peel{
+  0%{transform:translateY(0) rotate(0) scale(1);opacity:1}
+  20%{transform:translateY(-16px) rotate(-5deg) scale(1.07);opacity:1}
+  34%{transform:translateY(-13px) rotate(-4deg) scale(1.06);opacity:1}
+  100%{transform:translateY(170px) rotate(17deg) scale(.92);opacity:0}
 }
 
 /* ---------- 语言切换 ---------- */
@@ -249,7 +287,7 @@ body.opened .skip{display:none}
 body.opened .replay{opacity:1;pointer-events:auto}
 .replay:hover{color:var(--zhu)}
 
-/* ---------- 瞬间模式（reduced-motion / 二次访问） ---------- */
+/* ---------- 瞬间模式 ---------- */
 body.instant *,
 body.instant *::before,
 body.instant *::after{
@@ -262,11 +300,12 @@ body.instant *::after{
   :root{
     --ph:min(58vh,420px);
     --pw:calc(100vw - 76px);
-    --pw-closed:72px;
+    --pw-closed:152px;
   }
   .roller{flex-basis:14px;width:14px}
-  .seal{width:70px;height:70px}
-  .shard span{font-size:27px}
+  .band{height:76px}
+  .seal{width:76px;height:76px}
+  .wax-mark{font-size:26px}
   .view::before,.view::after{width:44px}
 }
 

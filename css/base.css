@@ -39,7 +39,7 @@
   /* 手卷尺寸 */
   --ph:min(64vh,540px);
   --pw:min(1080px,86vw);
-  --pw-closed:96px;
+  --pw-closed:230px;
 }
 
 html,body{height:100%}
@@ -68,18 +68,22 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   display:grid;
   place-items:center;
   background:
-    radial-gradient(120% 90% at 50% 42%,#2a231a 0%,#1a1612 46%,#100e0c 100%);
+    radial-gradient(78% 62% at 50% 44%,
+      #4a3c28 0%,
+      #33291b 34%,
+      #1d1811 66%,
+      #0d0a07 100%);
   overflow:hidden;
 }
 
-/* 地面投影，给手卷一点重量 */
+/* 桌面上的投影：让手卷有重量，不像浮着 */
 .scene::after{
   content:"";
   position:absolute;
-  left:50%;bottom:12%;
-  width:min(70vw,860px);height:60px;
+  left:50%;bottom:11%;
+  width:min(64vw,760px);height:74px;
   transform:translateX(-50%);
-  background:radial-gradient(50% 50% at 50% 50%,rgba(0,0,0,.55),transparent 70%);
-  filter:blur(6px);
+  background:radial-gradient(50% 50% at 50% 50%,rgba(0,0,0,.62),rgba(0,0,0,.28) 46%,transparent 72%);
+  filter:blur(10px);
   pointer-events:none;
 }

@@ -85,11 +85,12 @@
     seal.addEventListener('click', function () {
       if (body.classList.contains('opened')) return;
 
-      seal.classList.add('breaking');
+      // 蜡先抬起来，落下去的那一刻纸才开始动
+      seal.classList.add('peeling');
 
       window.setTimeout(function () {
         open(false);
-      }, 380);
+      }, 520);
     });
   }
 
@@ -112,6 +113,8 @@
     window.setTimeout(function () {
       if (body.classList.contains('opened')) {
         sealWrap.style.visibility = 'hidden';
+        var band = document.getElementById('bandWrap');
+        if (band) band.style.visibility = 'hidden';
       }
     }, 2400);
   }
