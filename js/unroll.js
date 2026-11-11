@@ -14,6 +14,7 @@
   var skip = document.getElementById('skip');
   var replay = document.getElementById('replay');
   var sealWrap = document.querySelector('.seal-wrap');
+  var twineWrap = document.getElementById('twineWrap');
   var langBtns = Array.prototype.slice.call(document.querySelectorAll('[data-lang]'));
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -109,13 +110,11 @@
     });
   }
 
-  if (sealWrap) {
+  if (sealWrap || twineWrap) {
     window.setTimeout(function () {
-      if (body.classList.contains('opened')) {
-        sealWrap.style.visibility = 'hidden';
-        var band = document.getElementById('bandWrap');
-        if (band) band.style.visibility = 'hidden';
-      }
+      if (!body.classList.contains('opened')) return;
+      if (sealWrap) sealWrap.style.visibility = 'hidden';
+      if (twineWrap) twineWrap.style.visibility = 'hidden';
     }, 2400);
   }
 })();

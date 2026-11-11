@@ -10,8 +10,9 @@
     radial-gradient(140% 110% at 50% -10%,rgba(255,250,235,.55) 0%,rgba(255,250,235,0) 58%),
     linear-gradient(178deg,var(--paper-hi) 0%,var(--paper) 42%,var(--paper-lo) 100%);
   box-shadow:
-    0 30px 70px -30px rgba(0,0,0,.75),
-    inset 0 0 0 1px rgba(120,96,60,.22);
+    0 26px 56px -26px rgba(70,50,24,.5),
+    0 4px 12px -4px rgba(70,50,24,.22),
+    inset 0 0 0 1px rgba(120,96,60,.2);
 }
 
 /* 纸纹：SVG feTurbulence 生成，无图片请求 */
@@ -20,7 +21,7 @@
   position:absolute;
   inset:0;
   pointer-events:none;
-  opacity:.5;
+  opacity:.72;
   mix-blend-mode:multiply;
   z-index:5;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.38'/%3E%3C/svg%3E");
@@ -33,10 +34,10 @@
   z-index:1;
   pointer-events:none;
   background:
-    radial-gradient(46% 62% at 84% 26%,rgba(26,20,14,.15) 0%,rgba(26,20,14,.06) 44%,transparent 72%),
-    radial-gradient(36% 50% at 18% 82%,rgba(26,20,14,.115) 0%,transparent 68%),
-    radial-gradient(22% 32% at 58% 92%,rgba(26,20,14,.085) 0%,transparent 74%);
-  filter:blur(11px);
+    radial-gradient(46% 62% at 84% 26%,rgba(26,20,14,.085) 0%,rgba(26,20,14,.032) 44%,transparent 72%),
+    radial-gradient(36% 50% at 18% 82%,rgba(26,20,14,.065) 0%,transparent 68%),
+    radial-gradient(22% 32% at 58% 92%,rgba(26,20,14,.05) 0%,transparent 74%);
+  filter:blur(16px);
   mix-blend-mode:multiply;
   opacity:0;
   transition:opacity 1600ms var(--ease) 500ms;
@@ -56,21 +57,20 @@ body.opened .ink{opacity:1}
   transform:rotate(-7deg);
 }
 
-/* 卷起时的层叠：横向的纸层边缘，展开后消失 */
+/* 长期卷存留下的横折痕：展开后才看得见 */
 .roll{
   position:absolute;
   inset:0;
   z-index:2;
   pointer-events:none;
-  background:
-    repeating-linear-gradient(180deg,
-      rgba(58,38,18,.07) 0 1px,
-      rgba(255,250,235,.05) 1px 2px,
-      transparent 2px 9px);
-  opacity:1;
-  transition:opacity 700ms var(--ease);
+  background:repeating-linear-gradient(180deg,
+    rgba(58,38,18,.026) 0 1px,
+    rgba(255,253,244,.05) 1px 2px,
+    transparent 2px 13px);
+  opacity:0;
+  transition:opacity 1500ms var(--ease) 1100ms;
 }
-body.opened .roll{opacity:0}
+body.opened .roll{opacity:1}
 
 /* ---------- 正文：英文横排，贴左 ---------- */
 .lead{
@@ -90,7 +90,7 @@ body.opened .roll{opacity:0}
   color:var(--ink-3);
   opacity:0;
   transform:translateY(8px);
-  transition:opacity 800ms var(--ease) 700ms,transform 800ms var(--ease) 700ms;
+  transition:opacity 800ms var(--ease) 1250ms,transform 800ms var(--ease) 1250ms;
 }
 body.opened .kicker{opacity:1;transform:none}
 
@@ -105,7 +105,7 @@ body.opened .kicker{opacity:1;transform:none}
   text-wrap:balance;
   opacity:0;
   transform:translateY(10px);
-  transition:opacity 900ms var(--ease) 840ms,transform 900ms var(--ease) 840ms;
+  transition:opacity 900ms var(--ease) 1390ms,transform 900ms var(--ease) 1390ms;
 }
 body.opened .lead-title{opacity:1;transform:none}
 
@@ -119,7 +119,7 @@ body.opened .lead-title{opacity:1;transform:none}
   color:var(--ink-2);
   opacity:0;
   transform:translateY(10px);
-  transition:opacity 900ms var(--ease) 980ms,transform 900ms var(--ease) 980ms;
+  transition:opacity 900ms var(--ease) 1530ms,transform 900ms var(--ease) 1530ms;
 }
 body.opened .sub{opacity:1;transform:none}
 
@@ -133,9 +133,9 @@ body.opened .sub{opacity:1;transform:none}
   writing-mode:vertical-rl;
   text-orientation:upright;
   font-family:var(--kai);
-  font-size:clamp(20px,2.35vw,31px);
+  font-size:clamp(21px,2.45vw,33px);
   line-height:1;
-  letter-spacing:.34em;
+  letter-spacing:.18em;
   color:var(--ink);
   clip-path:inset(0 0 100% 0);
   transition:clip-path 1300ms var(--ease) 1000ms;
@@ -160,7 +160,7 @@ body.opened .yinshou{clip-path:inset(0 0 0 0)}
   box-shadow:inset 0 0 0 2px rgba(244,230,204,.38);
   opacity:0;
   transform:rotate(-3deg) scale(.86);
-  transition:opacity 700ms var(--ease) 1650ms,transform 700ms var(--ease) 1650ms;
+  transition:opacity 1250ms var(--ease) 1650ms,transform 1250ms var(--ease) 1650ms;
 }
 body.opened .yin{opacity:.94;transform:rotate(-3deg) scale(1)}
 
@@ -175,39 +175,27 @@ body.opened .yin{opacity:.94;transform:rotate(-3deg) scale(1)}
   letter-spacing:.16em;
   color:var(--ink-3);
   opacity:0;
-  transition:opacity 700ms var(--ease) 1750ms;
+  transition:opacity 1250ms var(--ease) 1750ms;
 }
 body.opened .meta{opacity:1}
 
 /* ---------- 焦边 ---------- */
+/* 不是一圈框，是从纸边往里渗的一层焦：细黑边 + 三层渐隐 */
 .char{
   position:absolute;
-  inset:-42px;
+  inset:0;
   z-index:6;
   pointer-events:none;
-  border:58px solid #2c1b0f;
   box-shadow:
-    inset 0 0 0 1px rgba(255,150,70,.34),
-    inset 0 0 22px rgba(255,110,40,.13),
-    inset 0 0 58px rgba(110,52,16,.18);
-  filter:url(#roughen);
-  opacity:.82;
-  animation:emberPulse 7s ease-in-out infinite;
+    inset 0 0 0 4px rgba(26,12,3,.9),
+    inset 0 0 14px 2px rgba(46,22,7,.66),
+    inset 0 0 60px 16px rgba(104,60,24,.28),
+    inset 0 0 170px 52px rgba(160,108,54,.13);
+  filter:url(#burnEdge);
+  opacity:0;
+  transition:opacity 1300ms var(--ease) 620ms;
 }
-@keyframes emberPulse{
-  0%,100%{opacity:.88}
-  50%{opacity:1}
-}
-
-/* 展开瞬间余烬亮一下 */
-body.opened .char{
-  animation:emberFlare 2400ms var(--ease) 900ms both,emberPulse 7s ease-in-out 3300ms infinite;
-}
-@keyframes emberFlare{
-  0%{opacity:1;border-color:#1b1008}
-  22%{opacity:1;border-color:#3a1e0c}
-  100%{opacity:.9;border-color:#1b1008}
-}
+body.opened .char{opacity:1}
 
 /* ---------- 移动端 ---------- */
 @media (max-width:720px){
