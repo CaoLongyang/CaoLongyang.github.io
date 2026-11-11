@@ -1,7 +1,8 @@
 /* ============================================================
-   paper.css — 纸面质感与卷内排版
-   内容为占位，正式内容另行设计
+   paper.css — 纸面质感、焦边、水墨、双语排版
    ============================================================ */
+
+.svg-defs{position:absolute;width:0;height:0;overflow:hidden}
 
 .paper{
   overflow:hidden;
@@ -21,97 +22,185 @@
   pointer-events:none;
   opacity:.5;
   mix-blend-mode:multiply;
+  z-index:5;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.38'/%3E%3C/svg%3E");
 }
 
-/* 内框：手卷的边线 */
-.paper::before{
+/* ---------- 水墨 ---------- */
+.ink{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    radial-gradient(46% 62% at 84% 26%,rgba(26,20,14,.15) 0%,rgba(26,20,14,.06) 44%,transparent 72%),
+    radial-gradient(36% 50% at 18% 82%,rgba(26,20,14,.115) 0%,transparent 68%),
+    radial-gradient(22% 32% at 58% 92%,rgba(26,20,14,.085) 0%,transparent 74%);
+  filter:blur(11px);
+  mix-blend-mode:multiply;
+  opacity:0;
+  transition:opacity 1600ms var(--ease) 500ms;
+}
+body.opened .ink{opacity:1}
+
+/* 一道墨痕：从左下斜掠而过，压住版心 */
+.ink::after{
   content:"";
   position:absolute;
-  inset:15px;
-  border:1px solid rgba(36,28,20,.14);
-  pointer-events:none;
+  left:-6%;
+  bottom:6%;
+  width:46%;
+  height:34%;
+  background:radial-gradient(60% 50% at 40% 60%,rgba(26,20,14,.09),transparent 70%);
+  filter:url(#inkEdge);
+  transform:rotate(-7deg);
+}
+
+/* ---------- 正文：英文横排，贴左 ---------- */
+.lead{
+  position:absolute;
+  left:64px;
+  top:72px;
   z-index:3;
+  width:min(56%,600px);
 }
 
-/* ---------- 卷内文字 ---------- */
-/* 手卷右起：正文贴右端，左端留白给落款与印章 */
-.cols{
-  position:absolute;
-  top:64px;
-  bottom:64px;
-  right:58px;
-  z-index:2;
-  writing-mode:vertical-rl;
-  text-orientation:upright;
-}
-
-.col{
-  margin:0;
-  font-family:var(--kai);
-  font-size:clamp(24px,2.9vw,38px);
-  line-height:2.15;
-  letter-spacing:.2em;
-  color:var(--ink);
-  opacity:0;
-  transform:translateY(12px);
-  transition:opacity 900ms var(--ease),transform 900ms var(--ease);
-  transition-delay:calc(760ms + var(--i,0) * 170ms);
-}
-.col + .col{margin-block-start:1.5em}
-
-body.opened .col{
-  opacity:1;
-  transform:none;
-}
-
-/* 小字注记 */
-.note{
-  position:absolute;
-  left:58px;
-  bottom:104px;
-  z-index:2;
-  writing-mode:vertical-rl;
+.kicker{
+  margin:0 0 28px;
   font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:.3em;
+  font-size:10px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
   color:var(--ink-3);
   opacity:0;
-  transition:opacity 800ms var(--ease);
-  transition-delay:1500ms;
+  transform:translateY(8px);
+  transition:opacity 800ms var(--ease) 700ms,transform 800ms var(--ease) 700ms;
 }
-body.opened .note{opacity:1}
+body.opened .kicker{opacity:1;transform:none}
 
-/* 朱印 */
+.lead-title{
+  margin:0 0 20px;
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:clamp(24px,3.05vw,41px);
+  line-height:1.26;
+  letter-spacing:-.012em;
+  color:var(--ink);
+  text-wrap:balance;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 900ms var(--ease) 840ms,transform 900ms var(--ease) 840ms;
+}
+body.opened .lead-title{opacity:1;transform:none}
+
+.sub{
+  margin:0;
+  max-width:30em;
+  font-family:var(--serif);
+  font-size:clamp(13px,1.05vw,15px);
+  line-height:1.92;
+  letter-spacing:.005em;
+  color:var(--ink-2);
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 900ms var(--ease) 980ms,transform 900ms var(--ease) 980ms;
+}
+body.opened .sub{opacity:1;transform:none}
+
+/* ---------- 引首：中文竖排，贴右 ---------- */
+.yinshou{
+  position:absolute;
+  right:66px;
+  top:60px;
+  bottom:60px;
+  z-index:3;
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  font-family:var(--kai);
+  font-size:clamp(20px,2.35vw,31px);
+  line-height:1;
+  letter-spacing:.34em;
+  color:var(--ink);
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path 1300ms var(--ease) 1000ms;
+}
+body.opened .yinshou{clip-path:inset(0 0 0 0)}
+
+/* ---------- 落款 ---------- */
 .yin{
   position:absolute;
-  left:44px;
-  bottom:44px;
+  left:64px;
+  bottom:52px;
   z-index:3;
-  width:38px;
-  height:38px;
+  width:36px;
+  height:36px;
   display:grid;
   place-items:center;
   background:var(--zhu);
   color:#f4e6cc;
   font-family:var(--serif);
-  font-size:19px;
+  font-size:18px;
   line-height:1;
   box-shadow:inset 0 0 0 2px rgba(244,230,204,.38);
   opacity:0;
   transform:rotate(-3deg) scale(.86);
-  transition:opacity 700ms var(--ease),transform 700ms var(--ease);
-  transition-delay:1750ms;
+  transition:opacity 700ms var(--ease) 1650ms,transform 700ms var(--ease) 1650ms;
 }
-body.opened .yin{
-  opacity:.94;
-  transform:rotate(-3deg) scale(1);
+body.opened .yin{opacity:.94;transform:rotate(-3deg) scale(1)}
+
+.meta{
+  position:absolute;
+  left:114px;
+  bottom:62px;
+  z-index:3;
+  margin:0;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.16em;
+  color:var(--ink-3);
+  opacity:0;
+  transition:opacity 700ms var(--ease) 1750ms;
+}
+body.opened .meta{opacity:1}
+
+/* ---------- 焦边 ---------- */
+.char{
+  position:absolute;
+  inset:-26px;
+  z-index:6;
+  pointer-events:none;
+  border:40px solid #1b1008;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,152,72,.42),
+    inset 0 0 26px rgba(255,110,40,.16),
+    inset 0 0 64px rgba(110,52,16,.22);
+  filter:url(#roughen);
+  opacity:.9;
+  animation:emberPulse 7s ease-in-out infinite;
+}
+@keyframes emberPulse{
+  0%,100%{opacity:.88}
+  50%{opacity:1}
 }
 
+/* 展开瞬间余烬亮一下 */
+body.opened .char{
+  animation:emberFlare 2400ms var(--ease) 900ms both,emberPulse 7s ease-in-out 3300ms infinite;
+}
+@keyframes emberFlare{
+  0%{opacity:1;border-color:#1b1008}
+  22%{opacity:1;border-color:#3a1e0c}
+  100%{opacity:.9;border-color:#1b1008}
+}
+
+/* ---------- 移动端 ---------- */
 @media (max-width:720px){
-  .cols{padding:40px 34px}
-  .col{font-size:clamp(20px,5.4vw,26px);line-height:2}
-  .note{right:34px;bottom:40px;font-size:10px}
-  .yin{left:26px;bottom:26px;width:30px;height:30px;font-size:15px}
-  .paper::before{inset:10px}
+  .lead{left:32px;top:44px;width:calc(100% - 128px)}
+  .kicker{margin-bottom:16px;font-size:9px;letter-spacing:.18em}
+  .lead-title{font-size:clamp(19px,5.6vw,26px);line-height:1.3;margin-bottom:12px}
+  .sub{font-size:12px;line-height:1.8;max-width:22em}
+  .yinshou{right:34px;top:40px;bottom:40px;font-size:clamp(16px,4.4vw,22px);letter-spacing:.24em}
+  .yin{left:32px;bottom:30px;width:28px;height:28px;font-size:14px}
+  .meta{left:70px;bottom:38px;font-size:9px;letter-spacing:.1em}
+  .char{inset:-16px;border-width:26px}
 }

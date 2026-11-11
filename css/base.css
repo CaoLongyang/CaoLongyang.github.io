@@ -27,8 +27,8 @@
 
   --rule:rgba(36,28,20,.16);
 
-  /* 字体：正文宋、题跋楷、编号等宽 */
-  --serif:"Songti SC","Source Han Serif SC","Noto Serif CJK SC","SimSun",Georgia,serif;
+  /* 字体：西文在前、中文在后，逐字回退 —— 英文用 Georgia，中文落到宋体 */
+  --serif:Georgia,"Songti SC","Source Han Serif SC","Noto Serif CJK SC","SimSun",serif;
   --kai:"Kaiti SC","KaiTi","STKaiti","Songti SC","SimSun",serif;
   --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
 

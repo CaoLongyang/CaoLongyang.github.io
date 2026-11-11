@@ -191,6 +191,29 @@ body.opened .seal-wrap{
   100%{opacity:0;transform:scale(2.1)}
 }
 
+/* ---------- 语言切换 ---------- */
+.lang{
+  position:fixed;
+  right:26px;
+  top:22px;
+  z-index:30;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+}
+.lang button{
+  color:rgba(233,220,192,.42);
+  padding:4px 2px;
+  transition:color 240ms var(--ease);
+}
+.lang button:hover{color:rgba(233,220,192,.85)}
+.lang button[aria-pressed="true"]{color:var(--zhu)}
+body:not(.opened) .lang button[aria-pressed="true"]{color:#c9502c}
+.lang .slash{color:rgba(233,220,192,.2)}
+
 /* ---------- 跳过 / 重看 ---------- */
 .skip{
   position:fixed;

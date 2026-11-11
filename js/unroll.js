@@ -1,93 +1,113 @@
 /* ============================================================
-   unroll.js — 手卷展开逻辑
-   P0：只有"点燃火漆 → 展开 → 显影"这一条时间线
+   unroll.js — 手卷展开 + 双语切换
    ============================================================ */
 
 (function () {
   'use strict';
 
-  var STORE_KEY = 'scroll-opened-v1';
+  var OPEN_KEY = 'scroll-opened-v1';
+  var LANG_KEY = 'scroll-lang';
 
   var body = document.body;
+  var root = document.documentElement;
   var seal = document.getElementById('seal');
   var skip = document.getElementById('skip');
   var replay = document.getElementById('replay');
   var sealWrap = document.querySelector('.seal-wrap');
+  var langBtns = Array.prototype.slice.call(document.querySelectorAll('[data-lang]'));
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var seen = false;
 
-  try {
-    seen = localStorage.getItem(STORE_KEY) === '1';
-  } catch (e) {
-    seen = false;
-  }
-
-  function remember() {
+  function read(key, fallback) {
     try {
-      localStorage.setItem(STORE_KEY, '1');
+      return localStorage.getItem(key) || fallback;
     } catch (e) {
-      /* 隐私模式下写不进去，忽略即可 */
+      return fallback;
     }
   }
 
-  /**
-   * 展开手卷。
-   * @param {boolean} instant 直接跳到展开状态，不播动画
-   */
+  function write(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      /* 隐私模式写不进去，忽略 */
+    }
+  }
+
+  seen = read(OPEN_KEY, '') === '1';
+
+  /* ---------------- 双语 ---------------- */
+
+  function applyLang(lang) {
+    root.setAttribute('lang', lang === 'zh' ? 'zh-Hant' : 'en');
+
+    Array.prototype.forEach.call(document.querySelectorAll('[data-en]'), function (el) {
+      var text = el.getAttribute('data-' + lang);
+      if (text) el.textContent = text;
+    });
+
+    langBtns.forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang));
+    });
+  }
+
+  applyLang(read(LANG_KEY, 'en'));
+
+  langBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var lang = b.getAttribute('data-lang');
+      applyLang(lang);
+      write(LANG_KEY, lang);
+    });
+  });
+
+  /* ---------------- 展开 ---------------- */
+
   function open(instant) {
     if (body.classList.contains('opened')) return;
 
     if (instant) body.classList.add('instant');
 
-    // 先让纸动起来，内容显影的延迟在 CSS 里控制
     requestAnimationFrame(function () {
       body.classList.add('opened');
     });
 
-    remember();
+    write(OPEN_KEY, '1');
 
     if (skip) skip.hidden = true;
     if (seal) seal.setAttribute('tabindex', '-1');
   }
 
-  /* 二次访问或用户要求减弱动效：直接展开，不重播 */
-  if (seen || reduced) {
-    open(true);
-  }
+  if (seen || reduced) open(true);
 
-  /* 点火漆 */
   if (seal) {
     seal.addEventListener('click', function () {
       if (body.classList.contains('opened')) return;
 
       seal.classList.add('breaking');
 
-      // 蜡碎掉之后纸才开始动，这个间隔就是"仪式感"的来源
       window.setTimeout(function () {
         open(false);
       }, 380);
     });
   }
 
-  /* 跳过 */
   if (skip) {
     skip.addEventListener('click', function () {
       open(false);
     });
   }
 
-  /* 重看 */
   if (replay) {
     replay.addEventListener('click', function () {
       try {
-        localStorage.removeItem(STORE_KEY);
+        localStorage.removeItem(OPEN_KEY);
       } catch (e) {}
       window.location.reload();
     });
   }
 
-  /* 火漆在展开后隐藏，避免残留焦点 */
   if (sealWrap) {
     window.setTimeout(function () {
       if (body.classList.contains('opened')) {
