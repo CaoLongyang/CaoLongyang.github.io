@@ -1,0 +1,129 @@
+/* ============================================================
+   paper.css — 纸面质感与卷内排版
+   内容为占位，正式内容另行设计
+   ============================================================ */
+
+.paper{
+  overflow:hidden;
+  background:
+    radial-gradient(140% 110% at 50% -10%,rgba(255,250,235,.55) 0%,rgba(255,250,235,0) 58%),
+    linear-gradient(178deg,var(--paper-hi) 0%,var(--paper) 42%,var(--paper-lo) 100%);
+  box-shadow:
+    0 30px 70px -30px rgba(0,0,0,.75),
+    inset 0 0 0 1px rgba(120,96,60,.22);
+}
+
+/* 纸纹：SVG feTurbulence 生成，无图片请求 */
+.paper::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.5;
+  mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.38'/%3E%3C/svg%3E");
+}
+
+/* 内框：手卷的边线 */
+.paper::before{
+  content:"";
+  position:absolute;
+  inset:15px;
+  border:1px solid rgba(36,28,20,.14);
+  pointer-events:none;
+  z-index:3;
+}
+
+/* ---------- 卷内文字 ---------- */
+.cols{
+  position:relative;
+  z-index:2;
+  height:100%;
+  padding:64px 58px;
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+}
+
+.col{
+  margin:0;
+  font-family:var(--kai);
+  font-size:clamp(24px,2.9vw,38px);
+  line-height:2.15;
+  letter-spacing:.2em;
+  color:var(--ink);
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity 900ms var(--ease),transform 900ms var(--ease);
+  transition-delay:calc(760ms + var(--i,0) * 170ms);
+}
+.col + .col{margin-block-start:1.5em}
+
+body.opened .col{
+  opacity:1;
+  transform:none;
+}
+
+/* 小字注记 */
+.note{
+  position:absolute;
+  right:58px;
+  bottom:64px;
+  z-index:2;
+  writing-mode:vertical-rl;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.3em;
+  color:var(--ink-3);
+  opacity:0;
+  transition:opacity 800ms var(--ease);
+  transition-delay:1500ms;
+}
+body.opened .note{opacity:1}
+
+/* 鱼尾：版心标记 */
+.wei{
+  position:absolute;
+  left:50%;
+  top:15px;
+  z-index:3;
+  width:22px;
+  height:13px;
+  transform:translateX(-50%);
+  background:var(--ink-2);
+  opacity:.75;
+  clip-path:polygon(0 0,50% 50%,0 100%,100% 100%,50% 50%,100% 0);
+}
+
+/* 朱印 */
+.yin{
+  position:absolute;
+  left:44px;
+  bottom:44px;
+  z-index:3;
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  background:var(--zhu);
+  color:#f4e6cc;
+  font-family:var(--serif);
+  font-size:19px;
+  line-height:1;
+  box-shadow:inset 0 0 0 2px rgba(244,230,204,.38);
+  opacity:0;
+  transform:rotate(-3deg) scale(.86);
+  transition:opacity 700ms var(--ease),transform 700ms var(--ease);
+  transition-delay:1750ms;
+}
+body.opened .yin{
+  opacity:.94;
+  transform:rotate(-3deg) scale(1);
+}
+
+@media (max-width:720px){
+  .cols{padding:40px 34px}
+  .col{font-size:clamp(20px,5.4vw,26px);line-height:2}
+  .note{right:34px;bottom:40px;font-size:10px}
+  .yin{left:26px;bottom:26px;width:30px;height:30px;font-size:15px}
+  .paper::before{inset:10px}
+}
