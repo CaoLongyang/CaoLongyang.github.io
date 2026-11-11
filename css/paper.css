@@ -35,11 +35,13 @@
 }
 
 /* ---------- 卷内文字 ---------- */
+/* 手卷右起：正文贴右端，左端留白给落款与印章 */
 .cols{
-  position:relative;
+  position:absolute;
+  top:64px;
+  bottom:64px;
+  right:58px;
   z-index:2;
-  height:100%;
-  padding:64px 58px;
   writing-mode:vertical-rl;
   text-orientation:upright;
 }
@@ -66,8 +68,8 @@ body.opened .col{
 /* 小字注记 */
 .note{
   position:absolute;
-  right:58px;
-  bottom:64px;
+  left:58px;
+  bottom:104px;
   z-index:2;
   writing-mode:vertical-rl;
   font-family:var(--mono);
@@ -79,20 +81,6 @@ body.opened .col{
   transition-delay:1500ms;
 }
 body.opened .note{opacity:1}
-
-/* 鱼尾：版心标记 */
-.wei{
-  position:absolute;
-  left:50%;
-  top:15px;
-  z-index:3;
-  width:22px;
-  height:13px;
-  transform:translateX(-50%);
-  background:var(--ink-2);
-  opacity:.75;
-  clip-path:polygon(0 0,50% 50%,0 100%,100% 100%,50% 50%,100% 0);
-}
 
 /* 朱印 */
 .yin{

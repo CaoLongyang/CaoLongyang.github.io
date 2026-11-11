@@ -55,6 +55,11 @@
   transition:width 1750ms var(--ease);
 }
 
+/* 展开：视口变宽，纸被"露"出来 */
+body.opened .view{
+  width:var(--pw);
+}
+
 /* 纸在视口里始终居中、宽度固定 —— 所以展开过程中文字不会重排 */
 .paper{
   position:absolute;
@@ -203,6 +208,7 @@ body.opened .seal-wrap{
 }
 .skip:hover{color:rgba(233,220,192,.95);border-color:rgba(233,220,192,.5)}
 .skip[hidden]{display:none}
+body.opened .skip{display:none}
 
 .replay{
   position:fixed;
@@ -232,7 +238,7 @@ body.instant *::after{
 @media (max-width:720px){
   :root{
     --ph:min(58vh,420px);
-    --pw:88vw;
+    --pw:calc(100vw - 76px);
     --pw-closed:72px;
   }
   .roller{flex-basis:14px;width:14px}
