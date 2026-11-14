@@ -1,0 +1,76 @@
+/* sections/notes · 题跋：按年份排的文章 */
+
+#notes{--span:1;--w:calc(var(--ph-open) * 1.62)}
+
+.notes{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:clamp(18px,5cqh,40px);
+}
+
+.notes-year{position:relative}
+
+.notes-y{
+  margin:0 0 6px;
+  font-family:var(--mono);
+  font-weight:400;
+  font-size:clamp(11px,1.3cqh,16px);
+  letter-spacing:.24em;
+  color:var(--zhu);
+}
+
+.notes-rule{
+  width:100%;
+  height:8px;
+  margin-bottom:4px;
+  overflow:visible;
+}
+.notes-rule path{fill:none;stroke:var(--rule-strong);stroke-width:1.1;vector-effect:non-scaling-stroke}
+
+.notes-list{margin:0;padding:0;list-style:none}
+
+.note{
+  position:relative;
+  display:grid;
+  grid-template-columns:clamp(62px,9cqh,130px) 1fr auto;
+  align-items:baseline;
+  gap:18px;
+  padding:clamp(10px,2.4cqh,34px) 0;
+  border-bottom:1px solid var(--rule);
+  text-decoration:none;
+  color:inherit;
+}
+.note time{
+  font-family:var(--mono);
+  font-size:clamp(10.5px,1.25cqh,15px);
+  letter-spacing:.12em;
+  color:var(--ink-3);
+}
+.note-title{
+  font-size:clamp(14px,2.9cqh,38px);
+  line-height:1.4;
+  transition:transform var(--t-mid) var(--ease),color var(--t-fast) var(--ease);
+}
+a.note::before{
+  /* 悬停时左边落一个墨点 */
+  content:"";
+  position:absolute;
+  left:-16px;top:50%;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--zhu);
+  transform:translateY(-50%) scale(0);
+  transition:transform var(--t-mid) var(--ease-back);
+}
+a.note:hover::before{transform:translateY(-50%) scale(1)}
+a.note:hover .note-title{transform:translateX(6px);color:var(--zhu)}
+.note.is-soon .note-title{color:var(--ink-2)}
+.note.is-soon .tag{border-color:var(--rule-strong);color:var(--ink-3)}
+
+@media (max-width:720px){
+  #notes{--span:2}
+  .notes{flex:0 0 calc(var(--pw) - 48px)}
+  .note{grid-template-columns:48px 1fr;gap:10px}
+  .note .tag{display:none}
+}

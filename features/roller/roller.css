@@ -1,0 +1,317 @@
+/* ============================================================
+   roller · 锦缎手卷本体 + 展开后的两根轴
+   结构：.tilt > .scroll > .roller(卷) + .view + .roller(天杆)
+   roller.js 会往第一根 .roller 里补上：锦缎、题签、明暗、两端轴头
+
+   卷着：一卷竖放在桌上，外面裹深靛锦缎，贴一条题签
+   展开：先被摆到右边，然后从右往左滚过整个桌面，纸在身后摊开；
+         左边剩下一卷纸，右边留下天杆；最后纸面舒展到全屏高度
+   ============================================================ */
+
+/* ---------- 整体：躺在桌上 ---------- */
+.tilt{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  transform:rotate(-8deg) scale(.98);
+  transition:transform 600ms var(--ease-in-out),filter var(--t-slow) var(--ease);
+}
+body.opened .tilt{transform:none;transition-delay:200ms}
+/* 收卷：先把纸卷回去，再转回斜躺、挪回中间 */
+body.closing .tilt,
+body.closing .scroll{transition-delay:1150ms}
+body.closing .roller:last-child{transition-delay:1000ms}
+/* 夜间只压暗卷和绳，不给整棵树加滤镜（大面积滤镜会让滚动掉帧） */
+:root[data-theme="night"] .roller,
+:root[data-theme="night"] sc-twine,
+:root[data-theme="night"] sc-seal{filter:brightness(.82) sepia(.08)}
+
+.scroll{
+  position:absolute;
+  top:50%;
+  /* 卷着时：卷正好在屏幕中间；展开时：天杆贴到右边桌沿 */
+  right:calc(50% - var(--rd) / 2);
+  transform:translateY(-50%);
+  z-index:2;
+  display:flex;
+  align-items:center;
+  filter:drop-shadow(10px 18px 16px rgba(52,34,14,.38));
+  transition:right 600ms var(--ease-in-out);
+}
+/* 展开后去掉整卷的 drop-shadow：它会在每次横移时把整张大纸重新算一遍 */
+/* 展开：卷被摆到纸框右端（不是屏幕边），移动距离短 */
+body.opened .scroll{right:var(--edge);transition-delay:200ms}
+body.settled .scroll{filter:none}
+body.settled .view{box-shadow:0 22px 40px -24px rgba(52,34,14,.55),0 4px 12px -6px rgba(52,34,14,.3)}
+
+/* ============================================================
+   第一根：卷
+   ============================================================ */
+.roller:first-child{
+  position:relative;
+  z-index:3;
+  flex:0 0 var(--rd);
+  width:var(--rd);
+  height:var(--ph);
+  border-radius:50% / calc(var(--rd) * .13);
+  /* 底下是一卷纸：锦缎褪掉之后露出来的就是它 */
+  background:linear-gradient(90deg,
+    #a3937a 0%, #c9baa0 8%, #e8dcc2 20%, #f8f0dd 34%, #fffbef 44%,
+    #f2e8d2 58%, #d6c7a8 78%, #ab9a7c 92%, #8c7c62 100%);
+  transition:
+    flex-basis var(--t-unroll) var(--ease) 700ms,
+    width var(--t-unroll) var(--ease) 700ms,
+    height var(--t-slow) var(--ease),
+    border-radius var(--t-unroll) var(--ease) 700ms;
+}
+body.opened .roller:first-child{
+  flex-basis:var(--roll-open);
+  width:var(--roll-open);
+  height:calc(var(--ph) + 6px);
+  border-radius:50% / 8px;
+  transition:
+    flex-basis var(--t-unroll) var(--ease-in-out) 700ms,
+    width var(--t-unroll) var(--ease-in-out) 700ms,
+    border-radius var(--t-unroll) var(--ease) 700ms;
+}
+
+/* 锦缎：裹在最外面。展开时它先被放出去，所以最早消失；
+   滚动的时候纹样横着走，看起来就是卷在转 */
+.roll-brocade{
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background-color:var(--brocade-base);
+  background-image:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 2px),
+    var(--brocade-img);
+  background-size:auto,calc(var(--rd) * .26) calc(var(--rd) * .3);
+  background-position:0 0,0 0;
+  box-shadow:inset 0 0 0 1px rgba(10,14,24,.6);
+  transition:
+    opacity 500ms var(--ease) 1100ms,
+    background-position 1300ms cubic-bezier(.3,.1,.3,1) 700ms;
+}
+body.opened .roll-brocade{
+  opacity:0;
+  background-position:0 0,calc(var(--rd) * -5) 0;
+}
+body.closing .roll-brocade{transition:opacity 500ms var(--ease) 900ms,background-position 1500ms var(--ease) 0ms}
+
+/* 锦缎上下两道包边：深褐色的绢 */
+.roll-brocade::before,
+.roll-brocade::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;
+  height:5%;
+  background:linear-gradient(180deg,#3d2a1c,#5a3f2a 50%,#3a2718);
+}
+.roll-brocade::before{top:0;border-radius:50% 50% 0 0 / 60% 60% 0 0}
+.roll-brocade::after{bottom:0;border-radius:0 0 50% 50% / 0 0 60% 60%}
+
+/* 题签：一条竖着的纸，写着卷名 */
+.roll-label{
+  position:absolute;
+  left:50%;
+  top:11%;
+  width:calc(var(--rd) * .36);
+  height:28%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:calc(var(--rd) * .12) 0 calc(var(--rd) * .08);
+  background:linear-gradient(90deg,#d9ccae,#f4ebd4 30%,#fbf5e6 50%,#efe4c8 75%,#d3c5a5);
+  box-shadow:0 0 0 1px rgba(80,60,30,.35),inset 0 0 0 3px rgba(250,244,228,.9),inset 0 0 0 4px rgba(120,96,60,.35),0 2px 6px rgba(0,0,0,.35);
+  transition:opacity 260ms var(--ease) 350ms;
+}
+.roll-label b{
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  font-family:var(--kai);
+  font-weight:400;
+  font-size:calc(var(--rd) * .2);
+  letter-spacing:.32em;
+  line-height:1;
+  color:#241c14;
+}
+.roll-label i{
+  width:calc(var(--rd) * .13);
+  height:calc(var(--rd) * .13);
+  background:var(--zhu);
+  opacity:.9;
+  filter:url(#roughen);
+}
+body.opened .roll-label{opacity:0}
+body.closing .roll-label{transition-delay:1400ms}
+
+/* 圆柱明暗：压在锦缎和题签上面，题签才像贴在弧面上 */
+.roll-shade{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  border-radius:inherit;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,
+      rgba(0,0,0,.7) 0%, rgba(0,0,0,.32) 10%, rgba(255,250,235,.1) 24%,
+      rgba(255,250,235,.34) 33%, rgba(255,250,235,.12) 40%, rgba(255,250,235,0) 50%,
+      rgba(0,0,0,.14) 64%, rgba(0,0,0,.42) 84%, rgba(0,0,0,.74) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.18),transparent 8%,transparent 92%,rgba(0,0,0,.22));
+}
+
+/* 卷完之后：纸卷跟着滚动转（--spin 由 scroll-fx 写在 .scroll 上） */
+.roll-grain{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  border-radius:inherit;
+  opacity:0;
+  background:repeating-linear-gradient(90deg,
+    rgba(96,72,40,.16) 0 1px, transparent 1px 6px,
+    rgba(255,250,236,.3) 6px 7px, transparent 7px 11px);
+  background-position:calc(var(--spin, 0) * 1px) 0;
+  transition:opacity var(--t-slow) var(--ease);
+}
+body.settled .roll-grain{opacity:.7}
+
+/* ---------- 两端：纸卷的端面 + 轴头 ---------- */
+.roll-cap{
+  position:absolute;
+  left:2%;
+  width:96%;
+  aspect-ratio:1 / .26;
+  z-index:4;
+  pointer-events:none;
+}
+.roll-cap--top{top:0;transform:translateY(-50%)}
+.roll-cap--bottom{bottom:0;transform:translateY(50%)}
+
+/* 顶端看得见：一圈圈纸，中间是木芯 */
+.roll-cap--top::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:
+    radial-gradient(closest-side,#3a2112 0 22%,transparent 23%),
+    repeating-radial-gradient(closest-side,#f3e9d2 0 2.2%,#cdbb96 2.2% 3.6%),
+    #e8dcc2;
+  box-shadow:inset 0 0 0 1px rgba(80,60,30,.4),inset 0 -2px 4px rgba(60,40,16,.35);
+  transition:opacity 500ms var(--ease) 1100ms;
+}
+/* 卷着时端面被锦缎包住，是深色的 */
+.roll-cap--top::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.55),transparent 25%,transparent 70%,rgba(0,0,0,.6)),
+    radial-gradient(closest-side,#3a2112 0 22%,#2a3142 25%,#222b3d 60%,#161c29 100%);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.5),inset 0 2px 3px rgba(255,255,255,.08);
+  transition:opacity 500ms var(--ease) 900ms;
+}
+body.opened .roll-cap--top::after{opacity:0}
+body.closing .roll-cap--top::after{transition-delay:900ms}
+
+/* 轴头：紫檀短柱，从两端探出来 */
+.roll-knob{
+  position:absolute;
+  left:50%;
+  width:46%;
+  aspect-ratio:1 / .7;
+  transform:translateX(-50%);
+  z-index:2;
+  border-radius:50% / 26%;
+  background:linear-gradient(90deg,#1c0d06,#4a2414 22%,#8a4a2c 40%,#5a2c18 62%,#2a120a 88%,#160a04);
+  box-shadow:inset 0 0 0 1px rgba(0,0,0,.45);
+}
+.roll-cap--top .roll-knob{bottom:50%}
+.roll-cap--bottom .roll-knob{top:50%}
+.roll-knob::after{
+  /* 轴头的顶面 */
+  content:"";
+  position:absolute;
+  left:0;right:0;
+  height:52%;
+  border-radius:50%;
+  background:radial-gradient(closest-side,#9a5a36,#5e2e18 70%,#3a1a0c);
+}
+.roll-cap--top .roll-knob::after{top:-26%}
+.roll-cap--bottom .roll-knob::after{display:none}
+
+/* ============================================================
+   第二根：天杆（卷着时藏在卷后面，展开后留在右边）
+   ============================================================ */
+.roller:last-child{
+  position:relative;
+  z-index:3;
+  flex:0 0 0;
+  width:0;
+  height:calc(var(--ph) + 10px);
+  border-radius:5px;
+  opacity:0;
+  background:linear-gradient(90deg,#2e1b0b 0%,var(--wood) 26%,var(--wood-hi) 46%,#8a6440 68%,#4a3018 90%,#2e1b0b 100%);
+  box-shadow:inset 0 0 0 1px rgba(24,14,4,.55),4px 10px 14px -8px rgba(40,26,10,.55);
+  transition:
+    flex-basis 400ms var(--ease) 0ms,
+    width 400ms var(--ease) 0ms,
+    opacity 300ms var(--ease) 0ms,
+    height var(--t-slow) var(--ease);
+}
+body.opened .roller:last-child{
+  flex-basis:var(--axis-w);
+  width:var(--axis-w);
+  opacity:1;
+  height:calc(var(--ph) + 22px);
+  transition:
+    flex-basis 400ms var(--ease) 700ms,
+    width 400ms var(--ease) 700ms,
+    opacity 300ms var(--ease) 700ms;
+}
+
+/* ============================================================
+   视口：宽度就是"展开程度"
+   ============================================================ */
+.view{
+  position:relative;
+  z-index:2;
+  flex:0 0 auto;
+  height:var(--ph);
+  width:0;
+  overflow:hidden;
+  transition:
+    width var(--t-unroll) var(--ease-in-out),
+    height var(--t-slow) var(--ease);
+}
+body.opened .view{
+  width:var(--pw);
+  height:var(--ph);
+  transition:
+    width var(--t-unroll) var(--ease-in-out) 700ms;
+}
+
+/* 两端的压痕：纸正从这里进出轴 */
+.view::before,
+.view::after{
+  content:"";
+  position:absolute;
+  top:0;bottom:0;
+  width:64px;
+  z-index:8;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity var(--t-slow) var(--ease);
+}
+.view::before{left:0;background:linear-gradient(90deg,rgba(70,50,24,.34),rgba(70,50,24,.12) 30%,rgba(70,50,24,.03) 62%,transparent)}
+.view::after{right:0;width:28px;background:linear-gradient(270deg,rgba(70,50,24,.26),rgba(70,50,24,.06) 50%,transparent)}
+body.opened .view::before,
+body.opened .view::after{opacity:1;transition-delay:1500ms}
+
+@media (max-width:720px){
+  .tilt{transform:rotate(-6deg)}
+  .view::before{width:30px}
+}

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>墨迹显影 · 工坊</title>
+<script>try{var t=localStorage.getItem('scroll-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'night':'day')}catch(e){}</script>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../../features/stage/stage.css">
+<link rel="stylesheet" href="../../features/paper/paper.css">
+<link rel="stylesheet" href="../../features/ink-reveal/ink-reveal.css">
+<link rel="stylesheet" href="../../lab/demo.css">
+
+</head>
+<body data-demo="墨迹显影 · ink-reveal" data-actions="replay,reload" data-start="open">
+<div class="rail" style="height:auto"><main class="scene" style="position:relative;height:auto;min-height:100vh"><div class="dk-center"><div class="paper is-static dk-sheet x"><div class="inner" data-demo-target><p data-ink style="font-family:var(--mono);font-size:10px;letter-spacing:.24em">INK · 墨</p><h2 data-ink>墨刚落在纸上，先是糊的。</h2><p data-ink>然后慢慢定住，边缘变清楚，颜色沉下去。</p><p data-ink>每一行比上一行晚 85 毫秒，像一笔接一笔写出来。</p><p data-ink>点上面的「再显影一次」可以重看。</p></div></div></div></main></div>
+<script type="module">
+  import '../../lab/demo-kit.js';
+  import '../../core/filters.js';
+  import '../../features/stage/stage.js';
+  import '../../features/paper/paper.js';
+  import '../../features/ink-reveal/ink-reveal.js';
+
+</script>
+</body>
+</html>

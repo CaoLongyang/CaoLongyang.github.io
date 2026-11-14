@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中英切换 · 工坊</title>
+<script>try{var t=localStorage.getItem('scroll-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'night':'day')}catch(e){}</script>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../../features/stage/stage.css">
+<link rel="stylesheet" href="../../features/paper/paper.css">
+<link rel="stylesheet" href="../../features/lang-switch/lang-switch.css">
+<link rel="stylesheet" href="../../lab/demo.css">
+
+</head>
+<body data-demo="中英切换 · lang-switch" data-actions="reload" data-start="open">
+<div class="rail" style="height:auto"><main class="scene" style="position:relative;height:auto;min-height:100vh"><div class="dk-center"><div class="paper is-static dk-sheet "><div class="inner"><h2 data-en="Two languages, one page." data-zh="两种语言，一张纸。">Two languages, one page.</h2><p data-en="Every piece of text carries both versions. The switch just picks one." data-zh="每段文字都带着两个版本，开关只是选一个。">Every piece of text carries both versions. The switch just picks one.</p><p data-en="The choice is remembered for next time." data-zh="选择会被记住，下次来还是它。">The choice is remembered for next time.</p></div></div></div></main></div>
+<sc-lang-switch style="top:60px"></sc-lang-switch>
+<script type="module">
+  import '../../lab/demo-kit.js';
+  import '../../core/filters.js';
+  import '../../features/stage/stage.js';
+  import '../../features/paper/paper.js';
+  import '../../features/lang-switch/lang-switch.js';
+
+</script>
+</body>
+</html>

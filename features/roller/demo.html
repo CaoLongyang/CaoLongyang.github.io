@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>卷轴 · 工坊</title>
+<script>try{var t=localStorage.getItem('scroll-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'night':'day')}catch(e){}</script>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../../features/stage/stage.css">
+<link rel="stylesheet" href="../../features/roller/roller.css">
+<link rel="stylesheet" href="../../features/paper/paper.css">
+<link rel="stylesheet" href="../../lab/demo.css">
+
+</head>
+<body data-demo="卷轴 · roller" data-actions="open,close">
+<div class="rail">
+  <main class="scene">
+    <div class="tilt">
+      <div class="scroll" data-scroll>
+        <div class="roller"></div>
+        <div class="view"><div class="paper"><div style="position:absolute;inset:0;z-index:3;padding:64px;display:grid;align-content:center"><p class="kicker" style="font-family:var(--mono);font-size:10px;letter-spacing:.24em;color:var(--ink-3)">DEMO</p><h2 style="margin:0;font-weight:400;font-size:34px">一张空白的纸。</h2></div></div></div>
+        <div class="roller"></div>
+      </div>
+      
+    </div>
+  </main>
+</div>
+<label style="position:fixed;left:18px;bottom:18px;z-index:100;font-family:var(--mono);font-size:11px;color:var(--chrome-hi);display:flex;gap:10px;align-items:center">--spin <input id="spin" type="range" min="0" max="400" value="0"></label>
+<script type="module">
+  import '../../lab/demo-kit.js';
+  import '../../core/filters.js';
+  import '../../features/stage/stage.js';
+  import '../../features/roller/roller.js';
+  import '../../features/paper/paper.js';
+  document.getElementById('spin').addEventListener('input', (e) => document.querySelector('.scroll').style.setProperty('--spin', e.target.value));
+</script>
+</body>
+</html>

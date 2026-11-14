@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>彩蛋 · 工坊</title>
+<script>try{var t=localStorage.getItem('scroll-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'night':'day')}catch(e){}</script>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../../features/stage/stage.css">
+<link rel="stylesheet" href="../../features/paper/paper.css">
+<link rel="stylesheet" href="../../features/eggs/eggs.css">
+<link rel="stylesheet" href="../../lab/demo.css">
+<style>.dk-sheet{min-height:460px}</style>
+</head>
+<body data-demo="彩蛋 · eggs" data-actions="reload" data-start="open">
+<div class="rail" style="height:auto"><main class="scene" style="position:relative;height:auto;min-height:100vh"><div class="dk-center"><div class="paper is-static dk-sheet "><div class="inner"><h2 style="pointer-events:none">两个藏起来的东西</h2><p>1. 点纸上的空白处，落一滴墨，三秒后晕开消失。</p><p>2. 在键盘上依次敲 <code>b u r n</code>（或 <code>s h a o</code>）：纸角会烧穿一块，过一会儿复原。</p></div></div></div></main></div>
+<script type="module">
+  import '../../lab/demo-kit.js';
+  import '../../core/filters.js';
+  import '../../features/stage/stage.js';
+  import '../../features/paper/paper.js';
+  import '../../features/eggs/eggs.js';
+
+</script>
+</body>
+</html>

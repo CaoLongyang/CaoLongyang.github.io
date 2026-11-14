@@ -1,0 +1,98 @@
+/* ============================================================
+   stage · 桌面、窗光、投影、夜灯
+   需要的结构：.rail > .scene
+   ============================================================ */
+
+/* 卷没展开时页面不能滚 */
+body:not(.opened){overflow:hidden}
+
+/* 长卷页：不再用页面滚动，纸由 drag 推动 */
+html:has([data-rail]),html:has([data-rail]) body{overflow:hidden;overscroll-behavior:none}
+
+/* rail 的高度由 scroll-fx 按纸长算出来；scene 粘在视口里不动 */
+.rail{position:relative;height:100vh;height:100svh}
+
+.scene{
+  position:sticky;
+  top:0;
+  height:100vh;
+  height:100svh;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:
+    /* 斜掠的一道窗光 */
+    linear-gradient(104deg,
+      rgba(255,250,238,0) 22%,
+      rgba(255,250,238,.5) 34%,
+      rgba(255,250,238,.62) 42%,
+      rgba(255,250,238,0) 54%),
+    /* 左上打光 */
+    radial-gradient(120% 110% at 34% 14%,var(--desk-hi) 0%,var(--desk) 26%,var(--desk-mid) 58%,var(--desk-lo) 100%);
+  transition:background-color var(--t-slow) var(--ease);
+}
+
+/* 亚麻织纹 + 暗角 */
+.scene::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(92% 86% at 44% 40%,transparent 34%,rgba(70,54,32,.28) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='l'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23l)' opacity='.26'/%3E%3C/svg%3E");
+  mix-blend-mode:multiply;
+  opacity:.85;
+}
+
+/* 桌面上的投影：垫在卷的下面，不是糊在上面 */
+.scene::after{
+  content:"";
+  position:absolute;
+  left:calc(50% + 18px);top:calc(50% + 22px);
+  width:calc(var(--rd) * 2.4);height:calc(var(--ph) * 1.05);
+  transform:translate(-50%,-50%) rotate(-8deg);
+  background:radial-gradient(52% 46% at 50% 50%,rgba(72,54,30,.3),rgba(72,54,30,.11) 46%,transparent 72%);
+  filter:blur(26px);
+  pointer-events:none;
+  z-index:0;
+  transition:
+    transform var(--t-slow) var(--ease),
+    width 1300ms var(--ease-in-out) 700ms,
+    height var(--t-slow) var(--ease) 700ms,
+    opacity var(--t-slow) var(--ease);
+}
+body.opened .scene::after{
+  left:50%;top:calc(50% + 14px);
+  width:calc(var(--pw) + 120px);height:calc(var(--ph) + 40px);
+  transform:translate(-50%,-50%);
+  opacity:.75;
+}
+
+/* ---------- 夜间：窗光换成一盏台灯 ---------- */
+:root[data-theme="night"] .scene{
+  background:
+    radial-gradient(70% 62% at 42% 40%,rgba(255,180,106,.12) 0%,rgba(255,180,106,.04) 44%,transparent 72%),
+    radial-gradient(120% 110% at 34% 14%,var(--desk-hi) 0%,var(--desk) 30%,var(--desk-mid) 60%,var(--desk-lo) 100%);
+}
+:root[data-theme="night"] .scene::before{opacity:.45}
+
+.stage-lamp{
+  position:absolute;
+  left:50%;top:44%;
+  width:min(120vw,1500px);height:min(110vh,1000px);
+  transform:translate(-50%,-50%);
+  /* 台灯：琥珀色，从左上斜照 */
+  left:38%;top:36%;
+  background:radial-gradient(closest-side,rgba(255,180,106,.16),rgba(255,170,96,.05) 52%,transparent 78%);
+  pointer-events:none;
+  opacity:0;
+  z-index:0;
+  transition:opacity 1200ms var(--ease);
+  animation:lamp-breathe 7s ease-in-out infinite;
+}
+:root[data-theme="night"] .stage-lamp{opacity:1}
+@keyframes lamp-breathe{
+  0%,100%{filter:brightness(1)}
+  50%{filter:brightness(1.14)}
+}

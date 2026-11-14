@@ -1,0 +1,27 @@
+/* lang-switch · 右上角 EN / 中 */
+
+sc-lang-switch{
+  position:fixed;
+  /* 放在上黑边里 */
+  right:var(--edge);
+  top:max(10px,calc(var(--lb-closed) / 2 - 9px));
+  z-index:60;
+  display:flex;
+  align-items:center;
+  gap:7px;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.14em;
+}
+sc-lang-switch button{
+  color:var(--chrome);
+  padding:4px 2px;
+  transition:color var(--t-fast) var(--ease);
+}
+sc-lang-switch button:hover{color:var(--chrome-hi)}
+sc-lang-switch button[aria-pressed="true"]{color:var(--zhu)}
+sc-lang-switch .ls-slash{color:var(--chrome-line)}
+
+@media (max-width:720px){
+  sc-lang-switch{right:16px;top:14px}
+}

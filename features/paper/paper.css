@@ -1,0 +1,108 @@
+/* ============================================================
+   paper · 纸面：纸纹、水墨、卷痕、焦边
+   需要的结构：.view > .paper（paper.js 会补上 ink / roll / char 三层）
+   ============================================================ */
+
+.paper{
+  position:absolute;
+  left:50%;
+  top:0;
+  width:var(--pw);
+  height:100%;
+  transform:translateX(-50%);
+  z-index:1;
+  overflow:hidden;
+  background:
+    radial-gradient(140% 110% at 50% -10%,rgba(255,250,235,.55) 0%,rgba(255,250,235,0) 58%),
+    linear-gradient(178deg,var(--paper-hi) 0%,var(--paper) 42%,var(--paper-lo) 100%);
+  box-shadow:
+    0 26px 56px -26px rgba(70,50,24,.5),
+    0 4px 12px -4px rgba(70,50,24,.22),
+    inset 0 0 0 1px rgba(120,96,60,.2);
+}
+
+/* 夜间压暗：一层半透明的暗色，而不是滤镜（滤镜会拖慢横移） */
+.paper::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:6;
+  pointer-events:none;
+  background:rgb(24 14 4 / calc((1 - var(--paper-dim)) * 1.4));
+  transition:background-color var(--t-slow) var(--ease);
+}
+
+/* 卷着的时候纸是看不见的，只露出那道缝；收卷途中保持可见 */
+body:not(.opened):not(.closing) .paper{opacity:0}
+
+/* 纸纹：SVG feTurbulence 生成，无图片请求 */
+.paper::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.72;
+  mix-blend-mode:multiply;
+  z-index:5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.38'/%3E%3C/svg%3E");
+}
+
+/* ---------- 水墨 ---------- */
+.paper-ink{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    radial-gradient(46% 62% at 84% 26%,rgba(26,20,14,.085) 0%,rgba(26,20,14,.032) 44%,transparent 72%),
+    radial-gradient(36% 50% at 18% 82%,rgba(26,20,14,.065) 0%,transparent 68%),
+    radial-gradient(22% 32% at 58% 92%,rgba(26,20,14,.05) 0%,transparent 74%);
+  filter:blur(16px);
+  mix-blend-mode:multiply;
+  opacity:0;
+  transition:opacity 1600ms var(--ease) 500ms;
+}
+body.opened .paper-ink{opacity:1}
+
+/* ---------- 长期卷存留下的横折痕 ---------- */
+.paper-roll{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+  background:repeating-linear-gradient(180deg,
+    rgba(58,38,18,.026) 0 1px, rgba(255,253,244,.05) 1px 2px, transparent 2px 13px);
+  opacity:0;
+  transition:opacity 1500ms var(--ease) 1100ms;
+}
+body.opened .paper-roll{opacity:1}
+
+/* ---------- 焦边：从纸边往里渗 ---------- */
+.paper-char{
+  position:absolute;
+  inset:0;
+  z-index:6;
+  pointer-events:none;
+  box-shadow:
+    /* 暖褐色的焦边，宽度收窄一半：旧，但不阴森 */
+    inset 0 0 0 2px rgba(60,32,12,.75),
+    inset 0 0 8px 1px rgba(80,44,16,.5),
+    inset 0 0 30px 8px rgba(120,74,32,.2),
+    inset 0 0 84px 26px rgba(150,100,50,.1);
+  filter:url(#burnEdge);
+  opacity:0;
+  transition:opacity 1300ms var(--ease);
+}
+/* 纸停稳了焦边才渗出来：大面积的滤镜只算一次，不在动画里每帧重算 */
+body.settled .paper-char{opacity:1}
+body:not(.settled) .paper-char{filter:none}
+
+/* 详情页的立轴纸：不受开场状态影响 */
+.paper.is-static{position:relative;left:auto;transform:none;width:auto;height:auto;opacity:1}
+.paper.is-static .paper-ink,
+.paper.is-static .paper-roll,
+.paper.is-static .paper-char{opacity:1}
+
+@media (max-width:720px){
+  .paper-char{inset:-12px}
+}

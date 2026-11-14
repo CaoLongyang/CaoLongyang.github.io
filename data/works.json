@@ -1,0 +1,111 @@
+[
+  {
+    "id": "inboxpilot",
+    "title": "InboxPilot",
+    "year": "2026",
+    "tags": { "en": "AI agent · Hackathon", "zh": "AI 智能体 · 黑客松" },
+    "status": "public",
+    "link": "https://github.com/CaoLongyang/inboxpilot",
+    "glyph": "M28 38 H128 V108 H28 Z M28 38 L78 76 L128 38 M146 52 H184 M146 72 H184 M146 92 H172 M138 52 l4 4 l6 -8 M138 72 l4 4 l6 -8",
+    "summary": {
+      "en": "An AI email-to-action agent. It reads a real Gmail inbox, pulls out tasks and deadlines, and drafts a reply — but only after you approve. It never sends anything on its own.",
+      "zh": "一个把邮件变成行动的 AI 助理：读取真实的 Gmail，找出任务和截止日期，经你同意后才起草回复，从不自己发出任何邮件。"
+    },
+    "steps": {
+      "en": [
+        "FastAPI backend, Streamlit front end, SQLite for state, all in Docker.",
+        "Gmail OAuth with only two scopes: read, and compose drafts.",
+        "NVIDIA Nemotron models read each email; every claim is marked explicit, inference or unknown, and quotes are checked against the original.",
+        "A hard approval gate before any draft, then the draft is read back to verify it.",
+        "Built for the Nebius × NVIDIA Global AI Hackathon, with 292 tests."
+      ],
+      "zh": [
+        "FastAPI 做后端，Streamlit 做界面，SQLite 存状态，整体用 Docker 打包。",
+        "Gmail 授权只开两个权限：读邮件、写草稿。",
+        "用 NVIDIA Nemotron 模型读每封邮件；每条结论都标注「明说 / 推断 / 未知」，引用的原文会逐字核对。",
+        "起草前必须经过你的确认，写完再读回来核对一遍。",
+        "为 Nebius × NVIDIA 全球 AI 黑客松而做，带 292 个测试。"
+      ]
+    }
+  },
+  {
+    "id": "um-auto-attendance",
+    "title": "UM Auto Attendance",
+    "year": "2026",
+    "tags": { "en": "Automation · Python", "zh": "自动化 · Python" },
+    "status": "public",
+    "link": "https://github.com/CaoLongyang/UM-Auto-Attendance",
+    "glyph": "M40 34 H160 V122 H40 Z M40 56 H160 M70 24 V42 M130 24 V42 M78 88 L94 104 L126 70",
+    "summary": {
+      "en": "An automatic sign-in assistant for Universiti Malaya's Spectrum. It syncs your timetable and clicks \"Present\" at the right time, so you never miss an attendance check.",
+      "zh": "马来亚大学 Spectrum 的自动签到助手：同步你的课表，到点自动点「Present」，再也不会漏签。"
+    },
+    "steps": {
+      "en": [
+        "A small desktop app built with flet: one click to start, then it runs in the background.",
+        "Selenium drives Microsoft Edge with a saved profile, so the login is remembered.",
+        "Reads the attendance calendar with a Spectrum token and merges it into weekly time slots.",
+        "Skips sessions that belong to other OCC groups, and pauses to warn you when a session needs a password."
+      ],
+      "zh": [
+        "用 flet 做的小桌面程序：点一下开始，之后在后台运行。",
+        "Selenium 驱动 Edge，用保存好的浏览器配置记住登录。",
+        "用 Spectrum token 读取考勤日历，合并成每周固定的时段。",
+        "自动跳过不属于你所在 OCC 分组的签到；遇到需要密码的签到，会暂停并提醒你。"
+      ]
+    }
+  },
+  {
+    "id": "campusloop",
+    "title": "CampusLoop",
+    "year": "2026",
+    "tags": { "en": "Sustainability · Team project", "zh": "可持续 · 团队项目" },
+    "status": "private",
+    "progress": true,
+    "glyph": "M84 62 H124 V94 H84 Z M84 62 L104 50 L124 62 M58 80 A46 46 0 0 1 136 46 M136 46 L138 32 M136 46 L122 44 M150 80 A46 46 0 0 1 72 114 M72 114 L70 128 M72 114 L86 116",
+    "summary": {
+      "en": "A student-only reuse platform for Universiti Malaya: students who are leaving pass on furniture and appliances to students who are arriving, face to face on campus.",
+      "zh": "马来亚大学学生专属的闲置互换平台：要离开的同学把家具、电器留给刚来的同学，在校园里当面交接。"
+    },
+    "steps": {
+      "en": [
+        "Only verified @siswa.um.edu.my accounts can join, and every hand-over happens in person on campus.",
+        "Listings with photos, condition and pickup point; search, filters and item status.",
+        "Planned with a ten-person team over twelve weeks, starting from a survey of at least 50 students.",
+        "Tied to SDG 12.5: reuse before recycling. Still in progress."
+      ],
+      "zh": [
+        "只有验证过的 @siswa.um.edu.my 邮箱才能注册，所有交接都在校园里当面完成。",
+        "物品带照片、成色和取货点；可以搜索、筛选，能看到「可用 / 已预留 / 已出」。",
+        "十人团队、十二周排期，从至少 50 位同学的问卷调研开始。",
+        "对应联合国可持续目标 SDG 12.5：先复用，再回收。仍在进行中。"
+      ]
+    }
+  },
+  {
+    "id": "handscroll",
+    "title": "Handscroll",
+    "year": "2026",
+    "tags": { "en": "This site · HTML CSS JS", "zh": "就是本站 · HTML CSS JS" },
+    "status": "private",
+    "glyph": "M40 30 V112 M160 30 V112 M40 36 C 80 44, 120 28, 160 36 M40 106 C 80 114, 120 98, 160 106 M66 62 H128 M66 78 H112",
+    "summary": {
+      "en": "This site. A personal page you unroll instead of open — a brocade scroll on a dark desk, and an album for the things I've made.",
+      "zh": "就是这个网站。一个要「展开」而不是「打开」的个人页——暗色书桌上的一卷锦缎手卷，和一本放作品的册页。"
+    },
+    "steps": {
+      "en": [
+        "Hand-written HTML, CSS and JavaScript — no framework, no build step.",
+        "One feature per folder; features never import each other and only talk through events.",
+        "The paper follows your hand with inertia and snaps to the seams; the album turns with CSS 3D.",
+        "Scenes load only when you open them, so the scroll stays light."
+      ],
+      "zh": [
+        "HTML、CSS、JavaScript 全部手写，没有框架，没有构建步骤。",
+        "一个功能一个文件夹，功能之间不互相引用，只靠事件说话。",
+        "纸跟着手走，带惯性，停在接缝上；册页用 CSS 3D 翻页。",
+        "场景只在你点开时才加载，手卷本身保持轻巧。"
+      ]
+    }
+  }
+]

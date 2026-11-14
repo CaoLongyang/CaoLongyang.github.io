@@ -1,0 +1,86 @@
+/* ============================================================
+   seal · 火漆：系在绳结上，垂在卷边
+   <sc-seal></sc-seal>  放在 .tilt 里
+   ============================================================ */
+
+sc-seal{
+  /* 挂在绳结上：绳头 SVG 的起点正好落在结上 */
+  position:absolute;
+  left:calc(50% + var(--rd) / 2 + 92px);
+  top:calc(50% + var(--ph) * .2 + 100px);
+  z-index:12;
+  transform:translate(-50%,-50%);
+  transition:opacity 320ms var(--ease) 260ms;
+}
+body.opened sc-seal{opacity:0;pointer-events:none}
+body.closing sc-seal{transition-delay:1500ms}
+
+/* 垂下来的绳：从绳结弯到蜡上 */
+.seal-cord{
+  position:absolute;
+  left:-34px;
+  top:-55px;
+  width:60px;
+  height:84px;
+  overflow:visible;
+  pointer-events:none;
+  filter:drop-shadow(0 2px 2px rgba(50,34,14,.38));
+}
+
+.seal{
+  position:relative;
+  display:block;
+  width:124px;
+  height:104px;
+  filter:drop-shadow(0 8px 12px rgba(62,42,20,.46));
+  animation:seal-breathe 6.5s ease-in-out infinite;
+  transition:filter var(--t-fast) var(--ease);
+}
+@keyframes seal-breathe{
+  0%,100%{transform:scale(1) rotate(0deg)}
+  50%{transform:scale(1.014) rotate(-1deg)}
+}
+.seal:hover{
+  animation-play-state:paused;
+  filter:drop-shadow(0 12px 18px rgba(62,42,20,.58)) brightness(1.08);
+}
+
+.seal-svg{display:block;width:100%;height:100%;overflow:visible}
+
+/* 悬停 1.5 秒还没点：蜡上裂开一道缝，暗示「可以点」 */
+.seal-crack{
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+  transition:stroke-dashoffset 300ms var(--ease);
+}
+.seal:hover .seal-crack,
+.seal:focus-visible .seal-crack{
+  stroke-dashoffset:0;
+  transition:stroke-dashoffset 900ms var(--ease) 1500ms;
+}
+
+/* 揭开：先抬起，再脱手落下 */
+.seal.is-peeling{animation:seal-peel 1150ms cubic-bezier(.45,.05,.25,1) forwards}
+@keyframes seal-peel{
+  0%{transform:translate(0,0) rotate(0) scale(1);opacity:1}
+  22%{transform:translate(-5px,-18px) rotate(-8deg) scale(1.05);opacity:1}
+  36%{transform:translate(-4px,-14px) rotate(-6deg) scale(1.04);opacity:1}
+  100%{transform:translate(20px,140px) rotate(26deg) scale(.9);opacity:0}
+}
+
+/* 收卷后重新封上：从上方按下来 */
+.seal.is-resealing{animation:seal-press 700ms var(--ease-back) both}
+@keyframes seal-press{
+  0%{transform:translateY(-26px) scale(1.12);opacity:0}
+  60%{opacity:1}
+  100%{transform:none;opacity:1}
+}
+
+@media (max-width:720px){
+  .seal{width:84px;height:70px}
+  .seal-cord{width:42px;height:59px;left:-24px;top:-38px}
+  sc-seal{
+    left:calc(50% + var(--rd) / 2 + 62px);
+    top:calc(50% + var(--ph) * .2 + 70px);
+  }
+}

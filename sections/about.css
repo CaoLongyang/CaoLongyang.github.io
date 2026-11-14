@@ -1,0 +1,194 @@
+/* sections/about · 引首：自序
+   纸只占画面约 60%，左边露出目录的一角，提示后面还有
+   从右往左三块：竖排题名「自序」→ 小档案竖栏 → 自我介绍；底下压一层淡墨远山 */
+
+#about{--span:.6;--w:calc(var(--pw) * .6)}
+
+.about{position:absolute;inset:0;overflow:hidden}
+
+/* ---------- 淡墨远山 ---------- */
+.about-hills{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  width:100%;
+  height:62%;
+  pointer-events:none;
+  z-index:0;
+  opacity:0;
+  transition:opacity 1800ms var(--ease) 600ms;
+}
+.is-in .about-hills{opacity:1}
+.about-hills .h1{fill:rgba(29,22,16,.07)}
+.about-hills .h2{fill:rgba(29,22,16,.1)}
+.about-hills .h3{fill:rgba(29,22,16,.14)}
+
+/* ---------- 三块排布 ---------- */
+.about-inner{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:flex;
+  flex-direction:row-reverse;
+  align-items:flex-start;
+  gap:clamp(28px,6cqh,90px);
+  padding:clamp(40px,11cqh,140px) clamp(40px,8cqh,120px) clamp(40px,14cqh,170px);
+}
+
+/* 竖排题名，自上而下显影 */
+.about-yinshou{
+  flex:0 0 auto;
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  font-family:var(--kai);
+  font-size:clamp(26px,8cqh,104px);
+  line-height:1;
+  letter-spacing:.2em;
+  color:var(--ink);
+  clip-path:inset(0 0 100% 0);
+  transition:clip-path 1300ms var(--ease) 1000ms;
+}
+body.opened .about-yinshou{clip-path:inset(0 0 0 0)}
+
+/* 小档案：四条竖栏，和目录页同一种排法 */
+.about-facts{
+  flex:0 0 auto;
+  display:flex;
+  flex-direction:row-reverse;
+  margin:0;
+  padding:0;
+  list-style:none;
+  border-right:1px solid var(--rule);
+}
+.about-facts li{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:clamp(8px,1.8cqh,20px);
+  width:clamp(68px,13.5cqh,150px);
+  padding:clamp(2px,.6cqh,8px) 0 clamp(6px,1.4cqh,16px);
+  border-left:1px solid var(--rule);
+}
+.f-label{
+  font-family:var(--mono);
+  font-size:clamp(8px,1.05cqh,12px);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  color:var(--zhu);
+}
+.f-zh{
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  font-family:var(--kai);
+  font-weight:400;
+  font-size:clamp(15px,3.6cqh,40px);
+  letter-spacing:.18em;
+  line-height:1;
+  color:var(--ink);
+}
+.f-en{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:clamp(10px,1.6cqh,17px);
+  line-height:1.3;
+  text-align:center;
+  color:var(--ink-2);
+  max-width:92%;
+}
+
+/* 自我介绍 */
+.about-lead{flex:1 1 auto;min-width:0;max-width:34em}
+
+.about-title{
+  margin:0 0 clamp(12px,2.8cqh,32px);
+  font-weight:400;
+  font-size:clamp(26px,7.6cqh,96px);
+  line-height:1.12;
+  letter-spacing:-.015em;
+  text-wrap:balance;
+}
+.about-sub{
+  margin:0;
+  font-size:clamp(13px,2.25cqh,26px);
+  line-height:1.85;
+  color:var(--ink-2);
+}
+.about-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:clamp(16px,3cqh,40px);
+  margin:clamp(20px,4.4cqh,56px) 0 0;
+  padding:0;
+  list-style:none;
+  font-family:var(--mono);
+  font-size:clamp(10.5px,1.3cqh,15px);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+.about-links a{
+  text-decoration:none;
+  color:var(--ink-2);
+  background:linear-gradient(var(--zhu),var(--zhu)) left bottom / 0 1px no-repeat;
+  padding-bottom:3px;
+  transition:background-size var(--t-mid) var(--ease),color var(--t-fast) var(--ease);
+}
+.about-links a:hover{color:var(--zhu);background-size:100% 1px}
+
+/* 落款 + 朱印 */
+.about-sign{
+  position:absolute;
+  z-index:1;
+  left:clamp(40px,8cqh,120px);
+  bottom:clamp(32px,8cqh,110px);
+  display:flex;
+  align-items:center;
+  gap:14px;
+  opacity:0;
+  transition:opacity 1250ms var(--ease) 1650ms;
+}
+body.opened .about-sign{opacity:1}
+.about-yin{
+  width:clamp(32px,5cqh,60px);height:clamp(32px,5cqh,60px);
+  display:grid;place-items:center;
+  background:var(--zhu);
+  color:#f2e2c6;
+  font-family:var(--kai);
+  font-size:clamp(16px,2.5cqh,30px);
+  box-shadow:inset 0 0 0 2px rgba(242,226,198,.4);
+  transform:rotate(-3deg);
+  filter:url(#roughen);
+}
+.about-meta{font-family:var(--mono);font-size:clamp(10px,1.2cqh,14px);letter-spacing:.16em;color:var(--ink-3)}
+
+/* 提示往右拖 */
+.about-hint{
+  position:absolute;
+  z-index:1;
+  right:clamp(40px,8cqh,120px);
+  bottom:clamp(32px,8.5cqh,116px);
+  margin:0;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-family:var(--mono);
+  font-size:clamp(10px,1.2cqh,14px);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+  opacity:0;
+  transition:opacity var(--t-slow) var(--ease);
+}
+body.settled .about-hint{opacity:1}
+body.settled.is-moved .about-hint{opacity:0}
+.about-hint-arrow{display:inline-block;color:var(--zhu);animation:hint-nudge 2.2s var(--ease-in-out) infinite}
+@keyframes hint-nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+
+@media (max-width:720px){
+  #about{width:calc(var(--pw) - var(--head-w))}
+  .about-hills{height:40%}
+  .about-inner{flex-direction:column;padding:32px 24px}
+  .about-facts{display:none}
+  .about-yinshou{position:absolute;right:20px;top:28px;font-size:24px}
+  .about-lead{max-width:calc(100% - 50px)}
+  .about-title{font-size:clamp(22px,7vw,28px)}
+}

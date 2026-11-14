@@ -1,0 +1,104 @@
+/* sections/contact · 拖尾：联系方式、版权页、收卷 */
+
+#contact{--span:1;--w:calc(var(--ph-open) * 1.6)}
+
+.contact{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:clamp(18px,4cqh,30px);
+}
+
+.contact-list{margin:0;display:grid;gap:0}
+.contact-list div{
+  display:grid;
+  grid-template-columns:clamp(110px,16cqh,220px) 1fr;
+  align-items:baseline;
+  padding:clamp(10px,2.4cqh,32px) 0;
+  border-bottom:1px solid var(--rule);
+}
+.contact-list dt{
+  font-family:var(--mono);
+  font-size:clamp(10px,1.2cqh,14px);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+}
+.contact-list dd{margin:0;font-size:clamp(14px,2.8cqh,36px)}
+.contact-list a{
+  text-decoration:none;
+  background:linear-gradient(var(--zhu),var(--zhu)) left bottom / 0 1px no-repeat;
+  transition:background-size var(--t-mid) var(--ease),color var(--t-fast) var(--ease);
+}
+.contact-list a:hover{color:var(--zhu);background-size:100% 1px}
+
+.contact-colophon{
+  margin:0;
+  max-width:30em;
+  font-size:clamp(12.5px,1.8cqh,21px);
+  line-height:1.8;
+  color:var(--ink-3);
+}
+
+.contact-end{display:flex;align-items:center;justify-content:space-between;gap:20px}
+
+/* 收卷按钮：一根小木轴 */
+.rollup{
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  padding:clamp(9px,1.3cqh,16px) clamp(16px,2.2cqh,28px) clamp(9px,1.3cqh,16px) clamp(10px,1.4cqh,18px);
+  border:1px solid var(--rule-strong);
+  font-family:var(--mono);
+  font-size:clamp(10.5px,1.3cqh,15px);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  transition:color var(--t-fast) var(--ease),border-color var(--t-fast) var(--ease),background-color var(--t-fast) var(--ease);
+}
+.rollup:hover{color:var(--zhu);border-color:var(--zhu);background:rgba(255,252,240,.5)}
+.rollup-rod{
+  width:6px;height:22px;border-radius:3px;
+  background:linear-gradient(90deg,#3c2512,var(--wood-hi) 45%,var(--wood-lo));
+  transition:transform var(--t-mid) var(--ease-back);
+}
+.rollup:hover .rollup-rod{transform:rotate(180deg)}
+
+/* 藏书印：四字方印 */
+.contact-seal{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  grid-auto-flow:column;
+  grid-template-rows:1fr 1fr;
+  direction:rtl;
+  width:clamp(58px,9cqh,120px);height:clamp(58px,9cqh,120px);
+  padding:4px;
+  background:var(--zhu);
+  color:#f6e8cf;
+  font-family:var(--kai);
+  font-size:clamp(20px,3.3cqh,42px);
+  line-height:1;
+  place-items:center;
+  box-shadow:inset 0 0 0 2px rgba(246,232,207,.5);
+  filter:url(#roughen);
+  transform:rotate(-4deg);
+  transition:transform var(--t-mid) var(--ease-back);
+}
+.contact-seal:hover{transform:rotate(-4deg) translateY(-2px) scale(1.04)}
+
+.contact-psst{
+  position:absolute;
+  left:0;bottom:-6px;
+  margin:0;
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:.2em;
+  color:var(--ink-3);
+  opacity:.28;
+}
+
+@media (max-width:720px){
+  #contact{--span:2}
+  .contact{flex:0 0 calc(var(--pw) - 48px)}
+  .contact-list div{grid-template-columns:84px 1fr}
+}

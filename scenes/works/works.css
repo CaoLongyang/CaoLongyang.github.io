@@ -1,0 +1,252 @@
+/* ============================================================
+   scenes/works · 画心：一本摊开的册页
+   一开（左右两页）一件作品：右页是作品，左页是它的做法（从右往左读）
+   翻页方向和手卷一致：左页往右翻是下一件
+   ============================================================ */
+
+.wk-stage{
+  position:absolute;
+  inset:0;
+  display:grid;
+  place-items:center;
+  container-type:size;
+}
+
+/* 册页尺寸：两页并排，单页 3:4 竖幅 */
+.wk-album{
+  --h:min(90cqh,62cqw);
+  position:relative;
+  height:var(--h);
+  width:calc(var(--h) * 1.48);
+  transform-origin:25% 50%;
+  user-select:none;
+  touch-action:none;
+}
+.wk-album.is-flip{transition:transform 460ms cubic-bezier(.3,.7,.2,1)}
+
+/* 摊开后露出的锦缎封板 */
+.wk-board{
+  position:absolute;
+  inset:-2.4% -1.8%;
+  border-radius:3px;
+  background-color:var(--brocade-base);
+  background-image:
+    linear-gradient(90deg,rgba(0,0,0,.35),transparent 12%,transparent 46%,rgba(0,0,0,.5) 50%,transparent 54%,transparent 88%,rgba(0,0,0,.35)),
+    var(--brocade-img);
+  background-size:auto,calc(var(--h) * .06) calc(var(--h) * .07);
+  box-shadow:0 30px 50px -20px rgba(0,0,0,.7),0 6px 14px rgba(0,0,0,.4);
+  opacity:0;
+  transition:opacity 300ms var(--ease);
+}
+.wk-album.is-open .wk-board{opacity:1}
+
+/* 左边最底下那页（封三）：最后一开才看得到 */
+.wk-base{
+  position:absolute;
+  top:0;left:0;
+  width:50%;height:100%;
+}
+
+/* ---------- 一叶 = 正反两面 ---------- */
+.wk-leaf{
+  --a:0deg;
+  position:absolute;
+  top:0;left:0;
+  width:50%;
+  height:100%;
+  transform-origin:100% 50%;
+  transform:perspective(2800px) rotateY(var(--a));
+  transform-style:preserve-3d;
+}
+
+.wk-face,
+.wk-base{
+  container-type:size;
+  overflow:hidden;
+  background:
+    radial-gradient(120% 90% at 50% 10%,rgba(255,250,235,.35),transparent 60%),
+    linear-gradient(178deg,var(--paper-hi),var(--paper) 45%,var(--paper-lo));
+}
+.wk-face{
+  position:absolute;
+  inset:0;
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
+}
+.wk-back{transform:rotateY(180deg)}
+
+/* 书脊那一侧的弧度阴影 */
+.wk-front::before,
+.wk-base::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:linear-gradient(270deg,rgba(40,24,8,.32),rgba(40,24,8,.08) 7%,transparent 16%);
+}
+.wk-back::before{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:3;
+  background:linear-gradient(90deg,rgba(40,24,8,.32),rgba(40,24,8,.08) 7%,transparent 16%);
+}
+/* 翻动时的明暗：--sh 由脚本按角度写入 */
+.wk-face::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:4;
+  background:linear-gradient(90deg,rgba(20,12,4,.5),rgba(20,12,4,.15));
+  opacity:var(--sh,0);
+}
+
+/* 纸纹 */
+.wk-paper-grain{
+  position:absolute;inset:0;pointer-events:none;z-index:2;opacity:.55;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+}
+
+/* ---------- 页面内容 ---------- */
+.wk-page{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  padding:9cqh 10cqw 8cqh;
+}
+
+.wk-kicker{
+  margin:0 0 3cqh;
+  font-family:var(--mono);
+  font-size:clamp(9px,2cqh,13px);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--ink-3);
+}
+
+/* 封面 */
+.wk-cover{
+  background-color:var(--brocade-base);
+  background-image:
+    linear-gradient(90deg,rgba(255,255,255,.06),transparent 30%,transparent 80%,rgba(0,0,0,.35)),
+    var(--brocade-img);
+  background-size:auto,9cqw 9cqh;
+}
+.wk-cover .wk-paper-grain,.wk-cover::before{display:none}
+.wk-slip{
+  position:absolute;
+  left:14%;
+  top:9%;
+  width:17%;
+  height:46%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-between;
+  padding:4cqh 0 3cqh;
+  background:linear-gradient(90deg,#d9ccae,#f4ebd4 40%,#efe4c8);
+  box-shadow:0 0 0 1px rgba(80,60,30,.4),inset 0 0 0 3px rgba(250,244,228,.9),inset 0 0 0 4px rgba(120,96,60,.35),0 3px 8px rgba(0,0,0,.45);
+}
+.wk-slip b{
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-family:var(--kai);font-weight:400;
+  font-size:clamp(14px,5.6cqh,40px);letter-spacing:.3em;line-height:1;color:#241c14;
+}
+.wk-slip i{width:3.4cqh;height:3.4cqh;background:var(--zhu);filter:url(#roughen)}
+
+/* 扉页 */
+.wk-title-page .wk-page{align-items:flex-end;text-align:right}
+.wk-big{
+  margin:2cqh 0 4cqh;
+  writing-mode:vertical-rl;text-orientation:upright;
+  font-family:var(--kai);font-weight:400;
+  font-size:clamp(26px,11cqh,84px);letter-spacing:.24em;line-height:1;color:var(--ink);
+}
+.wk-sub{margin:0;font-size:clamp(12px,2.7cqh,19px);line-height:1.7;color:var(--ink-2)}
+.wk-seal{
+  margin-top:auto;
+  width:7cqh;height:7cqh;
+  display:grid;place-items:center;
+  background:var(--zhu);color:#f2e2c6;
+  font-family:var(--kai);font-size:3.8cqh;
+  transform:rotate(-4deg);
+  filter:url(#roughen);
+  box-shadow:inset 0 0 0 2px rgba(242,226,198,.45);
+}
+
+/* 目次 */
+.wk-index{list-style:none;margin:2cqh 0 0;padding:0;border-top:1px solid var(--rule)}
+.wk-index button{
+  width:100%;
+  display:grid;
+  grid-template-columns:3em 1fr auto;
+  align-items:baseline;
+  gap:1em;
+  padding:2.4cqh 0;
+  border-bottom:1px solid var(--rule);
+  text-align:left;
+  cursor:pointer;
+}
+.wk-index .n{font-family:var(--mono);font-size:clamp(9.5px,1.9cqh,13px);letter-spacing:.14em;color:var(--zhu)}
+.wk-index .t{font-size:clamp(13px,3cqh,21px);transition:transform var(--t-mid) var(--ease),color var(--t-fast) var(--ease)}
+.wk-index .y{font-family:var(--mono);font-size:clamp(9.5px,1.9cqh,13px);color:var(--ink-3)}
+.wk-index button:hover .t{color:var(--zhu);transform:translateX(5px)}
+
+/* 作品页（右页） */
+.wk-no{font-family:var(--mono);font-size:clamp(9.5px,1.9cqh,13px);letter-spacing:.2em;color:var(--ink-3)}
+.wk-name{
+  margin:1.4cqh 0 1.2cqh;
+  font-weight:400;
+  font-size:clamp(20px,6.4cqh,48px);
+  line-height:1.1;
+  letter-spacing:-.01em;
+}
+.wk-meta{margin:0;font-family:var(--mono);font-size:clamp(9.5px,1.85cqh,13px);letter-spacing:.12em;color:var(--ink-3)}
+/* 裱起来的作品图 */
+.wk-frame{
+  margin:3.6cqh 0;
+  padding:3cqh;
+  background:linear-gradient(180deg,#e9dfc6,#ddd0b2);
+  box-shadow:inset 0 0 0 1px rgba(90,70,40,.3),inset 0 0 0 5px rgba(245,238,220,.6),0 1px 0 rgba(255,255,255,.3);
+}
+.wk-frame svg{width:100%;height:auto;max-height:24cqh;overflow:visible}
+.wk-frame path{fill:none;stroke:var(--ink);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;opacity:.82}
+.wk-summary{margin:0;font-size:clamp(12px,2.55cqh,17px);line-height:1.75;color:var(--ink-2)}
+.wk-foot{
+  margin-top:auto;
+  padding-top:2.4cqh;
+  display:flex;align-items:center;justify-content:space-between;gap:1em;
+  border-top:1px solid var(--rule);
+  font-family:var(--mono);font-size:clamp(9.5px,1.9cqh,13px);letter-spacing:.14em;text-transform:uppercase;
+}
+.wk-foot a{color:var(--zhu);text-decoration:none}
+.wk-foot a:hover{text-decoration:underline}
+.wk-foot .private{color:var(--ink-3)}
+.wk-tag{padding:.2em .6em;border:1px solid rgba(158,58,32,.45);color:var(--zhu)}
+
+/* 做法页（左页） */
+.wk-steps{margin:1cqh 0 0;padding:0;list-style:none;counter-reset:s}
+.wk-steps li{
+  position:relative;
+  padding:0 0 2.4cqh 2.4em;
+  font-size:clamp(12px,2.5cqh,16.5px);
+  line-height:1.7;
+  color:var(--ink-2);
+  counter-increment:s;
+}
+.wk-steps li::before{
+  content:counter(s,decimal-leading-zero);
+  position:absolute;left:0;top:.15em;
+  font-family:var(--mono);font-size:.78em;letter-spacing:.1em;color:var(--zhu);
+}
+.wk-hint{margin-top:auto;font-family:var(--mono);font-size:clamp(9px,1.7cqh,12px);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);opacity:.7}
+
+/* 封底 */
+.wk-end .wk-page{align-items:center;justify-content:center;gap:4cqh}
+.wk-end .wk-big{margin:0}
+
+/* 线条一笔画出（只在这一开翻到时） */
+.wk-face [data-draw] path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1300ms var(--ease-in-out) 200ms}
+.wk-face.is-shown [data-draw] path{stroke-dashoffset:0}
+.wk-face [data-draw] path + path{transition-delay:600ms}
+
+/* 光标 */
+.wk-album{cursor:grab}
+.wk-album.is-grabbing,.wk-album.is-grabbing *{cursor:grabbing}
+
+@media (prefers-reduced-motion:reduce){
+  .wk-face [data-draw] path{stroke-dashoffset:0}
+}

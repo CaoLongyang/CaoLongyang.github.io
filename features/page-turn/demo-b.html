@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>翻纸转场 · 工坊</title>
+<script>try{var t=localStorage.getItem('scroll-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'night':'day')}catch(e){}</script>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../../features/stage/stage.css">
+<link rel="stylesheet" href="../../features/paper/paper.css">
+<link rel="stylesheet" href="../../features/page-turn/page-turn.css">
+<link rel="stylesheet" href="../../lab/demo.css">
+
+<script src="page-turn.js"></script>
+</head>
+<body data-demo="翻纸转场 · page-turn" data-actions="reload" data-start="open">
+<div class="rail" style="height:auto"><main class="scene" style="position:relative;height:auto;min-height:100vh"><div class="dk-center"><div class="paper is-static dk-sheet "><div class="inner"><h2>第二页</h2><p>这个链接带 data-turn=&quot;back&quot;，方向反过来。</p><p><a href="demo.html" data-turn="back">← 翻回第一页</a></p><p style="font-size:12px;color:var(--ink-3)">需要 Chrome / Edge 126+ 或 Safari 18.2+；其他浏览器就是普通跳转。</p></div></div></div></main></div>
+<script type="module">
+  import '../../lab/demo-kit.js';
+  import '../../core/filters.js';
+  import '../../features/stage/stage.js';
+  import '../../features/paper/paper.js';
+</script>
+</body>
+</html>

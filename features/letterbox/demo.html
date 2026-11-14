@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="zh-Hans" data-theme="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>遮幅 · 工坊</title>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../stage/stage.css">
+<link rel="stylesheet" href="letterbox.css">
+<link rel="stylesheet" href="../../lab/demo.css">
+</head>
+<body data-demo="遮幅 · letterbox" data-actions="open,close">
+<div class="rail"><main class="scene"><p style="position:relative;z-index:2;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--chrome)">点「展开」看黑边合拢</p></main></div>
+<sc-letterbox data-hint-en="drag · wheel · ← →" data-hint-zh="拖动 · 滚轮 · ← →"></sc-letterbox>
+<script type="module">
+  import '../../lab/demo-kit.js';
+  import '../stage/stage.js';
+  import './letterbox.js';
+</script>
+</body>
+</html>

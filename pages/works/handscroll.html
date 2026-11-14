@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Handscroll · 手卷</title>
+<meta name="description" content="How this unrolling personal site was built.">
+<script>try{var t=localStorage.getItem('scroll-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'night':'day')}catch(e){}</script>
+<script src="../../features/page-turn/page-turn.js"></script>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../../features/stage/stage.css">
+<link rel="stylesheet" href="../../features/paper/paper.css">
+<link rel="stylesheet" href="../../features/lang-switch/lang-switch.css">
+<link rel="stylesheet" href="../../features/theme-switch/theme-switch.css">
+<link rel="stylesheet" href="../../features/ink-reveal/ink-reveal.css">
+<link rel="stylesheet" href="../../features/scroll-fx/scroll-fx.css">
+<link rel="stylesheet" href="../../features/page-turn/page-turn.css">
+<link rel="stylesheet" href="../../features/cursor/cursor.css">
+<link rel="stylesheet" href="../../pages/page.css">
+</head>
+<body class="opened settled detail">
+
+<main class="scene">
+  <article class="hang">
+    <div class="hang-rod hang-rod--top" aria-hidden="true">
+      <svg class="hang-cord" viewBox="0 0 180 56"><path d="M20 56 L90 6 L160 56"/><circle cx="90" cy="6" r="4" fill="#85683a"/></svg>
+    </div>
+    <div class="paper is-static hang-paper">
+      <div class="hang-body">
+        <a class="back" href="../../index.html#works" data-turn="back"><span>←</span><span data-en="Back to the scroll" data-zh="卷回画心">Back to the scroll</span></a>
+        <p class="kicker" data-ink data-en="Works · 01" data-zh="作品 · 01">Works · 01</p>
+        <h1 data-ink>Handscroll</h1>
+        <p class="hang-meta" data-ink><span>2026</span><span>HTML · CSS · JS</span><span data-en="6 min read" data-zh="约 6 分钟">6 min read</span></p>
+        <p class="lede" data-ink data-en="A personal website you unroll instead of open. One wax seal, two paper rolls, and a long sheet that keeps going as you scroll." data-zh="一个要「展开」而不是「打开」的个人网站。一枚火漆、两根纸卷，和一张越滚越长的纸。">A personal website you unroll instead of open. One wax seal, two paper rolls, and a long sheet that keeps going as you scroll.</p>
+        <h2 data-ink><span class="num">01</span><span data-en="The idea" data-zh="想法">The idea</span></h2>
+        <p data-ink data-en="Most personal sites start with information: a name, a sentence, a few links. This one starts with an object. People want to touch an object; they only skim a paragraph." data-zh="大多数个人站的第一屏是信息：名字、一句话、几个链接。这个站的第一屏是一个物件。人面对物件会想伸手碰一下，面对一段字只会扫一眼。">Most personal sites start with information: a name, a sentence, a few links. This one starts with an object. People want to touch an object; they only skim a paragraph.</p>
+        <p data-ink data-en="So the first thing you do here is break a seal. It is a single click, but the scroll answers with two seconds of motion: the wax lifts and falls, the twine slides off, the rolls part and the paper settles flat." data-zh="所以在这里，你做的第一件事是揭开火漆。只是一次点击，但卷轴会用两秒钟的动作回应你：蜡抬起又落下，麻绳滑落，两卷分开，纸面摊平。">So the first thing you do here is break a seal. It is a single click, but the scroll answers with two seconds of motion: the wax lifts and falls, the twine slides off, the rolls part and the paper settles flat.</p>
+        <figure class="figure" data-ink>
+          <svg viewBox="0 0 600 120" data-draw aria-hidden="true">
+            <path pathLength="1" d="M10 70 H590"/>
+            <path pathLength="1" class="zhu" d="M10 70 C 40 30, 60 30, 70 70 M70 70 C 120 40, 200 40, 260 70 M260 70 C 330 20, 420 20, 470 70 M470 70 C 520 50, 560 50, 590 70"/>
+            <text x="10" y="100">0.0s seal</text>
+            <text x="70" y="100">0.5s twine</text>
+            <text x="230" y="100">0.6–2.1s unroll</text>
+            <text x="440" y="100">2.1s stretch</text>
+            <text x="540" y="100">2.3s</text>
+          </svg>
+          <figcaption data-en="The opening, on one line. Every curve is one physical action." data-zh="开场的时间线。每一段弧线对应一个物理动作。">The opening, on one line. Every curve is one physical action.</figcaption>
+        </figure>
+        <h2 data-ink><span class="num">02</span><span data-en="One feature, one folder" data-zh="一个功能，一个文件夹">One feature, one folder</span></h2>
+        <p data-ink data-en="The first version kept everything in one page: the wax SVG, five filters, the unroll logic and the language switch. It worked, and it was impossible to read." data-zh="第一版把所有东西都塞在一个页面里：火漆的 SVG、五个滤镜、展开逻辑、语言切换。能跑，但根本没法看。">The first version kept everything in one page: the wax SVG, five filters, the unroll logic and the language switch. It worked, and it was impossible to read.</p>
+        <p data-ink data-en="Now every piece lives in its own folder under features/, with its own styles, script, demo page and notes. The pieces never import each other. They talk through a handful of events on the document, like seal:broken and scroll:opened." data-zh="现在每个零件都住在 features/ 下自己的文件夹里，有自己的样式、脚本、演示页和说明。零件之间从不互相引用，只靠 document 上的几个事件说话，比如 seal:broken 和 scroll:opened。">Now every piece lives in its own folder under features/, with its own styles, script, demo page and notes. The pieces never import each other. They talk through a handful of events on the document, like seal:broken and scroll:opened.</p>
+        <ul data-ink>
+          <li data-en="Delete a folder and the rest of the site still runs." data-zh="删掉任何一个文件夹，网站其余部分照常运行。">Delete a folder and the rest of the site still runs.</li>
+          <li data-en="Open any demo.html to see one piece alone." data-zh="打开任意一个 demo.html，就能单独看那一个零件。">Open any demo.html to see one piece alone.</li>
+          <li data-en="Colours, timing and easing come only from core/tokens.css." data-zh="颜色、时长、缓动只从 core/tokens.css 取。">Colours, timing and easing come only from core/tokens.css.</li>
+        </ul>
+        <h2 data-ink><span class="num">03</span><span data-en="Reading right to left" data-zh="从右往左读">Reading right to left</span></h2>
+        <p data-ink data-en="A real handscroll is read from right to left: you unroll with one hand and roll up with the other. The homepage does the same. Scrolling down feeds the paper out from the left roller, and the wooden grain turns as it goes." data-zh="真正的手卷是从右往左读的：一只手展开，另一只手收起。首页也是这样。往下滚动，纸就从左边的轴里被送出来，木纹也跟着转。">A real handscroll is read from right to left: you unroll with one hand and roll up with the other. The homepage does the same. Scrolling down feeds the paper out from the left roller, and the wooden grain turns as it goes.</p>
+        <blockquote data-ink data-en="Motion should have a reason. If nothing physical would move, nothing on screen moves." data-zh="动效要有理由。现实里不会动的东西，屏幕上也不动。">Motion should have a reason. If nothing physical would move, nothing on screen moves.</blockquote>
+        <h2 data-ink><span class="num">04</span><span data-en="What I would do next" data-zh="接下来">What I would do next</span></h2>
+        <p data-ink data-en="Sound, maybe: paper and cracking wax, off by default. A real curl rendered in canvas. And more leaves in the scroll, which is the only part that really matters." data-zh="也许加声音：纸声和蜡裂开的声音，默认关闭。用 canvas 画出真正的卷曲。还有往卷里多放几页——这才是唯一真正要紧的部分。">Sound, maybe: paper and cracking wax, off by default. A real curl rendered in canvas. And more leaves in the scroll, which is the only part that really matters.</p>
+        <div class="hang-end">
+          <a class="back" href="../../index.html#works" data-turn="back"><span>←</span><span data-en="Back to the scroll" data-zh="卷回画心">Back to the scroll</span></a>
+          <span class="yin" aria-hidden="true">卷</span>
+        </div>
+      </div>
+    </div>
+    <div class="hang-rod hang-rod--bottom" aria-hidden="true"></div>
+  </article>
+</main>
+
+<sc-theme-switch></sc-theme-switch>
+<sc-lang-switch></sc-lang-switch>
+<sc-ink-cursor></sc-ink-cursor>
+
+<script type="module">
+  import '../../core/filters.js';
+  import '../../features/stage/stage.js';
+  import '../../features/paper/paper.js';
+  import '../../features/lang-switch/lang-switch.js';
+  import '../../features/theme-switch/theme-switch.js';
+  import '../../features/ink-reveal/ink-reveal.js';
+  import '../../features/cursor/cursor.js';
+</script>
+</body>
+</html>

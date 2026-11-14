@@ -1,0 +1,40 @@
+/* ============================================================
+   cursor · 纸面上的墨点光标
+   <sc-ink-cursor></sc-ink-cursor>   只在精确指针（鼠标/触控板）下工作
+   光标进入 .paper 才出现，离开纸面就还原成系统光标
+   ============================================================ */
+
+sc-ink-cursor{position:fixed;inset:0;pointer-events:none;z-index:60}
+
+.ic-dot,
+.ic-trail{
+  position:fixed;
+  left:0;top:0;
+  border-radius:50%;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity var(--t-fast) var(--ease),width var(--t-mid) var(--ease-back),height var(--t-mid) var(--ease-back),margin var(--t-mid) var(--ease-back),background-color var(--t-fast) var(--ease);
+  will-change:transform;
+}
+.ic-dot{
+  width:7px;height:7px;margin:-3.5px 0 0 -3.5px;
+  background:var(--ink);
+}
+.ic-trail{
+  width:22px;height:22px;margin:-11px 0 0 -11px;
+  background:radial-gradient(closest-side,rgba(36,28,20,.22),rgba(36,28,20,0));
+  filter:blur(1.5px);
+}
+
+sc-ink-cursor.is-on .ic-dot,
+sc-ink-cursor.is-on .ic-trail{opacity:1}
+
+/* 停在能点的东西上：墨点洇开，变成朱色 */
+sc-ink-cursor.is-hot .ic-dot{
+  width:30px;height:30px;margin:-15px 0 0 -15px;
+  background:var(--zhu-soft);
+}
+sc-ink-cursor.is-hot .ic-trail{opacity:0}
+
+body.has-ink-cursor .paper,
+body.has-ink-cursor .paper *{cursor:none}

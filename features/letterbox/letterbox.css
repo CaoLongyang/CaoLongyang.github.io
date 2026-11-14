@@ -1,0 +1,49 @@
+/* ============================================================
+   letterbox · 上下黑边（电影遮幅）
+   <sc-letterbox data-hint-en="…" data-hint-zh="…"></sc-letterbox>  属性是下黑边里的提示语
+   卷着：窄（--lb-closed）；展开：往中间合拢到 --lb-open
+   ============================================================ */
+
+.lb-bar{
+  position:fixed;
+  left:0;right:0;
+  z-index:50;
+  height:var(--lb-closed);
+  background:var(--lb-color);
+  pointer-events:none;
+  transition:height 700ms var(--ease-in-out);
+}
+.lb-top{top:0}
+.lb-bottom{bottom:0}
+body.opened .lb-bar{height:var(--lb-open);transition-delay:100ms}
+
+/* 内侧一道极细的暖光边 + 12px 柔和过渡：看得出是遮幅，又不是一刀切 */
+.lb-bar::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;
+  height:12px;
+}
+.lb-top{box-shadow:0 1px 0 rgba(205,170,120,.12)}
+.lb-bottom{box-shadow:0 -1px 0 rgba(205,170,120,.12)}
+.lb-top::after{top:100%;background:linear-gradient(var(--lb-color),transparent)}
+.lb-bottom::after{bottom:100%;background:linear-gradient(transparent,var(--lb-color))}
+
+/* 下黑边里的一行提示 */
+.lb-hint{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  margin:0;
+  font-family:var(--mono);
+  font-size:10.5px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--chrome);
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity var(--t-slow) var(--ease);
+}
+body.settled .lb-hint{opacity:1}
+body.settled.is-moved .lb-hint{opacity:.35}

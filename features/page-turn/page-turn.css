@@ -1,0 +1,33 @@
+/* ============================================================
+   page-turn · 翻纸转场（跨页面 View Transitions）
+   前进：旧页向右滑出，新页从左边送进来（手卷往左读）
+   返回：方向相反。链接加 data-turn="back" 即为返回
+   不支持的浏览器就是普通跳转
+   ============================================================ */
+
+@view-transition{navigation:auto}
+
+::view-transition-group(root){animation-duration:620ms;animation-timing-function:var(--ease-in-out)}
+
+::view-transition-old(root){animation:turn-out 620ms var(--ease-in-out) both}
+::view-transition-new(root){animation:turn-in 620ms var(--ease-in-out) both}
+
+html:active-view-transition-type(back)::view-transition-old(root){animation-name:turn-out-back}
+html:active-view-transition-type(back)::view-transition-new(root){animation-name:turn-in-back}
+
+@keyframes turn-out{
+  to{transform:translateX(22%) rotate(.6deg);opacity:0;filter:brightness(.92) blur(1px)}
+}
+@keyframes turn-in{
+  from{transform:translateX(-16%) rotate(-.4deg);opacity:0;filter:blur(2px)}
+}
+@keyframes turn-out-back{
+  to{transform:translateX(-22%) rotate(-.6deg);opacity:0;filter:brightness(.92) blur(1px)}
+}
+@keyframes turn-in-back{
+  from{transform:translateX(16%) rotate(.4deg);opacity:0;filter:blur(2px)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  ::view-transition-old(root),::view-transition-new(root){animation:none}
+}

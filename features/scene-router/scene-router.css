@@ -1,0 +1,88 @@
+/* ============================================================
+   scene-router · 场景层、墨晕转场、返回目录
+   场景放在上下黑边之间；进出场时一团墨从入口处晕开 / 收回
+   ============================================================ */
+
+.sr-layer{
+  position:fixed;
+  left:0;right:0;
+  top:var(--lb-open);
+  bottom:var(--lb-open);
+  z-index:20;
+  display:none;
+}
+body.in-scene .sr-layer{display:block}
+
+/* 场景打开时，手卷让位 */
+body.in-scene .tilt{visibility:hidden}
+
+/* 墨：从入口处晕开。几团偏心的软边圆叠在一起，边缘不规则、不生硬；
+   不用 SVG 滤镜，整屏动画也不掉帧 */
+@property --r{syntax:'<length>';inherits:true;initial-value:0px}
+
+.sr-ink{
+  --r:0px;
+  position:fixed;
+  inset:0;
+  z-index:45;
+  pointer-events:none;
+  background:
+    radial-gradient(closest-side at var(--ox,50%) var(--oy,50%),#120d09,var(--desk) 70%);
+  -webkit-mask:
+    radial-gradient(circle at var(--ox,50%) var(--oy,50%),#000 calc(var(--r) * .72),transparent var(--r)),
+    radial-gradient(circle at calc(var(--ox,50%) + 6vmin) calc(var(--oy,50%) - 4vmin),#000 calc(var(--r) * .6),transparent calc(var(--r) * .9)),
+    radial-gradient(circle at calc(var(--ox,50%) - 5vmin) calc(var(--oy,50%) + 5vmin),#000 calc(var(--r) * .55),transparent calc(var(--r) * .86));
+  mask:
+    radial-gradient(circle at var(--ox,50%) var(--oy,50%),#000 calc(var(--r) * .72),transparent var(--r)),
+    radial-gradient(circle at calc(var(--ox,50%) + 6vmin) calc(var(--oy,50%) - 4vmin),#000 calc(var(--r) * .6),transparent calc(var(--r) * .9)),
+    radial-gradient(circle at calc(var(--ox,50%) - 5vmin) calc(var(--oy,50%) + 5vmin),#000 calc(var(--r) * .55),transparent calc(var(--r) * .86));
+}
+.sr-ink.is-spread{
+  --r:190vmax;
+  transition:--r 560ms cubic-bezier(.6,.05,.4,1);
+}
+.sr-ink.is-fade{
+  --r:190vmax;
+  opacity:0;
+  transition:opacity 420ms var(--ease);
+}
+.sr-ink.is-cover{
+  --r:190vmax;
+  opacity:0;
+  transition:opacity 260ms var(--ease);
+}
+.sr-ink.is-cover.is-on{opacity:1}
+.sr-ink.is-shrink{
+  --r:0px;
+  transition:--r 420ms cubic-bezier(.6,.05,.4,1);
+}
+
+/* 返回目录：放在上黑边左侧 */
+.sr-back{
+  position:fixed;
+  left:var(--edge);
+  top:max(10px,calc(var(--lb-closed) / 2 - 10px));
+  z-index:60;
+  display:none;
+  align-items:center;
+  gap:10px;
+  font-family:var(--mono);
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--chrome);
+  transition:color var(--t-fast) var(--ease);
+}
+.sr-back b{
+  font-family:var(--kai);
+  font-weight:400;
+  font-size:15px;
+  letter-spacing:0;
+  color:var(--chrome-hi);
+}
+.sr-back:hover{color:var(--zhu)}
+body.in-scene .sr-back{display:inline-flex}
+
+@media (prefers-reduced-motion:reduce){
+  .sr-ink{display:none}
+}

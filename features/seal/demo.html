@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>火漆 · 工坊</title>
+<script>try{var t=localStorage.getItem('scroll-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'night':'day')}catch(e){}</script>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../../features/stage/stage.css">
+<link rel="stylesheet" href="../../features/seal/seal.css">
+<link rel="stylesheet" href="../../lab/demo.css">
+
+</head>
+<body data-demo="火漆 · seal" data-actions="reseal,reload">
+<div class="rail"><main class="scene"><div style="position:relative;z-index:2"><sc-seal mark="卷" style="position:relative;left:auto;top:auto;transform:none;display:block"></sc-seal></div><p style="position:absolute;bottom:80px;left:0;right:0;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--chrome)">悬停 1.5 秒会裂开一道缝 · 点击揭开</p></main></div>
+<script type="module">
+  import '../../lab/demo-kit.js';
+  import '../../core/filters.js';
+  import '../../features/stage/stage.js';
+  import '../../features/seal/seal.js';
+
+</script>
+</body>
+</html>

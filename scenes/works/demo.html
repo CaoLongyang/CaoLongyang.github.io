@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-Hans" data-theme="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>画心 · 工坊</title>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../../features/stage/stage.css">
+<link rel="stylesheet" href="../../features/letterbox/letterbox.css">
+<link rel="stylesheet" href="../../features/lang-switch/lang-switch.css">
+<link rel="stylesheet" href="works.css">
+<link rel="stylesheet" href="../../lab/demo.css">
+<style>.demo-layer{position:fixed;left:0;right:0;top:var(--lb-open);bottom:var(--lb-open)}</style>
+</head>
+<body class="opened settled" data-demo="画心 · scenes/works" data-actions="reload">
+<div class="rail"><main class="scene"></main></div>
+<div class="demo-layer"></div>
+<sc-letterbox data-hint-en="drag the pages · ← →" data-hint-zh="拖动书页 · ← →"></sc-letterbox>
+<sc-lang-switch style="top:60px"></sc-lang-switch>
+<script type="module">
+  import '../../lab/demo-kit.js';
+  import '../../core/filters.js';
+  import '../../features/stage/stage.js';
+  import '../../features/letterbox/letterbox.js';
+  import { applyLang } from '../../features/lang-switch/lang-switch.js';
+  import { mount } from './works.js';
+  const sub = location.hash.split('/')[1] || '';
+  await mount(document.querySelector('.demo-layer'), { sub });
+  applyLang();
+</script>
+</body>
+</html>

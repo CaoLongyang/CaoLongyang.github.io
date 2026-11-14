@@ -1,0 +1,71 @@
+/* sections/fragments · 拾零：夹在卷里的小纸条 */
+
+#fragments{--span:1.5;--w:calc(var(--ph-open) * 2.5)}
+
+.fragments{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-template-rows:repeat(2,minmax(0,1fr));
+  gap:clamp(14px,3.4cqh,56px) clamp(16px,3.4cqh,56px);
+  align-items:center;
+  direction:rtl;
+}
+.fragments > *{direction:ltr}
+
+.slip{
+  --r:0deg;
+  position:relative;
+  padding:clamp(14px,3.2cqh,44px) clamp(18px,3cqh,42px);
+  background:linear-gradient(170deg,#fffcf2,#f4ead2);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 8px 16px -10px rgba(70,50,24,.5),0 1px 3px rgba(70,50,24,.18);
+  filter:url(#slipEdge);
+  transform:rotate(var(--r));
+  transition:transform var(--t-mid) var(--ease),box-shadow var(--t-mid) var(--ease);
+}
+.slip:hover{
+  transform:rotate(0deg) translateY(-4px);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 16px 24px -12px rgba(70,50,24,.55),0 1px 3px rgba(70,50,24,.18);
+}
+
+.slip time{
+  display:block;
+  margin-bottom:clamp(8px,1.2cqh,16px);
+  font-family:var(--mono);
+  font-size:clamp(9.5px,1.15cqh,14px);
+  letter-spacing:.16em;
+  color:var(--ink-3);
+}
+.slip p{
+  margin:0;
+  font-size:clamp(12.5px,2.2cqh,28px);
+  line-height:1.7;
+  color:var(--ink);
+}
+.slip.is-note p{font-family:var(--kai);font-size:clamp(13.5px,2.4cqh,30px)}
+
+/* 有的纸条盖了一枚小印 */
+.slip-stamp{
+  position:absolute;
+  right:12px;
+  bottom:10px;
+  width:clamp(20px,2.8cqh,36px);height:clamp(20px,2.8cqh,36px);
+  display:grid;place-items:center;
+  background:var(--zhu);
+  color:#f4e6cc;
+  font-size:clamp(11px,1.5cqh,19px);
+  line-height:1;
+  opacity:.82;
+  transform:rotate(4deg);
+  filter:url(#roughen);
+}
+
+@media (max-width:720px){
+  #fragments{--span:3}
+  .fragments{
+    grid-template-columns:repeat(2,calc(var(--pw) - 48px));
+    grid-template-rows:repeat(3,auto);
+    grid-auto-flow:column;
+    column-gap:28px;
+    align-content:center;
+  }
+}

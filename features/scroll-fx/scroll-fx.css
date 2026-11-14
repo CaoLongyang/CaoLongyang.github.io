@@ -1,0 +1,43 @@
+/* ============================================================
+   scroll-fx · 跟着滚动发生的动效
+   [data-float]  卡片 / 纸条从纸里浮出（--i 决定先后）
+   [data-draw]   SVG 里带 pathLength="1" 的线一笔画出
+   [data-count]  数字从 0 滚到目标值（JS）
+   触发条件：所在的 .panel 拿到 .is-in
+   ============================================================ */
+
+[data-float]{
+  opacity:0;
+  transform:translateY(22px) rotate(var(--r,0deg)) scale(.985);
+  filter:blur(3px);
+  transition:
+    opacity 700ms var(--ease) calc(var(--i,0) * 90ms + 120ms),
+    transform 900ms var(--ease) calc(var(--i,0) * 90ms + 120ms),
+    filter 900ms var(--ease) calc(var(--i,0) * 90ms + 120ms);
+}
+.is-in [data-float],
+[data-float].is-in{
+  opacity:1;
+  transform:rotate(var(--r,0deg));
+  filter:none;
+}
+/* 浮出完成后把延迟清掉，悬停才跟手 */
+.is-done [data-float]{transition-delay:0ms}
+
+[data-draw] path{
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+  transition:stroke-dashoffset 1400ms var(--ease-in-out) calc(var(--i,0) * 90ms + 300ms),stroke var(--t-fast) var(--ease);
+}
+[data-draw] path + path{transition-delay:calc(var(--i,0) * 90ms + 700ms),0ms}
+.is-in [data-draw] path,
+[data-draw].is-in path{stroke-dashoffset:0}
+
+@media (prefers-reduced-motion:reduce){
+  [data-float]{opacity:1;transform:rotate(var(--r,0deg));filter:none}
+  [data-draw] path{stroke-dashoffset:0}
+}
+
+/* 不在长卷里的（详情页）：跟着 ink-reveal 的 .is-inked 一起画 */
+.is-inked[data-draw] path,
+.is-inked [data-draw] path{stroke-dashoffset:0}

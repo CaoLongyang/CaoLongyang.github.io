@@ -1,0 +1,7 @@
+/* drag · 光标与拖动中的状态 */
+
+body.settled .view{cursor:grab;touch-action:pan-y}
+body.is-dragging,
+body.is-dragging .view,
+body.is-dragging .view *{cursor:grabbing!important;user-select:none}
+body.is-dragging a{pointer-events:none}

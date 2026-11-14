@@ -1,0 +1,71 @@
+<div class="about">
+  <!-- 淡墨远山：三层山脊，越近越深；路径由脚本按噪声一次生成 -->
+  <svg class="about-hills" viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="hillFade" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fff" stop-opacity="1"/>
+        <stop offset=".75" stop-color="#fff" stop-opacity=".35"/>
+        <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+      </linearGradient>
+      <mask id="hillMask"><rect width="1000" height="300" fill="url(#hillFade)"/></mask>
+    </defs>
+    <g mask="url(#hillMask)">
+      <path class="h1" d="M0 300 L0 170.2 L8 167.2 L17 163.4 L25 162.2 L33 157.1 L42 155.2 L50 150.2 L58 147.0 L67 145.4 L75 144.7 L83 140.4 L92 140.4 L100 142.8 L108 146.2 L117 147.9 L125 151.5 L133 159.1 L142 161.3 L150 170.9 L158 175.0 L167 180.6 L175 186.1 L183 191.7 L192 197.5 L200 197.7 L208 200.9 L217 201.6 L225 200.0 L233 199.3 L242 195.4 L250 193.1 L258 191.4 L267 191.0 L275 188.2 L283 186.4 L292 186.7 L300 186.0 L308 185.7 L317 188.4 L325 188.9 L333 188.0 L342 190.1 L350 190.2 L358 191.3 L367 189.7 L375 186.1 L383 186.3 L392 179.5 L400 176.8 L408 173.9 L417 167.1 L425 164.3 L433 158.7 L442 158.2 L450 156.4 L458 154.5 L467 155.6 L475 154.5 L483 158.1 L492 160.6 L500 164.2 L508 167.6 L517 173.1 L525 177.3 L533 178.6 L542 181.8 L550 180.9 L558 183.9 L567 183.1 L575 182.9 L583 179.7 L592 174.3 L600 171.0 L608 168.2 L617 161.7 L625 159.8 L633 155.3 L642 152.3 L650 149.9 L658 151.1 L667 147.4 L675 147.1 L683 147.1 L692 148.3 L700 144.1 L708 144.2 L717 142.5 L725 141.0 L733 137.2 L742 133.0 L750 125.7 L758 120.9 L767 115.1 L775 111.7 L783 106.9 L792 99.3 L800 96.0 L808 94.0 L817 93.2 L825 94.8 L833 97.3 L842 99.5 L850 103.1 L858 110.5 L867 116.8 L875 124.5 L883 133.2 L892 139.2 L900 145.2 L908 151.9 L917 157.8 L925 160.4 L933 168.4 L942 172.1 L950 176.3 L958 179.8 L967 182.2 L975 186.6 L983 190.3 L992 197.9 L1000 201.8 L1000 300 Z"/>
+      <path class="h2" d="M0 300 L0 206.9 L8 200.1 L17 196.6 L25 194.3 L33 195.5 L42 195.0 L50 201.1 L58 201.7 L67 200.7 L75 201.5 L83 201.1 L92 199.3 L100 195.6 L108 196.5 L117 194.8 L125 190.5 L133 190.1 L142 188.7 L150 190.5 L158 194.0 L167 196.0 L175 200.7 L183 198.3 L192 197.0 L200 199.6 L208 193.9 L217 187.4 L225 184.3 L233 177.0 L242 175.7 L250 175.7 L258 174.8 L267 175.7 L275 177.2 L283 182.8 L292 187.7 L300 196.9 L308 201.5 L317 207.7 L325 209.2 L333 211.4 L342 216.1 L350 218.4 L358 219.1 L367 220.8 L375 223.7 L383 227.0 L392 229.0 L400 235.5 L408 239.7 L417 242.3 L425 245.2 L433 247.5 L442 246.2 L450 245.0 L458 241.0 L467 231.7 L475 226.6 L483 219.3 L492 212.3 L500 203.7 L508 198.8 L517 196.2 L525 194.7 L533 194.2 L542 196.1 L550 197.1 L558 195.8 L567 192.1 L575 190.1 L583 187.4 L592 180.2 L600 179.7 L608 178.4 L617 176.6 L625 176.8 L633 177.3 L642 179.0 L650 186.0 L658 187.8 L667 193.7 L675 196.9 L683 194.7 L692 193.5 L700 193.3 L708 187.7 L717 179.6 L725 173.9 L733 169.1 L742 168.9 L750 166.0 L758 161.8 L767 165.8 L775 168.3 L783 169.0 L792 169.9 L800 173.0 L808 172.4 L817 172.6 L825 177.6 L833 176.1 L842 176.1 L850 179.6 L858 180.2 L867 187.3 L875 194.0 L883 199.7 L892 209.9 L900 220.9 L908 231.4 L917 243.2 L925 250.1 L933 257.7 L942 261.2 L950 268.1 L958 267.0 L967 268.3 L975 269.5 L983 271.9 L992 271.1 L1000 276.0 L1000 300 Z"/>
+      <path class="h3" d="M0 300 L0 284.1 L8 289.7 L17 293.9 L25 301.1 L33 296.9 L42 296.2 L50 294.4 L58 290.3 L67 287.1 L75 287.6 L83 287.8 L92 288.8 L100 282.9 L108 281.8 L117 274.3 L125 267.9 L133 264.8 L142 258.9 L150 257.6 L158 259.9 L167 264.0 L175 264.9 L183 268.8 L192 268.9 L200 267.3 L208 264.6 L217 258.2 L225 253.8 L233 249.6 L242 249.9 L250 247.0 L258 246.7 L267 244.7 L275 236.3 L283 231.9 L292 226.5 L300 218.2 L308 207.8 L317 204.3 L325 206.2 L333 207.2 L342 213.4 L350 218.4 L358 227.3 L367 231.9 L375 234.9 L383 231.9 L392 236.9 L400 239.3 L408 240.4 L417 250.4 L425 256.9 L433 257.4 L442 264.7 L450 261.4 L458 259.4 L467 258.1 L475 252.7 L483 245.4 L492 246.1 L500 248.3 L508 250.9 L517 254.5 L525 259.3 L533 264.4 L542 261.1 L550 263.8 L558 262.4 L567 259.7 L575 263.0 L583 267.6 L592 270.6 L600 271.1 L608 277.9 L617 275.2 L625 271.5 L633 258.8 L642 251.0 L650 240.9 L658 238.2 L667 230.4 L675 227.0 L683 227.7 L692 229.9 L700 228.2 L708 222.5 L717 218.9 L725 220.6 L733 216.9 L742 218.4 L750 218.2 L758 223.8 L767 234.7 L775 240.0 L783 243.0 L792 250.7 L800 248.8 L808 247.9 L817 241.1 L825 244.0 L833 239.3 L842 246.0 L850 247.0 L858 250.2 L867 254.7 L875 258.9 L883 255.5 L892 254.6 L900 257.4 L908 258.0 L917 262.1 L925 269.9 L933 278.6 L942 289.4 L950 298.8 L958 305.1 L967 311.2 L975 309.1 L983 309.3 L992 305.8 L1000 305.9 L1000 300 Z"/>
+    </g>
+  </svg>
+
+  <!-- 从右往左：竖排题名 → 小档案 → 自我介绍 -->
+  <div class="about-inner">
+    <div class="about-yinshou" aria-hidden="true">自序</div>
+
+    <ol class="about-facts">
+      <li data-ink>
+        <span class="f-label" data-en="Studying" data-zh="在读">Studying</span>
+        <b class="f-zh">马来亚大学</b>
+        <span class="f-en">Universiti Malaya</span>
+      </li>
+      <li data-ink>
+        <span class="f-label" data-en="Building" data-zh="在做">Building</span>
+        <b class="f-zh">智能体</b>
+        <span class="f-en">AI agents</span>
+      </li>
+      <li data-ink>
+        <span class="f-label" data-en="Learning" data-zh="在学">Learning</span>
+        <b class="f-zh">计算机网络</b>
+        <span class="f-en">Networking</span>
+      </li>
+      <li data-ink>
+        <span class="f-label" data-en="Into" data-zh="喜欢">Into</span>
+        <b class="f-zh">合作解谜</b>
+        <span class="f-en">Co-op puzzles</span>
+      </li>
+    </ol>
+
+    <div class="about-lead">
+      <p class="kicker" data-ink data-en="Preface" data-zh="自序">Preface</p>
+      <h1 class="about-title" data-ink
+          data-en="Hi, I'm Calvin."
+          data-zh="你好，我是 Calvin。">Hi, I'm Calvin.</h1>
+      <p class="about-sub" data-ink
+         data-en="I build things for the web and think a lot about games — especially cooperative puzzles that only work when people talk to each other. This scroll is where I keep what I make."
+         data-zh="我做网页，也常常琢磨游戏——尤其是那种只有互相说清楚才能解开的合作谜题。这卷纸，用来收我做过的东西。">I build things for the web and think a lot about games — especially cooperative puzzles that only work when people talk to each other. This scroll is where I keep what I make.</p>
+      <ul class="about-links" data-ink>
+        <li><a href="https://github.com/CaoLongyang" target="_blank" rel="noopener">GitHub ↗</a></li>
+        <li><a href="mailto:hello@example.com" data-en="Email" data-zh="写信">Email</a></li>
+        <li><a href="#toc" data-goto="toc" data-en="Contents →" data-zh="目录 →">Contents →</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="about-sign">
+    <span class="about-yin" aria-hidden="true">序</span>
+    <span class="about-meta">vol. i · mmxxvi</span>
+  </div>
+
+  <p class="about-hint" aria-hidden="true">
+    <span data-en="drag the paper" data-zh="拖动纸面">drag the paper</span>
+    <span class="about-hint-arrow">→</span>
+  </p>
+</div>

@@ -1,0 +1,28 @@
+/* ============================================================
+   ink-reveal · 墨迹渗开式显影
+   <p data-ink>…</p>  —— 先糊、后清，像墨刚落在纸上慢慢定住
+   触发：所在 .panel 拿到 .is-in，或元素本身拿到 .is-inked（详情页滚动到视野里）
+   ============================================================ */
+
+[data-ink]{
+  opacity:0;
+  filter:blur(6px);
+  transform:translateY(5px);
+  text-shadow:0 0 10px rgba(36,28,20,.35);
+  transition:
+    opacity 900ms var(--ease) calc(var(--i,0) * 85ms),
+    filter 1300ms var(--ease) calc(var(--i,0) * 85ms),
+    transform 1100ms var(--ease) calc(var(--i,0) * 85ms),
+    text-shadow 1600ms var(--ease) calc(var(--i,0) * 85ms);
+}
+.is-in [data-ink],
+[data-ink].is-inked{
+  opacity:1;
+  filter:none;
+  transform:none;
+  text-shadow:0 0 0 rgba(36,28,20,0);
+}
+
+@media (prefers-reduced-motion:reduce){
+  [data-ink]{opacity:1;filter:none;transform:none;text-shadow:none}
+}

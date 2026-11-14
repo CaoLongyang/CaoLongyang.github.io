@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工坊 · 手卷</title>
+<meta name="description" content="Every piece of the handscroll site, one by one.">
+<script>try{var t=localStorage.getItem('scroll-theme');document.documentElement.dataset.theme=t||(matchMedia('(prefers-color-scheme: dark)').matches?'night':'day')}catch(e){}</script>
+<script src="../features/page-turn/page-turn.js"></script>
+<link rel="stylesheet" href="../core/tokens.css">
+<link rel="stylesheet" href="../core/reset.css">
+<link rel="stylesheet" href="../features/stage/stage.css">
+<link rel="stylesheet" href="../features/paper/paper.css">
+<link rel="stylesheet" href="../features/theme-switch/theme-switch.css">
+<link rel="stylesheet" href="../features/ink-reveal/ink-reveal.css">
+<link rel="stylesheet" href="../features/page-turn/page-turn.css">
+<link rel="stylesheet" href="../pages/page.css">
+<link rel="stylesheet" href="lab.css">
+</head>
+<body class="opened settled detail">
+<main class="scene">
+  <article class="hang lab">
+    <div class="hang-rod hang-rod--top" aria-hidden="true"></div>
+    <div class="paper is-static hang-paper">
+      <div class="hang-body">
+        <a class="back" href="../index.html" data-turn="back"><span>←</span><span>回到手卷</span></a>
+        <p class="kicker" data-ink>Workshop · 工坊</p>
+        <h1 data-ink>这个网站的每个零件。</h1>
+        <p class="lede" data-ink>每个功能一个文件夹，能单独打开、单独看、单独改。点开任意一件，右下角会实时显示它发出和收到的事件。</p>
+<h2 class="lab-group" data-ink><span>叙事层</span><em>Narrative</em></h2>
+<div class="lab-grid">
+  <a class="lab-card" href="../features/stage/demo.html" data-ink>
+    <span class="lab-no">01</span>
+    <b>桌面</b>
+    <code>features/stage/</code>
+    <span class="lab-desc">亚麻、窗光、夜灯</span>
+  </a>
+  <a class="lab-card" href="../features/letterbox/demo.html" data-ink>
+    <span class="lab-no">00</span>
+    <b>遮幅</b>
+    <code>features/letterbox/</code>
+    <span class="lab-desc">上下黑边，展开时合拢</span>
+  </a>
+  <a class="lab-card" href="../features/roller/demo.html" data-ink>
+    <span class="lab-no">02</span>
+    <b>锦缎手卷</b>
+    <code>features/roller/</code>
+    <span class="lab-desc">包首、题签、轴头、天杆</span>
+  </a>
+  <a class="lab-card" href="../features/paper/demo.html" data-ink>
+    <span class="lab-no">03</span>
+    <b>纸面</b>
+    <code>features/paper/</code>
+    <span class="lab-desc">纸纹、水墨、焦边</span>
+  </a>
+  <a class="lab-card" href="../features/twine/demo.html" data-ink>
+    <span class="lab-no">04</span>
+    <b>丝绳</b>
+    <code>features/twine/</code>
+    <span class="lab-desc">绕卷两道，挂着火漆</span>
+  </a>
+  <a class="lab-card" href="../features/seal/demo.html" data-ink>
+    <span class="lab-no">05</span>
+    <b>火漆</b>
+    <code>features/seal/</code>
+    <span class="lab-desc">点一下，蜡抬起落下</span>
+  </a>
+  <a class="lab-card" href="../features/unroll/demo.html" data-ink>
+    <span class="lab-no">06</span>
+    <b>开场编排</b>
+    <code>features/unroll/</code>
+    <span class="lab-desc">把上面几件串成两秒</span>
+  </a>
+  <a class="lab-card" href="../features/intro-controls/demo.html" data-ink>
+    <span class="lab-no">07</span>
+    <b>跳过与重看</b>
+    <code>features/intro-controls/</code>
+    <span class="lab-desc">给老访客的出口</span>
+  </a>
+</div>
+<h2 class="lab-group" data-ink><span>滚动层</span><em>Scroll</em></h2>
+<div class="lab-grid">
+  <a class="lab-card" href="../features/scroll-fx/demo.html" data-ink>
+    <span class="lab-no">08</span>
+    <b>滚动动效</b>
+    <code>features/scroll-fx/</code>
+    <span class="lab-desc">竖滚横移、浮出、画线、数字</span>
+  </a>
+  <a class="lab-card" href="../features/ink-reveal/demo.html" data-ink>
+    <span class="lab-no">09</span>
+    <b>墨迹显影</b>
+    <code>features/ink-reveal/</code>
+    <span class="lab-desc">先糊后清</span>
+  </a>
+  <a class="lab-card" href="../features/bookmarks/demo.html" data-ink>
+    <span class="lab-no">10</span>
+    <b>布带书签</b>
+    <code>features/bookmarks/</code>
+    <span class="lab-desc">垂下来的导航</span>
+  </a>
+  <a class="lab-card" href="../features/page-turn/demo.html" data-ink>
+    <span class="lab-no">11</span>
+    <b>翻纸转场</b>
+    <code>features/page-turn/</code>
+    <span class="lab-desc">页与页之间</span>
+  </a>
+</div>
+<h2 class="lab-group" data-ink><span>微交互</span><em>Details</em></h2>
+<div class="lab-grid">
+  <a class="lab-card" href="../features/cursor/demo.html" data-ink>
+    <span class="lab-no">12</span>
+    <b>墨点光标</b>
+    <code>features/cursor/</code>
+    <span class="lab-desc">纸上的指针</span>
+  </a>
+  <a class="lab-card" href="../features/lang-switch/demo.html" data-ink>
+    <span class="lab-no">13</span>
+    <b>中英切换</b>
+    <code>features/lang-switch/</code>
+    <span class="lab-desc">EN / 中</span>
+  </a>
+  <a class="lab-card" href="../features/theme-switch/demo.html" data-ink>
+    <span class="lab-no">14</span>
+    <b>昼夜</b>
+    <code>features/theme-switch/</code>
+    <span class="lab-desc">昼 / 夜</span>
+  </a>
+</div>
+<h2 class="lab-group" data-ink><span>场景</span><em>Scenes</em></h2>
+<div class="lab-grid">
+  <a class="lab-card" href="../scenes/works/demo.html" data-ink>
+    <span class="lab-no">S1</span>
+    <b>画心 · 作品册页</b>
+    <code>scenes/works/</code>
+    <span class="lab-desc">一开一件作品，用手翻页</span>
+  </a>
+</div>
+<h2 class="lab-group" data-ink><span>彩蛋</span><em>Easter eggs</em></h2>
+<div class="lab-grid">
+  <a class="lab-card" href="../features/eggs/demo.html" data-ink>
+    <span class="lab-no">15</span>
+    <b>彩蛋</b>
+    <code>features/eggs/</code>
+    <span class="lab-desc">墨点与「烧」</span>
+  </a>
+</div>
+
+        <div class="hang-end">
+          <a class="back" href="../index.html" data-turn="back"><span>←</span><span>回到手卷</span></a>
+          <span class="yin" aria-hidden="true">坊</span>
+        </div>
+      </div>
+    </div>
+    <div class="hang-rod hang-rod--bottom" aria-hidden="true"></div>
+  </article>
+</main>
+<sc-theme-switch style="right:26px"></sc-theme-switch>
+<script type="module">
+  import '../core/filters.js';
+  import '../features/stage/stage.js';
+  import '../features/paper/paper.js';
+  import '../features/theme-switch/theme-switch.js';
+  import '../features/ink-reveal/ink-reveal.js';
+</script>
+</body>
+</html>

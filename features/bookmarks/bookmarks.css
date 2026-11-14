@@ -1,0 +1,120 @@
+/* ============================================================
+   bookmarks · 从顶上垂下来的布带书签
+   <sc-bookmarks></sc-bookmarks>  自动读取页面里的 [data-bookmark] 段落
+   ============================================================ */
+
+sc-bookmarks{
+  position:fixed;
+  top:0;
+  /* 避开引首的竖排题名 */
+  right:calc(var(--edge) + var(--axis-w) + var(--head-w) + var(--ph-open) * .24);
+  z-index:20;
+  display:flex;
+  gap:10px;
+  pointer-events:none;
+}
+
+.bm{
+  --len:96px;
+  position:relative;
+  width:28px;
+  height:var(--len);
+  padding-top:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  pointer-events:auto;
+  color:var(--ink);
+  background:
+    repeating-linear-gradient(90deg,rgba(255,255,255,.14) 0 1px,transparent 1px 3px),
+    linear-gradient(90deg,#c6b994,#ddd1b1 40%,#d2c5a2 70%,#b9ab86);
+  /* 燕尾 */
+  clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 10px),0 100%);
+  box-shadow:0 2px 6px rgba(50,34,14,.25);
+  transform-origin:50% 0;
+  transform:translateY(calc(-100% - 4px));
+  transition:
+    transform 900ms var(--ease-back) calc(var(--n) * 90ms),
+    background var(--t-mid) var(--ease),
+    color var(--t-mid) var(--ease),
+    height var(--t-mid) var(--ease);
+}
+body.settled .bm{transform:translateY(0)}
+.bm:nth-child(1){--len:118px}
+.bm:nth-child(2){--len:100px}
+.bm:nth-child(3){--len:126px}
+.bm:nth-child(4){--len:92px}
+
+.bm-zh{
+  writing-mode:vertical-rl;
+  text-orientation:upright;
+  font-family:var(--kai);
+  font-size:14px;
+  letter-spacing:.12em;
+  line-height:1;
+}
+.bm-en{
+  position:absolute;
+  top:calc(var(--len) + 8px);
+  left:50%;
+  transform:translateX(-50%);
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--chrome);
+  white-space:nowrap;
+  opacity:0;
+  transition:opacity var(--t-fast) var(--ease);
+  pointer-events:none;
+}
+
+/* 悬停：被风带了一下 */
+.bm:hover{height:calc(var(--len) + 12px);animation:bm-swing 1.4s var(--ease) 1}
+.bm:hover .bm-en,.bm:focus-visible .bm-en{opacity:1}
+@keyframes bm-swing{
+  0%{rotate:0deg}
+  25%{rotate:4deg}
+  55%{rotate:-2.4deg}
+  80%{rotate:1deg}
+  100%{rotate:0deg}
+}
+
+/* 当前段：换成朱色的绢 */
+.bm[aria-current="true"]{
+  color:#f8ecd6;
+  height:calc(var(--len) + 18px);
+  background:
+    repeating-linear-gradient(90deg,rgba(255,255,255,.1) 0 1px,transparent 1px 3px),
+    linear-gradient(90deg,#8a2c12,var(--zhu) 45%,#b4472a 70%,#86290f);
+}
+
+@media (max-width:720px){
+  sc-bookmarks{
+    top:auto;bottom:0;left:0;right:0;
+    justify-content:center;
+    gap:0;
+    padding:0 12px calc(8px + env(safe-area-inset-bottom));
+    background:linear-gradient(transparent,rgba(0,0,0,.06));
+  }
+  .bm{
+    --len:auto;
+    width:auto;
+    height:38px;
+    flex:1;
+    max-width:96px;
+    padding:0;
+    justify-content:center;
+    flex-direction:row;
+    clip-path:none;
+    box-shadow:none;
+    background:transparent;
+    color:var(--chrome);
+    transform:translateY(120%);
+  }
+  .bm-zh{writing-mode:horizontal-tb;font-size:14px;letter-spacing:.2em}
+  .bm-en{display:none}
+  .bm:hover{height:38px;animation:none}
+  .bm[aria-current="true"]{height:38px;background:none;color:var(--zhu);box-shadow:inset 0 -2px 0 var(--zhu)}
+}

@@ -1,0 +1,47 @@
+/* ============================================================
+   twine · 丝绳：绕卷两道，在右侧打结，火漆挂在绳头上
+   <sc-twine></sc-twine>  放在 .tilt 里（卷在屏幕正中）
+   ============================================================ */
+
+sc-twine{
+  --cord-y:calc(var(--ph) * .2);   /* 绳子绕在卷中间偏下的位置 */
+  position:absolute;
+  left:50%;
+  top:calc(50% + var(--cord-y));
+  z-index:9;
+  width:calc(var(--rd) + 6px);
+  height:calc(var(--rd) * .42);
+  transform:translate(-50%,-50%);
+  pointer-events:none;
+  transition:
+    opacity 420ms var(--ease) 120ms,
+    transform 640ms var(--ease) 0ms;
+}
+body.opened sc-twine{
+  opacity:0;
+  transform:translate(-50%,-50%) translateY(90px) rotate(6deg) scale(.92);
+}
+/* 收卷：等纸卷回去了，绳子再落回来 */
+body.closing sc-twine{transition-delay:1350ms,1350ms}
+
+.twine-svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 2px 2px rgba(20,12,4,.55))}
+.twine-svg .c-body{fill:none;stroke:#9c7638;stroke-width:6.6px;stroke-linecap:round}
+.twine-svg .c-dark{fill:none;stroke:#5a4018;stroke-width:6.6px;stroke-dasharray:2 3.4;stroke-linecap:butt;opacity:.55}
+.twine-svg .c-hi{fill:none;stroke:#e9cf92;stroke-width:1.3px;stroke-linecap:round;opacity:.7}
+
+/* 绳结 */
+.twine-knot{
+  position:absolute;
+  right:-9px;
+  top:50%;
+  width:20px;height:18px;
+  transform:translateY(-50%) rotate(-14deg);
+  border-radius:48% 52% 50% 50% / 50% 46% 54% 50%;
+  background:radial-gradient(60% 55% at 36% 30%,#f2d9a0,#b8904c 48%,#7a5826 86%);
+  box-shadow:0 2px 4px rgba(20,12,4,.5),inset 0 0 0 1px rgba(70,48,18,.35);
+}
+
+@media (max-width:720px){
+  .twine-svg .c-body,.twine-svg .c-dark{stroke-width:3.6px}
+  .twine-knot{width:14px;height:13px;right:-6px}
+}

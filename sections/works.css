@@ -1,0 +1,115 @@
+/* sections/works · 画心：作品像册页一样排开 */
+
+#works{--span:1.72;--w:calc(var(--ph-open) * 2.9)}
+
+.works{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:0;
+  height:100%;
+  /* 从右往左排：第一页紧挨着标题 */
+  direction:rtl;
+  /* 乌丝栏：页与页之间一道细竖线 */
+  border-right:1px solid var(--rule);
+}
+.works > *{direction:ltr}
+
+.leaf{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  padding:clamp(18px,4cqh,60px) clamp(18px,3.2cqh,52px);
+  border-left:1px solid var(--rule);
+  text-decoration:none;
+  color:inherit;
+  transition:background-color var(--t-mid) var(--ease);
+}
+.leaf::before{
+  /* 悬停时纸面被灯照亮一小块 */
+  content:"";
+  position:absolute;inset:0;
+  background:radial-gradient(80% 60% at 50% 30%,rgba(255,252,240,.7),transparent 70%);
+  opacity:0;
+  transition:opacity var(--t-mid) var(--ease);
+  pointer-events:none;
+}
+.leaf:hover::before{opacity:1}
+
+.leaf-no{
+  font-family:var(--mono);
+  font-size:clamp(10px,1.25cqh,15px);
+  letter-spacing:.2em;
+  color:var(--ink-3);
+}
+
+.leaf-glyph{
+  width:100%;
+  max-width:clamp(110px,24cqh,300px);
+  height:auto;
+  margin:clamp(14px,5cqh,70px) 0 clamp(14px,4.5cqh,60px);
+  overflow:visible;
+}
+.leaf-glyph path{
+  fill:none;
+  stroke:var(--ink);
+  stroke-width:1.3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  opacity:.78;
+}
+.leaf:hover .leaf-glyph path{stroke:var(--zhu)}
+
+.leaf-title{
+  position:relative;
+  margin:0 0 10px;
+  font-family:var(--serif);
+  font-weight:400;
+  font-size:clamp(18px,3.6cqh,46px);
+  line-height:1.2;
+}
+
+.leaf-desc{
+  position:relative;
+  margin:0;
+  font-size:clamp(12px,1.95cqh,23px);
+  line-height:1.75;
+  color:var(--ink-2);
+}
+
+.leaf-foot{
+  position:relative;
+  margin:auto 0 0;
+  padding-top:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-family:var(--mono);
+  font-size:clamp(10px,1.2cqh,14px);
+  letter-spacing:.14em;
+  color:var(--ink-3);
+}
+
+.leaf-open,
+.leaf-soon{
+  position:relative;
+  margin-top:clamp(14px,2cqh,28px);
+  font-family:var(--mono);
+  font-size:clamp(10px,1.2cqh,14px);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.leaf-open{
+  color:var(--zhu);
+  opacity:.55;
+  transform:translateX(0);
+  transition:opacity var(--t-fast) var(--ease),transform var(--t-mid) var(--ease);
+}
+a.leaf:hover .leaf-open{opacity:1;transform:translateX(6px)}
+.leaf-soon{color:var(--ink-3);opacity:.6}
+
+@media (max-width:720px){
+  #works{--span:3}
+  .works{grid-template-columns:repeat(2,calc(var(--pw) - 48px));grid-template-rows:1fr 1fr;grid-auto-flow:column;column-gap:28px;border-right:0}
+  .leaf{border-left:0;border-bottom:1px solid var(--rule);padding:16px 4px}
+  .leaf-glyph{max-width:110px;margin:10px 0}
+}

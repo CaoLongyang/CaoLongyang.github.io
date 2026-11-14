@@ -1,0 +1,20 @@
+[
+  { "date": "2026-11-02", "kind": "line", "stamp": "卷",
+    "en": "Paper remembers how long it was rolled.",
+    "zh": "纸记得自己被卷了多久。" },
+  { "date": "2026-10-18", "kind": "note",
+    "en": "Reading Bringhurst again. Chapter two is about rhythm; so is everything else.",
+    "zh": "又在读 Bringhurst。第二章讲节奏——其实别的章也是。" },
+  { "date": "2026-09-30", "kind": "line",
+    "en": "A good puzzle makes two people finish each other's sentences.",
+    "zh": "好的谜题，会让两个人替对方把话说完。" },
+  { "date": "2026-08-12", "kind": "line",
+    "en": "Ping is just knocking on a door and timing the echo.",
+    "zh": "ping 不过是敲门，然后掐表等回声。" },
+  { "date": "2026-06-03", "kind": "note", "stamp": "记",
+    "en": "Shipped something small. Fixed it again at 2 a.m.",
+    "zh": "上线了一个小东西。凌晨两点又修了一遍。" },
+  { "date": "2026-03-21", "kind": "line",
+    "en": "Wax cracks along the line you were already hesitating on.",
+    "zh": "火漆总是沿着你犹豫过的那条线裂开。" }
+]

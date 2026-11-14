@@ -1,0 +1,136 @@
+/* ============================================================
+   core/tokens.css — 全站唯一的数值来源
+   颜色、字体、尺寸、时长、缓动。功能里不写死数值，只取这里的变量。
+   ============================================================ */
+
+:root{
+  color-scheme:light;
+
+  /* 桌面 —— 亚麻布 */
+  --desk-hi:#efeade;
+  --desk:#d7cdba;
+  --desk-mid:#cec5b3;
+  --desk-lo:#b3a894;
+
+  /* 纸 */
+  --paper-hi:#fffdf4;
+  --paper:#faf3e1;
+  --paper-lo:#eee2c6;
+  --paper-dim:1;          /* 夜间把纸压暗一点 */
+
+  /* 墨 */
+  --ink:#241c14;
+  --ink-2:#5b4d3a;
+  --ink-3:#8a7c66;
+  --rule:rgba(36,28,20,.14);
+  --rule-strong:rgba(36,28,20,.32);
+
+  /* 朱：全站唯一的彩色 */
+  --zhu:#a83a1c;
+  --zhu-soft:rgba(168,58,28,.2);
+
+  /* 木 */
+  --wood-hi:#b98f5c;
+  --wood:#7d5a34;
+  --wood-lo:#2e1b0b;
+
+  /* 隔水（段与段之间的绢） */
+  --silk:#d9d6c8;
+  --silk-lo:#c7c2b0;
+
+  /* 桌面上的界面字（语言、跳过等） */
+  --chrome:rgba(36,28,20,.42);
+  --chrome-hi:rgba(36,28,20,.9);
+  --chrome-line:rgba(36,28,20,.16);
+
+  /* 字体：西文在前、中文在后，逐字回退 */
+  --serif:Georgia,"Songti SC","Source Han Serif SC","Noto Serif CJK SC","SimSun",serif;
+  --kai:"LXGW WenKai","Kaiti SC","KaiTi","STKaiti","Songti SC","SimSun",serif;
+  --mono:ui-monospace,"Cascadia Code","SF Mono",Consolas,monospace;
+
+  /* 字号阶梯 1.25 */
+  --fs-xs:10px;
+  --fs-s:12px;
+  --fs-m:15px;
+  --fs-l:19px;
+  --fs-xl:clamp(22px,2.4vw,30px);
+  --fs-xxl:clamp(26px,3.05vw,41px);
+
+  /* 间距 */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+
+  /* 缓动：纸有惯性，卷轴有回弹 */
+  --ease:cubic-bezier(.16,1,.3,1);
+  --ease-in-out:cubic-bezier(.65,0,.35,1);
+  --ease-back:cubic-bezier(.34,1.56,.64,1);
+
+  /* 时长 */
+  --t-fast:240ms;
+  --t-mid:520ms;
+  --t-slow:900ms;
+  --t-unroll:1300ms;
+
+  /* 锦缎（包首）：深靛底 + 暗金龟背纹 */
+  --brocade-base:#1f2a3d;
+  --brocade-img:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='30' viewBox='0 0 26 30'%3E%3Cpath d='M13 2 L24 8.5 V21.5 L13 28 L2 21.5 V8.5 Z' fill='none' stroke='%23c2a466' stroke-width='1.1' opacity='.5'/%3E%3Cpath d='M13 9 L18 15 L13 21 L8 15 Z' fill='%23c2a466' opacity='.42'/%3E%3C/svg%3E");
+
+  /* ---------- 手卷尺寸 ---------- */
+  /* 纸：停在遮幅中间，不铺满 */
+  /* 左右铺满（只留卷和天杆的位置），上下由遮幅黑边收住 */
+  --pw:calc(100vw - var(--roll-open) - var(--axis-w) - 32px);
+  --ph:min(56vh,820px);            /* 纸高 = 卷的长度（卷着和展开一样长） */
+  --ph-open:var(--ph);             /* 兼容旧变量名 */
+  --rd:clamp(72px,6.2vw,104px);    /* 卷着时的直径 */
+  --roll-open:40px;                /* 展开后左边那卷剩下的纸的直径 */
+  --axis-w:14px;                   /* 右边天杆的宽 */
+  --head-w:calc(var(--ph) * .085); /* 包首锦缎的宽 */
+
+  /* 遮幅：上下黑边 */
+  --lb-color:#060504;
+  --lb-closed:5vh;
+  --desk-gap:3vh;                  /* 纸与黑边之间露出的一点桌面（给轴头留位置） */
+  --lb-open:max(48px,calc((100vh - var(--ph)) / 2 - var(--desk-gap)));
+  /* 整卷展开后离屏幕左右的距离：界面按钮也对齐到这里 */
+  --edge:calc((100vw - var(--pw) - var(--roll-open) - var(--axis-w)) / 2);
+}
+
+/* ---------- 夜间：桌上点一盏灯 ---------- */
+:root[data-theme="night"]{
+  color-scheme:dark;
+  /* 深夜书房，一盏台灯：暗部一律偏暖，不用纯黑、不用冷色 */
+  --desk-hi:#4a3b2c;
+  --desk:#2a221a;
+  --desk-mid:#221c16;
+  --desk-lo:#1b1612;
+  /* 旧纸色：暗环境里不刺眼 */
+  --paper-hi:#e2d5b8;
+  --paper:#d8c9a8;
+  --paper-lo:#c9b78f;
+  --paper-dim:1;
+  --ink:#1d1610;
+  --ink-2:#3f3326;
+  --ink-3:#5a4a36;
+  --rule:rgba(29,22,16,.18);
+  --rule-strong:rgba(29,22,16,.36);
+  --zhu:#9e3a20;
+  --zhu-soft:rgba(158,58,32,.24);
+  --silk:#b9b29e;
+  --silk-lo:#a39b85;
+  --chrome:rgba(205,191,159,.6);
+  --chrome-hi:rgba(232,220,194,.95);
+  --chrome-line:rgba(205,191,159,.22);
+}
+
+@media (max-width:720px){
+  /* 手机端这一轮只保证能看 */
+  :root{
+    --pw:calc(100vw - 40px - var(--roll-open) - var(--axis-w));
+    --ph:calc(100svh - 124px);
+    --rd:60px;
+    --roll-open:20px;
+    --axis-w:10px;
+    --lb-closed:24px;
+    --desk-gap:12px;
+    --lb-open:50px;
+  }
+}
