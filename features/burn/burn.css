@@ -1,0 +1,9 @@
+/* burn · 火焰画布：盖在场景上，在黑边下面 */
+.burn-canvas{
+  position:fixed;
+  inset:0;
+  width:100vw;
+  height:100vh;
+  z-index:46;
+  pointer-events:none;
+}

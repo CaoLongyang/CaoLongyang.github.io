@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-Hans" data-theme="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>对比 · 新的火与纸 · 工坊</title>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../demo.css">
+<link rel="stylesheet" href="compare.css">
+</head>
+<body data-demo="对比 · 火与纸" data-depth="../../" data-actions="reload">
+<main class="cmp">
+  <h1>新的火 · 有重量的纸</h1>
+  <p>这一页只用来挑选，不会改动网站。上面的纸点「点燃」：火从中间烧开，带火苗、火星、烟和热浪。下面三本书的纸重量不同：按住左页往右拖、拖到一半松手，或者点「翻页」；鼠标靠近书的左边缘，纸的外沿会被轻轻掀起。</p>
+
+  <h2>火 <em>FIRE · WEBGL</em></h2>
+  <div class="acts top"><button data-play="both">两个一起点燃</button><button data-reset="both">全部复原</button><span>网址后面加 ?slow=4 可以慢放</span></div>
+  <div class="row two">
+    <article class="card">
+      <header><b>现在</b><span>网站上正在用的</span></header>
+      <div class="stagebox big"><div class="sheet" data-burn="v1"><small>WORKS · 01</small><h3>InboxPilot</h3><p>An AI email-to-action agent. It reads a real Gmail inbox, pulls out tasks and deadlines, and drafts a reply — but only after you approve. It never sends anything on its own.</p><p style="margin-top:10px">FastAPI backend, Streamlit front end, SQLite for state.</p></div></div>
+      <p class="desc">一圈橙色火焰沿洞口烧开，约 1.7 秒。</p>
+      <div class="acts"><button data-play="v1">点燃</button><button data-reset="v1">复原</button></div>
+    </article>
+    <article class="card">
+      <header><b>A + B</b><span class="rec">新 · 待你挑</span></header>
+      <div class="stagebox big"><div class="sheet" data-burn="v2"><small>WORKS · 01</small><h3>InboxPilot</h3><p>An AI email-to-action agent. It reads a real Gmail inbox, pulls out tasks and deadlines, and drafts a reply — but only after you approve. It never sends anything on its own.</p><p style="margin-top:10px">FastAPI backend, Streamlit front end, SQLite for state.</p></div></div>
+      <p class="desc">先在中心烤出焦点 → 焦黄、褐、炭黑一层层推开，火线是一条细亮的余烬 → 一簇簇小火舌往上蹿，火光照亮纸和桌面 → 炭边碎成灰片，边缘还红着，翻着往上飘。约 2.5 秒。</p>
+      <div class="acts"><button data-play="v2">点燃</button><button data-reset="v2">复原</button></div>
+    </article>
+  </div>
+
+  <h2>纸 <em>PAPER · PHYSICS</em></h2>
+  <div class="row">
+    <article class="card">
+      <header><b>宣纸</b><span class="rec">推荐 · 很轻、很软、会飘</span></header>
+      <div class="bk-host" data-paper="xuan"></div>
+      <div class="acts"><button data-flip="xuan">翻页</button><button data-unflip="xuan">复原</button></div>
+    </article>
+    <article class="card">
+      <header><b>书页</b><span>轻</span></header>
+      <div class="bk-host" data-paper="page"></div>
+      <div class="acts"><button data-flip="page">翻页</button><button data-unflip="page">复原</button></div>
+    </article>
+    <article class="card">
+      <header><b>卡纸</b><span>挺括</span></header>
+      <div class="bk-host" data-paper="card"></div>
+      <div class="acts"><button data-flip="card">翻页</button><button data-unflip="card">复原</button></div>
+    </article>
+  </div>
+
+  <p class="pick">看完告诉我：火还要怎么调（更快 / 更慢、火苗更高 / 更矮、火星更多 / 更少），纸选宣纸、书页还是卡纸。</p>
+</main>
+
+<script type="module">
+  import '../demo-kit.js';
+  import { burnGL as burn1 } from './fire-gl.js';
+  import { burnGL as burn2 } from './fire-gl2.js';
+  import { makePaperBookGL } from './paper-gl.js';
+
+  const slow = +(new URLSearchParams(location.search).get('slow') || 1);   // ?slow=4 慢放，方便看细节
+  const reset = (el) => { el.style.clipPath = ''; el.style.visibility = ''; el.style.filter = ''; };
+  const fire = {
+    v1: (el) => burn1(el, { duration: 1700 * slow, tail: 650 * slow }),
+    v2: (el) => burn2(el, { duration: 2500 * slow, tail: 1100 * slow }),
+  };
+  const ids = (v) => v === 'both' ? ['v1', 'v2'] : [v];
+  document.addEventListener('click', (e) => {
+    const p = e.target.closest('[data-play]'), r = e.target.closest('[data-reset]');
+    if (p) for (const v of ids(p.dataset.play)) { const el = document.querySelector(`[data-burn="${v}"]`); reset(el); fire[v](el); }
+    if (r) for (const v of ids(r.dataset.reset)) reset(document.querySelector(`[data-burn="${v}"]`));
+  });
+
+  const left = `<div class="pg"><small>HOW IT WAS MADE</small><h4>做法</h4><p>FastAPI backend, Streamlit front end, SQLite for state. Gmail OAuth with only two scopes.</p></div>`;
+  const right = `<div class="pg"><small>02 / 04</small><h4>UM Auto Attendance</h4><p>Syncs your timetable and clicks "Present" at the right time.</p></div>`;
+  const front = `<div class="pg"><small>HOW IT WAS MADE</small><h4>InboxPilot · 做法</h4><p>NVIDIA Nemotron models read each email; every claim is marked explicit, inference or unknown, and quotes are checked against the original.</p></div>`;
+  const back = `<div class="pg"><span class="big">画心</span><small>01 / 04</small><h4>InboxPilot</h4><p>Reads a real Gmail inbox and drafts a reply — only after you approve.</p></div>`;
+  const books = {};
+  for (const h of document.querySelectorAll('[data-paper]')) {
+    books[h.dataset.paper] = await makePaperBookGL(h, { preset: h.dataset.paper, front, back, left, right });
+  }
+  document.addEventListener('click', (e) => {
+    const f = e.target.closest('[data-flip]'), u = e.target.closest('[data-unflip]');
+    if (f) books[f.dataset.flip].play();
+    if (u) books[u.dataset.unflip].reset();
+  });
+</script>
+</body>
+</html>

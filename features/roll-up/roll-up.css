@@ -1,0 +1,23 @@
+/* roll-up · 卷起自序的那根锦缎轴（放在 .paper 里，盖在长卷上面） */
+
+.ru-roll{
+  position:absolute;
+  top:-3px;bottom:-3px;left:0;
+  z-index:6;
+  pointer-events:none;
+  opacity:0;
+  border-radius:50% / 10px;
+  overflow:hidden;
+  will-change:transform,width;
+  /* 往左投一道影子到目录上 */
+  box-shadow:-14px 0 22px -6px rgba(0,0,0,.5),6px 0 10px -4px rgba(0,0,0,.35);
+}
+.ru-roll i{
+  position:absolute;inset:0;
+  background-color:var(--brocade-base);
+  background-image:
+    linear-gradient(90deg,rgba(0,0,0,.55),rgba(255,255,255,.14) 36%,rgba(255,255,255,.03) 55%,rgba(0,0,0,.62)),
+    var(--brocade-img);
+  background-size:auto,100% auto;
+  background-position:0 0,0 var(--spin,0px);
+}

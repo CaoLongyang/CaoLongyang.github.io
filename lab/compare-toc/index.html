@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-Hans" data-theme="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>对比 · 自序到目录的转场 · 工坊</title>
+<link rel="stylesheet" href="../../core/tokens.css">
+<link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../demo.css">
+<link rel="stylesheet" href="toc-cmp.css">
+</head>
+<body data-demo="对比 · 自序 → 目录" data-depth="../../" data-actions="reload">
+<main class="tc">
+  <h1>自序 → 目录：三种转场</h1>
+  <p>每一格都是一段小卷轴，内容是 自序 → 目录 → 卷终。和网站一样：<b>按住纸往右拖</b>（或滚轮往下、键盘 ←）往后看，反过来就退回。松手会吸附到最近的一页。拖到一半停住，可以看清每种做法的中间状态。</p>
+
+  <section class="tc-case" data-mode="A">
+    <header><b>A · 目录笺</b><span>目录是一张单独的笺纸，从下黑边里被抽上来，盖在自序上</span></header>
+    <div class="tc-stage" tabindex="0"></div>
+    <footer><button data-go="-1">← 上一页</button><button data-go="1">下一页 →</button><span class="tc-p"></span></footer>
+  </section>
+
+  <section class="tc-case" data-mode="B">
+    <header><b>B · 叠压</b><span>自序停住，目录那一截纸从左边铺过来盖住它</span></header>
+    <div class="tc-stage" tabindex="0"></div>
+    <footer><button data-go="-1">← 上一页</button><button data-go="1">下一页 →</button><span class="tc-p"></span></footer>
+  </section>
+
+  <section class="tc-case" data-mode="C">
+    <header><b>C · 收卷</b><span>自序被一根卷轴从右往左卷起来，露出后面的目录</span></header>
+    <div class="tc-stage" tabindex="0"></div>
+    <footer><button data-go="-1">← 上一页</button><button data-go="1">下一页 →</button><span class="tc-p"></span></footer>
+  </section>
+
+  <p class="pick">试完告诉我选哪个，或者哪两个的组合（比如 A 的笺纸 + 随时能从「目」字布带抽出来）。</p>
+</main>
+
+<template id="tpl-about">
+  <div class="pn pn-about">
+    <div class="ab-hills"></div>
+    <h2 class="v">自序</h2>
+    <div class="ab-facts">
+      <div><small>STUDYING</small><b class="v">马来亚大学</b></div>
+      <div><small>BUILDING</small><b class="v">智能体</b></div>
+      <div><small>LEARNING</small><b class="v">计算机网络</b></div>
+      <div><small>INTO</small><b class="v">合作解谜</b></div>
+    </div>
+    <div class="ab-lead">
+      <small>PREFACE</small>
+      <h3>Hi, I'm Calvin.</h3>
+      <p>I build things for the web and think a lot about games — especially cooperative puzzles that only work when people talk to each other.</p>
+      <nav><span>GITHUB ↗</span><span>EMAIL</span><span>CONTENTS →</span></nav>
+    </div>
+  </div>
+</template>
+<template id="tpl-toc">
+  <div class="pn pn-toc">
+    <div class="tc-head"><h2 class="v">目录</h2><small>CONTENTS</small><p>Four chapters. The works are ready; the rest are still drying.</p></div>
+    <div class="tc-col on"><small>CH. III</small><b class="v">画心</b><i>Works</i><div class="book"><span>画心</span></div><em>4 WORKS · OPEN</em></div>
+    <div class="tc-col"><small>CH. IV</small><b class="v">题跋</b><i>Notes</i><em>still drying</em></div>
+    <div class="tc-col"><small>CH. V</small><b class="v">拾零</b><i>Fragments</i><em>still drying</em></div>
+    <div class="tc-col"><small>CH. VI</small><b class="v">拖尾</b><i>Colophon</i><em>still drying</em></div>
+  </div>
+</template>
+<template id="tpl-end">
+  <div class="pn pn-end"><b class="v">卷终</b><p>The end of the scroll — for now.</p><span class="seal">终</span></div>
+</template>
+
+<script type="module">
+  import '../demo-kit.js';
+  import { mountCase } from './toc-cmp.js';
+  for (const c of document.querySelectorAll('.tc-case')) mountCase(c);
+</script>
+</body>
+</html>

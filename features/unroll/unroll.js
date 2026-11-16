@@ -82,4 +82,16 @@ document.addEventListener('click', (e) => {
 
 /* 老访客、带锚点进来的、要求减少动效的：直接是展开好的样子；其他人自动播放 */
 if (get(KEYS.OPENED) === '1' || reduced() || location.hash.length > 1) open(true);
-else setTimeout(() => open(false), IDLE);
+else whenQuiet().then(() => setTimeout(() => open(false), IDLE));
+
+/* 等页面忙完再开场：段落载入、字体、图片解码都结束，主线程空下来以后才开始动。
+   否则动画的前几帧正好撞上这些活，就会一卡一卡的。最多等 1.5 秒。 */
+function whenQuiet() {
+  const content = new Promise((r) => { on(EV.CONTENT_READY, r); });
+  const loaded = document.readyState === 'complete' ? Promise.resolve() : new Promise((r) => addEventListener('load', r, { once: true }));
+  const fonts = document.fonts?.ready || Promise.resolve();
+  const idle = () => new Promise((r) => (window.requestIdleCallback ? requestIdleCallback(r, { timeout: 400 }) : setTimeout(r, 50)));
+  const frames = () => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const ready = Promise.all([content, loaded, fonts]).then(idle).then(frames);
+  return Promise.race([ready, wait(1500)]);
+}

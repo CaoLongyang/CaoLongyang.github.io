@@ -250,3 +250,75 @@
 @media (prefers-reduced-motion:reduce){
   .wk-face [data-draw] path{stroke-dashoffset:0}
 }
+
+/* ---------- 翻页时：光泽扫过 + 下面那页上的影子 ---------- */
+.wk-face .wk-page::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(100deg,transparent 30%,rgba(255,248,230,.32) 46%,transparent 62%);
+  background-size:260% 100%;
+  background-position:calc(var(--sheen,0) * 100%) 0;
+  opacity:calc(var(--sh,0) * 1.6);
+}
+.wk-cast{
+  position:absolute;
+  top:0;
+  width:50%;
+  height:100%;
+  pointer-events:none;
+  z-index:150;
+  opacity:0;
+}
+.wk-cast[data-side="left"]{left:0;background:linear-gradient(270deg,rgba(10,6,2,.55),rgba(10,6,2,0) 70%)}
+.wk-cast[data-side="right"]{left:50%;background:linear-gradient(90deg,rgba(10,6,2,.55),rgba(10,6,2,0) 70%)}
+
+/* ---------- 翻页提示：纸角卷起 ---------- */
+.wk-curl{
+  --c:calc(var(--h) * .16 * var(--k, 0));
+  position:absolute;
+  bottom:0;
+  width:var(--c);
+  height:var(--c);
+  z-index:180;
+  pointer-events:none;
+  transition:width 160ms var(--ease),height 160ms var(--ease);
+}
+.wk-curl--left{left:0;--k:var(--curlL,0)}
+.wk-curl--right{right:0;--k:var(--curlR,0)}
+.wk-curl i{position:absolute;inset:0}
+/* 卷起来以后露出的下面一页（暗） */
+.wk-curl .under{background:linear-gradient(135deg,rgba(12,8,4,.7),rgba(12,8,4,.35))}
+/* 折过来的那一角：纸的背面，带一道折痕高光 */
+.wk-curl .flap{
+  background:linear-gradient(225deg,#efe4c8 0%,#d9c9a6 55%,#bba887 100%);
+  filter:drop-shadow(2px -2px 3px rgba(0,0,0,.35));
+}
+.wk-curl--left .under{clip-path:polygon(0 0,0 100%,100% 100%)}
+.wk-curl--left .flap{clip-path:polygon(0 0,100% 100%,100% 0)}
+.wk-curl--right .under{clip-path:polygon(100% 0,100% 100%,0 100%)}
+.wk-curl--right .flap{clip-path:polygon(100% 0,0 100%,0 0);background:linear-gradient(135deg,#efe4c8 0%,#d9c9a6 55%,#bba887 100%)}
+
+/* 书外的提示 */
+.wk-out{
+  position:absolute;
+  left:50%;
+  bottom:clamp(4px,1.2cqh,14px);
+  transform:translateX(-50%);
+  margin:0;
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--chrome);
+  opacity:.55;
+  pointer-events:none;
+  white-space:nowrap;
+}
+.wk-stage{cursor:pointer}
+.wk-stage .wk-album{cursor:grab}
+
+/* ---------- 有重量的书页：翻动时盖在册页上的 WebGL 画布 ---------- */
+.wk-sheet{position:absolute;pointer-events:none;z-index:190;visibility:hidden}
+.has-sheet .wk-curl{display:none}

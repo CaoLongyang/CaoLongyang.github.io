@@ -35,7 +35,6 @@ body.closing .roller:last-child{transition-delay:1000ms}
   z-index:2;
   display:flex;
   align-items:center;
-  filter:drop-shadow(10px 18px 16px rgba(52,34,14,.38));
   transition:right 600ms var(--ease-in-out);
 }
 /* 展开后去掉整卷的 drop-shadow：它会在每次横移时把整张大纸重新算一遍 */
@@ -54,6 +53,7 @@ body.settled .view{box-shadow:0 22px 40px -24px rgba(52,34,14,.55),0 4px 12px -6
   width:var(--rd);
   height:var(--ph);
   border-radius:50% / calc(var(--rd) * .13);
+  box-shadow:10px 16px 18px -6px rgba(52,34,14,.42);
   /* 底下是一卷纸：锦缎褪掉之后露出来的就是它 */
   background:linear-gradient(90deg,
     #a3937a 0%, #c9baa0 8%, #e8dcc2 20%, #f8f0dd 34%, #fffbef 44%,
@@ -283,6 +283,7 @@ body.opened .roller:last-child{
   height:var(--ph);
   width:0;
   overflow:hidden;
+  contain:layout paint style;
   transition:
     width var(--t-unroll) var(--ease-in-out),
     height var(--t-slow) var(--ease);

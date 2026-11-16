@@ -89,16 +89,23 @@ async function exit() {
   busy = true;
   const { name, api, from } = active;
   const fast = reduced();
-  const [ox, oy] = originOf(from);
-  ink.style.setProperty('--ox', ox);
-  ink.style.setProperty('--oy', oy);
 
-  // 墨先盖住整个画面
+  // 一把火把整个场景烧掉：从中间烧开，烧完回到目录
+  // burn 是可选的：没有这个文件夹就退回到墨盖住的做法
   if (!fast) {
-    ink.className = 'sr-ink is-cover';
-    void ink.offsetWidth;
-    ink.classList.add('is-on');
-    await wait(260);
+    try {
+      const { burnAway } = await import(new URL('features/burn/burn.js', base).href);
+      const target = api?.burnTarget?.() || layer.firstElementChild;
+      await burnAway(target, { pad: api?.burnPad?.() || 0, duration: 1700 });
+    } catch {
+      const [ox, oy] = originOf(from);
+      ink.style.setProperty('--ox', ox);
+      ink.style.setProperty('--oy', oy);
+      ink.className = 'sr-ink is-cover';
+      void ink.offsetWidth;
+      ink.classList.add('is-on');
+      await wait(260);
+    }
   }
   await api?.unmount?.();
   layer.innerHTML = '';
@@ -106,12 +113,11 @@ async function exit() {
   active = null;
   history.replaceState(null, '', '#toc');
 
-  // 墨收回到入口处
+  // 目录从灰烬后面重新浮出来
+  ink.className = 'sr-ink';
   if (!fast) {
-    void ink.offsetWidth;
-    ink.className = 'sr-ink is-shrink';
-    await wait(400);
-    ink.className = 'sr-ink';
+    body.classList.add('sr-return');
+    setTimeout(() => body.classList.remove('sr-return'), 600);
   }
   busy = false;
   emit(EV.SCENE_CLOSED, { name });

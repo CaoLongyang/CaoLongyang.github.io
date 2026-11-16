@@ -1,0 +1,89 @@
+/* ============================================================
+   toc-slip · 「目」字布带 + 目录笺
+   笺压在卷上（z 40），从下黑边（z 50）后面抽上来，所以看起来是从黑边里出来的
+   ============================================================ */
+
+/* ---------- 布带：从上黑边正中垂下来 ---------- */
+.ts-tab{
+  position:fixed;
+  top:0;left:50%;
+  z-index:55;
+  width:30px;
+  height:calc(var(--lb-open) * .62);
+  transform:translate(-50%,-100%);
+  display:flex;align-items:flex-end;justify-content:center;
+  padding-bottom:14px;
+  background:
+    repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 3px),
+    linear-gradient(90deg,#7a2a16,#9e3a20 45%,#7a2a16);
+  clip-path:polygon(0 0,100% 0,100% 100%,50% calc(100% - 9px),0 100%);   /* 燕尾 */
+  box-shadow:0 2px 6px rgba(0,0,0,.4);
+  color:#f3e4cf;
+  font-family:var(--kai);
+  font-size:15px;
+  line-height:1;
+  cursor:pointer;
+  transition:transform 600ms var(--ease),height 260ms var(--ease);
+}
+.ts-tab b{font-weight:400}
+body.settled .ts-tab{transform:translate(-50%,0);transition-delay:300ms,0ms}
+body.in-scene .ts-tab{transform:translate(-50%,-100%);transition-delay:0ms}
+.ts-tab:hover,.ts-tab:focus-visible,body.slip-open .ts-tab{height:calc(var(--lb-open) * .62 + 10px)}
+.ts-tab:focus-visible{outline:1px solid rgba(240,163,127,.8);outline-offset:3px}
+
+/* ---------- 罩：卷稍微变暗，点它关掉 ---------- */
+.ts-shade{
+  position:fixed;inset:0;z-index:39;
+  background:rgba(8,5,3,.5);
+  opacity:0;pointer-events:none;
+  transition:opacity 420ms var(--ease);
+}
+body.slip-open .ts-shade{opacity:1;pointer-events:auto}
+
+/* ---------- 笺 ---------- */
+.ts-slip{
+  position:fixed;
+  left:50%;top:50%;
+  z-index:40;
+  width:min(calc(var(--pw) * .9), 1500px);
+  height:calc(var(--ph) * .9);
+  transform:translate(-50%, calc(50vh + 10%)) rotate(-2deg);
+  transform-origin:50% 100%;
+  transition:transform 640ms cubic-bezier(.2,.75,.25,1), visibility 0s linear 640ms;
+  visibility:hidden;
+  filter:drop-shadow(0 26px 30px rgba(0,0,0,.6));
+}
+body.slip-open .ts-slip{
+  transform:translate(-50%,-50%) rotate(0deg);
+  visibility:visible;
+  transition:transform 640ms cubic-bezier(.2,.75,.25,1), visibility 0s;
+}
+.ts-paper{
+  position:absolute;inset:0;
+  container-type:size;
+  container-name:panel;
+  background:linear-gradient(178deg,var(--paper-hi),var(--paper) 45%,var(--paper-lo));
+  border-top:3px solid var(--zhu);
+  overflow:hidden;
+}
+/* 竖格线，像笺纸 */
+.ts-paper::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(60,40,20,.03) 0 1px,transparent 1px 24px);
+}
+/* 顶上的「目」字签 */
+.ts-paper::after{
+  content:"目";
+  position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+  padding:3px 10px 5px;
+  background:var(--zhu);color:#f3e4cf;
+  font-family:var(--kai);font-size:14px;line-height:1;
+  border-radius:0 0 2px 2px;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ts-slip,body.slip-open .ts-slip{transition:none}
+}
+@media (max-width:720px){
+  .ts-slip{width:calc(100vw - 24px);height:calc(100vh - var(--lb-open) * 2)}
+}

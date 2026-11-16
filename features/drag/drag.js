@@ -140,7 +140,7 @@ if (track && surface) {
   addEventListener('resize', measure, { passive: true });
 
   // 展开动画走完才能推
-  new MutationObserver(() => { enabled = body.classList.contains('settled') && !body.classList.contains('in-scene'); })
+  new MutationObserver(() => { enabled = body.classList.contains('settled') && !body.classList.contains('in-scene') && !body.classList.contains('slip-open'); })
     .observe(body, { attributes: true, attributeFilter: ['class'] });
   on(EV.CLOSED, () => { stop(); set(0); });
 

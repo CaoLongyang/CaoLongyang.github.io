@@ -8,6 +8,7 @@
 
 import { EV, emit, on } from '../../core/events.js';
 import { reduced, clamp, easeOut } from '../../core/motion.js';
+import { mapX } from '../../core/track-map.js';
 
 const track = document.querySelector('[data-track]');
 const spinEl = document.querySelector('[data-scroll]');
@@ -27,11 +28,12 @@ if (track) {
   /* 某段在纸里的左边 = (纸宽 - 长卷宽) + 段的 offsetLeft + 已送出的距离 */
   const paint = () => {
     raf = 0;
-    track.style.transform = `translate3d(${x.toFixed(2)}px,0,0)`;
-    spinEl?.style.setProperty('--spin', (x * 0.9).toFixed(1));
+    const tx = mapX(x);                     // 画面位置（收卷时和 x 不一样）
+    track.style.transform = `translate3d(${tx.toFixed(2)}px,0,0)`;
+    spinEl?.style.setProperty('--spin', (tx * 0.9).toFixed(1));
     let best = null, bestOverlap = -1;
     for (const p of panels) {
-      const left = viewW - trackW + p.left + x;
+      const left = viewW - trackW + p.left + tx;
       const overlap = Math.max(0, Math.min(left + p.w, viewW) - Math.max(left, 0));
       const ratio = overlap / Math.min(p.w, viewW || 1);
       p.el.style.setProperty('--p', clamp(ratio * 1.4, 0, 1).toFixed(3));

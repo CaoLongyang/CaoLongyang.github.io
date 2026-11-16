@@ -12,6 +12,9 @@
    翻页方向：左页绕书脊往右翻 = 下一开（和手卷「往右拖是往前」一致）
    ============================================================ */
 
+import { EV, emit, on } from '../../core/events.js';
+import { createSheet } from './sheet.js';
+
 const base = new URL('../../', import.meta.url);
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -93,7 +96,11 @@ export async function mount(layer, { sub = '', fromRect = null, instant = false 
         <div class="wk-board"></div>
         <div class="wk-base">${grain}<div class="wk-page" style="justify-content:flex-end;align-items:flex-start"><span class="wk-seal" aria-hidden="true">卷</span></div></div>
         ${leavesHtml.map((l, i) => `<div class="wk-leaf" data-i="${i}">${l.front}${l.back}</div>`).join('')}
+        <div class="wk-cast" aria-hidden="true"></div>
+        <span class="wk-curl wk-curl--left" aria-hidden="true"><i class="under"></i><i class="flap"></i></span>
+        <span class="wk-curl wk-curl--right" aria-hidden="true"><i class="under"></i><i class="flap"></i></span>
       </div>
+      <p class="wk-out" aria-hidden="true" data-en="click anywhere outside the album to go back" data-zh="点书外任意处，返回目录">click anywhere outside the album to go back</p>
     </div>`;
 
   const album = layer.querySelector('.wk-album');
@@ -102,11 +109,18 @@ export async function mount(layer, { sub = '', fromRect = null, instant = false 
   let anim = 0;
 
   /* ---------- 画一叶 ---------- */
+  const cast = album.querySelector('.wk-cast');
   const setAngle = (j, deg) => {
     const el = leaves[j];
     el.style.setProperty('--a', `${deg}deg`);
     const k = Math.sin((deg * Math.PI) / 180);
     el.style.setProperty('--sh', (k * 0.55).toFixed(3));
+    // 光泽带随角度扫过纸面；翻起来的纸在下面那页投下影子
+    el.style.setProperty('--sheen', (deg / 180).toFixed(3));
+    if (deg > 0.5 && deg < 179.5) {
+      cast.style.opacity = (k * 0.55).toFixed(3);
+      cast.dataset.side = deg < 90 ? 'left' : 'right';
+    } else cast.style.opacity = '0';
   };
   const restack = (moving = -1) => {
     leaves.forEach((el, j) => {
@@ -153,12 +167,126 @@ export async function mount(layer, { sub = '', fromRect = null, instant = false 
     target = clamp(target, 1, L);
     const many = Math.abs(target - s) > 1;
     while (s !== target) await turn(Math.sign(target - s), many ? 160 : 620);
+    prefetch?.();
   };
 
-  /* ---------- 拖 ---------- */
+  /* ============================================================
+     有重量的书页（WebGL）。不支持时退回下面的 CSS 翻页
+     ============================================================ */
+  const sheet = reduced() ? { ok: false } : createSheet(album);
+  if (sheet.ok) album.classList.add('has-sheet');
+  const offLang = on(EV.LANG, () => sheet.ok && sheet.clear());
+
+  const sideOf = (j) => (j < s ? 1 : -1);                 // 这一叶现在躺在哪边
+  const spineX = () => { const r = album.getBoundingClientRect(); return r.left + r.width / 2; };
+  // 指针的横向位置 → 手在弧上的位置；翻到一半时手离书脊近一点，纸有松量，中间就塌成弧
+  const handAt = (x, k = .5) => {
+    const r = album.getBoundingClientRect();
+    const p = clamp((x - spineX()) / (r.width / 2), -1, 1);
+    const th = Math.acos(-p), rad = sheet.L * (.97 - .14 * Math.sin(th));
+    return { u: -Math.cos(th) * rad, v: Math.sin(th) * rad, k };
+  };
+  const prefetch = () => {
+    if (!sheet.ok) return;
+    if (s < L) sheet.prepare(leaves[s]);
+    if (s > 1) sheet.prepare(leaves[s - 1]);
+  };
+
+  let session = null;     // 正在被物理接管的那一叶：{ j, side, mode: 'hover' | 'drag' | 'auto' }
+  const begin = async (j, mode) => {
+    const side = sideOf(j);
+    session = { j, side, mode };
+    turning = true;
+    restack(j);
+    let end;
+    try {
+      end = await sheet.start(leaves[j], side, () => { leaves[j].style.visibility = 'hidden'; });
+    } catch (err) {
+      // 这个浏览器不让把页面快照交给 WebGL（比如 Safari）：以后都用 CSS 翻页
+      console.warn('[works] 书页物理不可用，改用 CSS 翻页', err);
+      sheet.ok = false; album.classList.remove('has-sheet');
+      leaves[j].style.visibility = ''; session = null; turning = false; restack();
+      if (mode === 'auto') turn(side < 0 ? 1 : -1);
+      return;
+    }
+    // 落定：换回网页
+    if (end !== side) s += side < 0 ? 1 : -1;
+    setAngle(j, end > 0 ? 180 : 0);
+    leaves[j].style.visibility = '';
+    session = null;
+    turning = false;
+    restack(); show(); prefetch();
+  };
+
+  /* 自动翻（点击、键盘）：一只看不见的手把外沿提起来、送过去，然后松手 */
+  const autoTurn = (dir) => {
+    if (dir > 0 && s >= L) return;
+    if (dir < 0 && s <= 1) return;
+    const j = dir > 0 ? s : s - 1;
+    const side = sideOf(j);
+    if (session && session.j === j) session.mode = 'auto';   // 悬停时已经掀起来了，直接接着送过去
+    else if (!session) begin(j, 'auto');
+    else return;
+    const from = side < 0 ? 0 : Math.PI, to = side < 0 ? Math.PI * .8 : Math.PI * .2;
+    const t0 = performance.now(), dur = 460;
+    const tick = (t) => {
+      if (session?.mode !== 'auto') return;
+      const k = clamp((t - t0) / dur, 0, 1), e = 1 - Math.pow(1 - k, 2), th = from + (to - from) * e;
+      const rad = sheet.L * (.97 - .14 * Math.sin(th));
+      sheet.hand({ u: -Math.cos(th) * rad, v: Math.sin(th) * rad, k: .3 });
+      if (k < 1) requestAnimationFrame(tick); else sheet.release();
+    };
+    requestAnimationFrame(tick);
+  };
+
+  /* ---------- CSS 翻页（后备，以及目次里一下翻好几页） ---------- */
+  const ZONE = 0.16;
+  const setCurl = (side, v) => album.style.setProperty(side === 'left' ? '--curlL' : '--curlR', v.toFixed(3));
+
+  /* ---------- 指针 ---------- */
   let drag = null;
+  album.addEventListener('pointermove', (e) => {
+    const r = album.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    if (drag) {
+      const dx = e.clientX - drag.x0;
+      if (!drag.moved && Math.abs(dx) > 4) {
+        drag.moved = true;
+        album.classList.add('is-grabbing');
+        if (sheet.ok) {
+          if (session?.j === drag.j) session.mode = 'drag';      // 悬停掀起的那一叶，直接接着拖
+          else if (!session) begin(drag.j, 'drag');
+        } else restack(drag.j);
+      }
+      if (!drag.moved) return;
+      if (sheet.ok) { sheet.hand(handAt(e.clientX)); return; }
+      const deg = drag.onLeft ? clamp((dx / drag.w) * 180, 0, 180) : 180 - clamp((-dx / drag.w) * 180, 0, 180);
+      setAngle(drag.j, deg);
+      drag.deg = deg;
+      drag.last.push([performance.now(), e.clientX]);
+      if (drag.last.length > 5) drag.last.shift();
+      return;
+    }
+    // 悬停在外沿：纸被轻轻掀起一点
+    const nearL = s < L && x < ZONE, nearR = s > 1 && x > 1 - ZONE;
+    if (!sheet.ok) { setCurl('left', nearL ? 1 - x / ZONE : 0); setCurl('right', nearR ? 1 - (1 - x) / ZONE : 0); return; }
+    if (nearL || nearR) {
+      const j = nearL ? s : s - 1, side = sideOf(j);
+      if (!session && !turning) begin(j, 'hover');
+      if (session?.mode === 'hover' && session.j === j) {
+        const prox = nearL ? 1 - x / ZONE : 1 - (1 - x) / ZONE, th = .3 * prox;
+        sheet.hand({ u: side * Math.cos(th) * sheet.L * .985, v: Math.sin(th) * sheet.L * .985, k: .12 });
+      }
+    } else if (session?.mode === 'hover') sheet.release();
+  });
+  album.addEventListener('pointerleave', () => {
+    setCurl('left', 0); setCurl('right', 0);
+    if (session?.mode === 'hover') sheet.release();
+  });
+
   album.addEventListener('pointerdown', (e) => {
-    if (turning || e.button !== 0 || e.target.closest('a,button')) return;
+    if (e.button !== 0 || e.target.closest('a,button')) return;
+    if (turning && !(session?.mode === 'hover')) return;
     const r = album.getBoundingClientRect();
     const onLeft = e.clientX < r.left + r.width / 2;
     const j = onLeft ? s : s - 1;
@@ -166,35 +294,32 @@ export async function mount(layer, { sub = '', fromRect = null, instant = false 
     drag = { j, onLeft, x0: e.clientX, w: r.width / 2, moved: false, last: [[performance.now(), e.clientX]] };
     album.setPointerCapture(e.pointerId);
   });
-  album.addEventListener('pointermove', (e) => {
-    if (!drag) return;
-    const dx = e.clientX - drag.x0;
-    if (!drag.moved && Math.abs(dx) > 4) { drag.moved = true; album.classList.add('is-grabbing'); restack(drag.j); }
-    if (!drag.moved) return;
-    const deg = drag.onLeft ? clamp((dx / drag.w) * 180, 0, 180) : 180 - clamp((-dx / drag.w) * 180, 0, 180);
-    setAngle(drag.j, deg);
-    drag.deg = deg;
-    drag.last.push([performance.now(), e.clientX]);
-    if (drag.last.length > 5) drag.last.shift();
-  });
   const release = async (e) => {
     if (!drag) return;
     const d = drag; drag = null;
     album.classList.remove('is-grabbing');
     if (!d.moved) {
       // 没拖，只点了一下：点左页往后翻，点右页往前翻
-      if (!e.target.closest?.('a,button')) turn(d.onLeft ? 1 : -1);
+      if (e.target.closest?.('a,button')) return;
+      if (sheet.ok) autoTurn(d.onLeft ? 1 : -1);
+      else turn(d.onLeft ? 1 : -1);
       return;
     }
+    if (sheet.ok) { sheet.release(); return; }                // 交给重力
     const [[t1, x1]] = d.last, [t2, x2] = d.last[d.last.length - 1];
     const v = t2 > t1 ? (x2 - x1) / (t2 - t1) : 0;
     const done = d.onLeft ? d.deg > 90 || v > 0.6 : d.deg < 90 || v < -0.6;
-    const ms = 360;
-    if (done) await turn(d.onLeft ? 1 : -1, ms, d.deg);
-    else { await tween(d.j, d.deg, d.onLeft ? 0 : 180, ms); restack(); }
+    if (done) await turn(d.onLeft ? 1 : -1, 360, d.deg);
+    else { await tween(d.j, d.deg, d.onLeft ? 0 : 180, 360); restack(); }
   };
   album.addEventListener('pointerup', release);
   album.addEventListener('pointercancel', release);
+
+  /* ---------- 点书外任意处：返回目录（烧掉） ---------- */
+  const stage = layer.querySelector('.wk-stage');
+  stage.addEventListener('click', (e) => {
+    if (!album.contains(e.target)) emit(EV.SCENE_EXIT);
+  });
 
   /* ---------- 目次、键盘 ---------- */
   album.addEventListener('click', (e) => {
@@ -204,7 +329,7 @@ export async function mount(layer, { sub = '', fromRect = null, instant = false 
   const onKey = (e) => {
     if (turning) return;
     const map = { ArrowLeft: 1, PageDown: 1, ArrowRight: -1, PageUp: -1 };
-    if (map[e.key]) { e.preventDefault(); turn(map[e.key]); }
+    if (map[e.key]) { e.preventDefault(); sheet.ok ? autoTurn(map[e.key]) : turn(map[e.key]); }
     if (e.key === 'Home') { e.preventDefault(); go(1); }
     if (e.key === 'End') { e.preventDefault(); go(L); }
   };
@@ -218,6 +343,7 @@ export async function mount(layer, { sub = '', fromRect = null, instant = false 
     s = start;
     album.classList.add('is-open');
     layout();
+    setTimeout(prefetch, 50);
   } else {
     s = 0;
     layout();
@@ -236,12 +362,15 @@ export async function mount(layer, { sub = '', fromRect = null, instant = false 
     setTimeout(async () => {
       album.classList.add('is-open');
       await turn(1, 560);
-      if (start > 1) go(start);
+      if (start > 1) await go(start);
+      prefetch();
     }, fromRect ? 360 : 120);
   }
 
   return {
+    burnTarget: () => album,
+    burnPad: () => album.getBoundingClientRect().width * 0.03,
     go: (id) => { const i = works.findIndex((w) => w.id === id); if (i >= 0) go(i + 2); },
-    unmount() { removeEventListener('keydown', onKey); cancelAnimationFrame(anim); },
+    unmount() { removeEventListener('keydown', onKey); cancelAnimationFrame(anim); offLang(); },
   };
 }

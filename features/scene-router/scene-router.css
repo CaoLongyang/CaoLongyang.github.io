@@ -57,6 +57,10 @@ body.in-scene .tilt{visibility:hidden}
   transition:--r 420ms cubic-bezier(.6,.05,.4,1);
 }
 
+/* 烧完回到目录：手卷从暗处浮出来 */
+body.sr-return .tilt{animation:sr-return 520ms var(--ease) both}
+@keyframes sr-return{from{opacity:0;filter:brightness(.55)}}
+
 /* 返回目录：放在上黑边左侧 */
 .sr-back{
   position:fixed;
