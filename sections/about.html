@@ -45,16 +45,18 @@
 
     <div class="about-lead">
       <p class="kicker" data-ink data-en="Preface" data-zh="自序">Preface</p>
-      <h1 class="about-title" data-ink
-          data-en="Hi, I'm Calvin."
-          data-zh="你好，我是 Calvin。">Hi, I'm Calvin.</h1>
+      <h1 class="about-title" aria-label="Hi, I'm Calvin."
+          data-en-label="Hi, I'm Calvin." data-zh-label="你好，我是 Calvin。">
+        <span class="t-pre" aria-hidden="true" data-en="Hi, I'm" data-zh="你好，我是">Hi, I'm</span>
+        <span class="sig" aria-hidden="true"></span>
+      </h1>
       <p class="about-sub" data-ink
          data-en="I build things for the web and think a lot about games — especially cooperative puzzles that only work when people talk to each other. This scroll is where I keep what I make."
          data-zh="我做网页，也常常琢磨游戏——尤其是那种只有互相说清楚才能解开的合作谜题。这卷纸，用来收我做过的东西。">I build things for the web and think a lot about games — especially cooperative puzzles that only work when people talk to each other. This scroll is where I keep what I make.</p>
       <ul class="about-links" data-ink>
         <li><a href="https://github.com/CaoLongyang" target="_blank" rel="noopener">GitHub ↗</a></li>
         <li><a href="mailto:hello@example.com" data-en="Email" data-zh="写信">Email</a></li>
-        <li><a href="#toc" data-goto="toc" data-en="Contents →" data-zh="目录 →">Contents →</a></li>
+        <li><a href="#toc" data-goto="toc" data-en="← Contents" data-zh="← 目录">← Contents</a></li>
       </ul>
     </div>
   </div>
@@ -65,7 +67,7 @@
   </div>
 
   <p class="about-hint" aria-hidden="true">
-    <span data-en="drag the paper" data-zh="拖动纸面">drag the paper</span>
+    <span data-en="drag right to read on" data-zh="向右拖，往下读">drag right to read on</span>
     <span class="about-hint-arrow">→</span>
   </p>
 </div>

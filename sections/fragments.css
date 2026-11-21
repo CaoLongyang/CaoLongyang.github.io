@@ -30,7 +30,7 @@
 .slip time{
   display:block;
   margin-bottom:clamp(8px,1.2cqh,16px);
-  font-family:var(--mono);
+  font-family:var(--label);font-weight:600;
   font-size:clamp(9.5px,1.15cqh,14px);
   letter-spacing:.16em;
   color:var(--ink-3);

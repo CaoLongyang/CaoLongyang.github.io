@@ -2,40 +2,43 @@
   <header class="toc-head">
     <h2 class="toc-mark" data-ink aria-label="Contents">目录</h2>
     <p class="kicker" data-ink data-en="Contents" data-zh="目录">Contents</p>
-    <p class="toc-lede" data-ink data-en="Four chapters. The works are ready; the rest are still drying." data-zh="四章。作品已经装订好，其余的墨还没干。">Four chapters. The works are ready; the rest are still drying.</p>
+    <p class="toc-lede" data-ink data-en="Four chapters. Hover one and a seal comes up — press it to go in." data-zh="四章。停在一章上，会浮出一方印；按下去就进去了。">Four chapters. Hover one and a seal comes up — press it to go in.</p>
   </header>
 
+  <!-- 每一栏是一章：data-chapter = 场景名；data-ready = 已经做好、可以进入
+       印和印痕由 features/toc-stamp 补上；没有它时点章名直接进入 -->
   <ol class="toc-cols">
-    <li class="toc-col" data-ink>
+    <li class="toc-col" data-ink data-chapter="works" data-ready>
       <span class="toc-no" data-en="Ch. III" data-zh="卷三">Ch. III</span>
-      <b class="toc-name">画心</b>
+      <span class="toc-namewrap"><b class="toc-name">画心</b></span>
       <span class="toc-en">Works</span>
-      <!-- 合着的册页：点开进入「画心」场景 -->
-      <button class="toc-album" type="button" data-scene="works" data-en-label="Open the works album" data-zh-label="翻开作品册页" aria-label="Open the works album">
-        <span class="toc-album-cover"><span class="toc-album-slip">画心</span></span>
-      </button>
-      <span class="toc-open" data-en="4 works · open" data-zh="4 件 · 翻开">4 works · open</span>
+      <p class="toc-blurb" data-en="Things I've built. One work per spread — turn the leaf to see how it was made." data-zh="我做过的东西。一开一件，翻过来看是怎么做的。">Things I've built. One work per spread — turn the leaf to see how it was made.</p>
+      <span class="toc-count" data-en="4 works" data-zh="四件">4 works</span>
+      <button class="toc-hit" type="button" data-en-label="Open Works" data-zh-label="进入画心" aria-label="Open Works"></button>
     </li>
-    <li class="toc-col" data-ink>
+    <li class="toc-col" data-ink data-chapter="notes">
       <span class="toc-no" data-en="Ch. IV" data-zh="卷四">Ch. IV</span>
-      <b class="toc-name">题跋</b>
+      <span class="toc-namewrap"><b class="toc-name">题跋</b></span>
       <span class="toc-en">Notes</span>
-      <span class="toc-soon" data-en="still drying" data-zh="墨未干">still drying</span>
-      <span class="toc-tip" data-en="Unrolling soon" data-zh="即将展开">Unrolling soon</span>
+      <p class="toc-blurb" data-en="Longer writing — what I was thinking while building, and what I gave up." data-zh="长一点的文字：做东西时的想法，和放弃了什么。">Longer writing — what I was thinking while building, and what I gave up.</p>
+      <span class="toc-count is-soon" data-en="ink still drying" data-zh="墨未干">ink still drying</span>
+      <button class="toc-hit" type="button" aria-disabled="true" data-en-label="Notes — not ready yet" data-zh-label="题跋，墨未干" aria-label="Notes — not ready yet"></button>
     </li>
-    <li class="toc-col" data-ink>
+    <li class="toc-col" data-ink data-chapter="fragments">
       <span class="toc-no" data-en="Ch. V" data-zh="卷五">Ch. V</span>
-      <b class="toc-name">拾零</b>
+      <span class="toc-namewrap"><b class="toc-name">拾零</b></span>
       <span class="toc-en">Fragments</span>
-      <span class="toc-soon" data-en="still drying" data-zh="墨未干">still drying</span>
-      <span class="toc-tip" data-en="Unrolling soon" data-zh="即将展开">Unrolling soon</span>
+      <p class="toc-blurb" data-en="Short lines, reading notes, ideas that haven't grown up yet." data-zh="短句、读书笔记、还没长大的念头。">Short lines, reading notes, ideas that haven't grown up yet.</p>
+      <span class="toc-count is-soon" data-en="ink still drying" data-zh="墨未干">ink still drying</span>
+      <button class="toc-hit" type="button" aria-disabled="true" data-en-label="Fragments — not ready yet" data-zh-label="拾零，墨未干" aria-label="Fragments — not ready yet"></button>
     </li>
-    <li class="toc-col" data-ink>
+    <li class="toc-col" data-ink data-chapter="colophon">
       <span class="toc-no" data-en="Ch. VI" data-zh="卷六">Ch. VI</span>
-      <b class="toc-name">拖尾</b>
+      <span class="toc-namewrap"><b class="toc-name">拖尾</b></span>
       <span class="toc-en">Colophon</span>
-      <span class="toc-soon" data-en="still drying" data-zh="墨未干">still drying</span>
-      <span class="toc-tip" data-en="Unrolling soon" data-zh="即将展开">Unrolling soon</span>
+      <p class="toc-blurb" data-en="How to reach me, and how this scroll was made." data-zh="怎么找到我，以及这一卷是怎么做出来的。">How to reach me, and how this scroll was made.</p>
+      <span class="toc-count is-soon" data-en="ink still drying" data-zh="墨未干">ink still drying</span>
+      <button class="toc-hit" type="button" aria-disabled="true" data-en-label="Colophon — not ready yet" data-zh-label="拖尾，墨未干" aria-label="Colophon — not ready yet"></button>
     </li>
   </ol>
 </div>

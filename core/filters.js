@@ -28,6 +28,32 @@ const DEFS = `
 <filter id="slipEdge" x="-6%" y="-6%" width="112%" height="112%">
   <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" seed="31" result="s"/>
   <feDisplacementMap in="SourceGraphic" in2="s" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<!-- 墨字洇边：笔画边缘被纸吸开一点 -->
+<filter id="inkBleed" x="-6%" y="-6%" width="112%" height="112%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="g"/>
+  <feDisplacementMap in="SourceGraphic" in2="g" scale="1.6" xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feGaussianBlur in="d" stdDeviation="0.35"/>
+</filter>
+<!-- 飞白：沿笔势方向的断续丝缕 -->
+<filter id="dryBrush" x="-4%" y="-40%" width="108%" height="180%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.004 0.22" numOctaves="2" seed="5" result="t"/>
+  <feColorMatrix in="t" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -2.6 0 0 0 2.25" result="streak"/>
+  <feComposite in="SourceGraphic" in2="streak" operator="in" result="s"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="2" result="w"/>
+  <feDisplacementMap in="s" in2="w" scale="7" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<!-- 远山晕染：山脊毛糙、整体洇开 -->
+<filter id="hillWash" x="-4%" y="-20%" width="108%" height="140%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.018 0.05" numOctaves="4" seed="8" result="h"/>
+  <feDisplacementMap in="SourceGraphic" in2="h" scale="14" xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feGaussianBlur in="d" stdDeviation="1.6"/>
+</filter>
+<!-- 墨点：边缘毛糙 -->
+<filter id="inkDot" x="-30%" y="-30%" width="160%" height="160%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.12" numOctaves="2" seed="13" result="p"/>
+  <feDisplacementMap in="SourceGraphic" in2="p" scale="5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feGaussianBlur in="d" stdDeviation="0.5"/>
 </filter>`;
 
 export function ensureFilters() {

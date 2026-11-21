@@ -36,7 +36,7 @@
 .leaf:hover::before{opacity:1}
 
 .leaf-no{
-  font-family:var(--mono);
+  font-family:var(--label);font-weight:600;
   font-size:clamp(10px,1.25cqh,15px);
   letter-spacing:.2em;
   color:var(--ink-3);
@@ -83,7 +83,7 @@
   display:flex;
   align-items:center;
   justify-content:space-between;
-  font-family:var(--mono);
+  font-family:var(--label);font-weight:600;
   font-size:clamp(10px,1.2cqh,14px);
   letter-spacing:.14em;
   color:var(--ink-3);
@@ -93,7 +93,7 @@
 .leaf-soon{
   position:relative;
   margin-top:clamp(14px,2cqh,28px);
-  font-family:var(--mono);
+  font-family:var(--label);font-weight:600;
   font-size:clamp(10px,1.2cqh,14px);
   letter-spacing:.18em;
   text-transform:uppercase;

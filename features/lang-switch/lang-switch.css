@@ -10,12 +10,12 @@ sc-lang-switch{
   align-items:center;
   gap:7px;
   font-family:var(--mono);
-  font-size:11px;
+  font-size:13px;
   letter-spacing:.14em;
 }
 sc-lang-switch button{
   color:var(--chrome);
-  padding:4px 2px;
+  padding:6px 4px;
   transition:color var(--t-fast) var(--ease);
 }
 sc-lang-switch button:hover{color:var(--chrome-hi)}

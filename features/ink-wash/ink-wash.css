@@ -1,0 +1,189 @@
+/* ============================================================
+   ink-wash · 墨的样式
+   大字洇边、飞白、墨点、远山晕染、「墨未干」
+   ============================================================ */
+
+/* ---------- 大字：焦墨 + 洇边 ---------- */
+.about-yinshou,
+.panel-mark,
+.toc-mark,
+.toc-name,
+.end-mark{
+  color:var(--ink-jiao);
+  filter:url(#inkBleed);
+  text-shadow:0 0 .5px rgba(14,11,9,.55),0 0 3px rgba(14,11,9,.14);
+}
+/* 落笔：先是一团湿墨，再被纸吸住、收紧 */
+.toc-mark[data-ink],.toc-col[data-ink] .toc-name{transition:filter 0s}
+.toc-mark[data-ink]{filter:blur(14px);transform:scale(1.06)}
+.is-in .toc-mark[data-ink]{filter:url(#inkBleed);transform:none}
+
+/* ---------- 飞白 ---------- */
+.ink-stroke{
+  position:absolute;
+  pointer-events:none;
+  z-index:0;
+  display:block;
+  color:var(--ink);
+  opacity:0;
+  transition:opacity 1600ms var(--ease) 900ms, clip-path 1400ms var(--ease) 900ms;
+  /* 从右往左「刷」出来 */
+  clip-path:inset(0 0 0 100%);
+}
+.ink-stroke svg{display:block;width:100%;height:100%;overflow:visible}
+.ink-stroke path{fill:currentColor;filter:url(#dryBrush)}
+.is-in .ink-stroke:not(.ink-stroke--title),
+.about.sig-done .ink-stroke--title{clip-path:inset(0 0 0 0)}
+
+/* 自序：标题底下一笔淡墨，像压在字下的底色 */
+.about-lead{position:relative}
+.about-lead > *:not(.ink-stroke){position:relative;z-index:1}
+.ink-stroke--title{
+  left:-3%;
+  top:clamp(34px,8cqh,104px);
+  width:min(118%,34em);
+  height:clamp(34px,8.5cqh,104px);
+}
+.about.sig-done .ink-stroke--title{opacity:.26}
+
+/* 目录：「目录」二字旁一道竖笔 */
+.toc-head{position:relative}
+.toc-head > *:not(.ink-stroke){position:relative;z-index:1}
+.ink-stroke--toc{
+  right:clamp(-28px,-3cqh,-14px);
+  top:-2%;
+  width:clamp(240px,34cqh,420px);
+  height:clamp(36px,7cqh,80px);
+  transform-origin:100% 0;
+  transform:rotate(90deg) translate(0,-100%);
+}
+.is-in .ink-stroke--toc{opacity:.1}
+
+/* 卷尾：「卷终」后面一笔重墨 */
+.end{isolation:isolate}
+.end > *:not(.ink-stroke):not(.ink-dots){position:relative;z-index:1}
+.ink-stroke--end{
+  left:50%;top:50%;
+  width:clamp(260px,62cqh,640px);
+  height:clamp(60px,13cqh,150px);
+  transform:translate(-50%,-150%) rotate(-6deg);
+}
+.is-in .ink-stroke--end{opacity:.24}
+
+/* ---------- 墨点 ---------- */
+.ink-dots{
+  position:absolute;
+  pointer-events:none;
+  display:block;
+  color:var(--ink);
+  opacity:0;
+  transition:opacity 900ms var(--ease) 2000ms;
+}
+.ink-dots svg{display:block;width:100%;height:100%;overflow:visible}
+.ink-dots svg *{fill:currentColor;filter:url(#inkDot)}
+.ink-dots--sign{
+  left:calc(100% + 6px);top:-60%;
+  width:clamp(60px,9cqh,110px);height:clamp(40px,6cqh,74px);
+}
+.about-sign{overflow:visible}
+body.opened .ink-dots--sign{opacity:.72}
+.ink-dots--end{
+  left:calc(50% + clamp(40px,7cqh,90px));
+  bottom:clamp(40px,12cqh,150px);
+  width:clamp(70px,11cqh,130px);height:clamp(46px,7cqh,88px);
+  transform:rotate(18deg);
+}
+.is-in .ink-dots--end{opacity:.8}
+
+/* ---------- 远山：从矢量填色改成晕染 ---------- */
+.about .about-hills g{filter:url(#hillWash)}
+.about .about-hills .h1{fill:rgba(27,23,19,.1)}
+.about .about-hills .h2{fill:rgba(27,23,19,.17)}
+.about .about-hills .h3{fill:rgba(27,23,19,.28);stroke:rgba(14,11,9,.26);stroke-width:1.4;vector-effect:non-scaling-stroke}
+
+/* ---------- 「墨未干」：湿墨字，还在洇 ---------- */
+.toc-soon{
+  font-family:var(--kai)!important;
+  font-weight:400!important;
+  letter-spacing:.2em!important;
+  color:var(--ink-3)!important;
+  filter:blur(.6px);
+  text-shadow:0 0 6px rgba(27,23,19,.35);
+  animation:ink-wet 5s var(--ease-in-out) infinite;
+}
+@keyframes ink-wet{
+  0%,100%{text-shadow:0 0 5px rgba(27,23,19,.3)}
+  50%{text-shadow:0 0 9px rgba(27,23,19,.42)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ink-stroke{clip-path:none}
+  .toc-mark[data-ink]{filter:url(#inkBleed);transform:none}
+  .toc-soon{animation:none}
+}
+@media (max-width:720px){
+  .ink-stroke--toc{display:none}
+}
+
+/* ---------- 自序右下：一大片淡墨晕 ---------- */
+.ink-wash-blot{
+  position:absolute;
+  right:4%;bottom:6%;
+  width:46%;height:52%;
+  pointer-events:none;
+  z-index:0;
+  background:
+    radial-gradient(48% 42% at 62% 58%,rgba(27,23,19,.26) 0%,rgba(27,23,19,.12) 45%,transparent 70%),
+    radial-gradient(26% 24% at 34% 72%,rgba(27,23,19,.18) 0%,transparent 70%),
+    radial-gradient(18% 16% at 78% 30%,rgba(27,23,19,.14) 0%,transparent 70%);
+  filter:url(#hillWash) blur(6px);
+  mix-blend-mode:multiply;
+  opacity:0;
+  transition:opacity 2200ms var(--ease) 1200ms;
+}
+body.opened .ink-wash-blot{opacity:1}
+
+/* ---------- 自序标题：笔扫 + 签名 ---------- */
+.about .about-title{white-space:nowrap;text-wrap:nowrap}
+.about-title .t-pre{
+  display:inline-block;
+  -webkit-mask-image:linear-gradient(90deg,#000 0 42%,rgba(0,0,0,.5) 50%,transparent 58%);
+          mask-image:linear-gradient(90deg,#000 0 42%,rgba(0,0,0,.5) 50%,transparent 58%);
+  -webkit-mask-size:260% 100%;mask-size:260% 100%;
+  -webkit-mask-position:100% 0;mask-position:100% 0;
+  filter:blur(4px);
+  opacity:.7;
+}
+.about-title.is-writing .t-pre{
+  -webkit-mask-position:0 0;mask-position:0 0;
+  filter:blur(0);opacity:1;
+  transition:-webkit-mask-position 800ms var(--ease),mask-position 800ms var(--ease),
+             filter 1100ms var(--ease) 250ms,opacity 900ms var(--ease);
+}
+.about-title .sig{
+  display:inline-block;
+  height:1.42em;
+  width:calc(1.42em * 480 / 160);
+  margin:-.3em 0 -.2em -.02em;
+  vertical-align:-.37em;
+}
+.sig svg{display:block;width:100%;height:100%;overflow:visible}
+.sig-trace{fill:none;stroke:#fff;stroke-width:20;stroke-linecap:round;stroke-linejoin:round}
+.sig-wet path{fill:var(--ink-jiao);filter:blur(2px);opacity:.9}
+.about-title.is-written .sig-wet{opacity:0;transition:opacity 900ms var(--ease)}
+.sig-dry path,.sig-dot{fill:var(--ink-jiao)}
+.sig-dry,.sig-dot{filter:url(#inkBleed)}
+.sig-dot{opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(.3)}
+.sig-dot.is-on{opacity:1;transform:none;transition:opacity 180ms ease-out,transform 260ms var(--ease-back)}
+.sig-nib{
+  fill:var(--ink-jiao);
+  opacity:0;
+  filter:blur(2.2px);
+  transition:opacity 300ms ease;
+}
+@media (max-width:720px){
+  .about .about-title{white-space:normal;text-wrap:wrap}
+}
+/* 中文前缀更宽：Calvin 换到下一行，像落款 */
+html:lang(zh-Hans) .about .about-title{white-space:normal;text-wrap:wrap}
+html:lang(zh-Hans) .about-title .sig{display:block;margin:.08em 0 -.1em .4em}

@@ -90,3 +90,8 @@ body.in-scene .sr-back{display:inline-flex}
 @media (prefers-reduced-motion:reduce){
   .sr-ink{display:none}
 }
+
+/* 从朱印进场：晕开的是暗朱色 */
+.sr-ink.is-zhu{
+  background:radial-gradient(closest-side at var(--ox,50%) var(--oy,50%),#6a2112,#3a130a 45%,var(--desk) 85%);
+}

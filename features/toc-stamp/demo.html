@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-Hans" data-theme="night"><head><meta charset="utf-8"><title>toc-stamp · 章名落印</title>
+<link rel="stylesheet" href="../../core/tokens.css"><link rel="stylesheet" href="../../core/reset.css">
+<link rel="stylesheet" href="../../lab/demo.css">
+<link rel="stylesheet" href="../../sections/track.css"><link rel="stylesheet" href="../../sections/toc.css">
+<link rel="stylesheet" href="toc-stamp.css">
+<style>
+  body{background:#17130f;min-height:100vh;display:grid;place-items:center;padding:80px 32px}
+  .sheet{position:relative;width:min(1200px,92vw);height:min(560px,70vh);container-type:size;container-name:panel;
+    background:linear-gradient(178deg,var(--paper-hi),var(--paper) 45%,var(--paper-lo));box-shadow:0 20px 40px -20px #000}
+</style></head>
+<body class="opened settled" data-demo="章名落印 · toc-stamp" data-depth="../../" data-actions="reload">
+<div class="sheet" data-src="../../sections/toc.html"></div>
+<script type="module">
+  import '../../lab/demo-kit.js';
+  import { EV, on } from '../../core/events.js';
+  import './toc-stamp.js';
+  import '../lang-switch/lang-switch.js';
+  import '../../core/include.js';
+  // 演示页没有场景：盖完印 1 秒后当作「看完回来」
+  on(EV.SCENE_ENTER, ({ name }) => setTimeout(() => document.dispatchEvent(new CustomEvent(EV.SCENE_CLOSED, { detail: { name } })), 1000));
+</script>
+</body></html>

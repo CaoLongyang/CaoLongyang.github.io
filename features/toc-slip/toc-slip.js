@@ -16,7 +16,7 @@ class ScTocSlip extends HTMLElement {
     if (this.firstChild) return;
     this.innerHTML = `
       <button class="ts-tab" type="button" aria-expanded="false" aria-controls="ts-slip"
-        data-en-label="Contents" data-zh-label="目录" aria-label="Contents"><b>目</b></button>
+        data-en-label="Contents" data-zh-label="目录" aria-label="Contents" title="Contents · T"><b>目</b></button>
       <div class="ts-shade" aria-hidden="true"></div>
       <div class="ts-slip" id="ts-slip" role="dialog" aria-modal="true" aria-label="Contents" inert>
         <div class="ts-paper"></div>

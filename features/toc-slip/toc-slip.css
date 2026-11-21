@@ -29,6 +29,9 @@
 body.settled .ts-tab{transform:translate(-50%,0);transition-delay:300ms,0ms}
 body.in-scene .ts-tab{transform:translate(-50%,-100%);transition-delay:0ms}
 .ts-tab:hover,.ts-tab:focus-visible,body.slip-open .ts-tab{height:calc(var(--lb-open) * .62 + 10px)}
+/* 停稳后轻轻晃两下，告诉人这是能拉的 */
+body.settled:not(.is-moved) .ts-tab{animation:ts-tug 1.4s var(--ease-in-out) 1.6s 2}
+@keyframes ts-tug{0%,100%{height:calc(var(--lb-open) * .62)}40%{height:calc(var(--lb-open) * .62 + 12px)}}
 .ts-tab:focus-visible{outline:1px solid rgba(240,163,127,.8);outline-offset:3px}
 
 /* ---------- 罩：卷稍微变暗，点它关掉 ---------- */
@@ -69,7 +72,7 @@ body.slip-open .ts-slip{
 /* 竖格线，像笺纸 */
 .ts-paper::before{
   content:"";position:absolute;inset:0;pointer-events:none;
-  background:repeating-linear-gradient(0deg,rgba(60,40,20,.03) 0 1px,transparent 1px 24px);
+  background:none;
 }
 /* 顶上的「目」字签 */
 .ts-paper::after{

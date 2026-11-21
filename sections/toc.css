@@ -34,7 +34,7 @@
 }
 .toc-head .kicker{
   margin:0 0 10px;
-  font-family:var(--mono);
+  font-family:var(--label);font-weight:600;
   font-size:clamp(10px,1.3cqh,15px);
   letter-spacing:.24em;
   text-transform:uppercase;
@@ -70,7 +70,7 @@
 }
 
 .toc-no{
-  font-family:var(--mono);
+  font-family:var(--label);font-weight:600;
   font-size:clamp(10px,1.25cqh,14px);
   letter-spacing:.2em;
   text-transform:uppercase;
@@ -88,110 +88,33 @@
   color:var(--ink);
   transition:color var(--t-fast) var(--ease);
 }
-/* 悬停：章名左边落一个墨点 */
-.toc-name::before{
-  content:"";
-  position:absolute;
-  right:calc(100% + 14px);
-  top:.2em;
-  width:7px;height:7px;
-  border-radius:50%;
-  background:var(--zhu);
-  transform:scale(0);
-  transition:transform var(--t-mid) var(--ease-back);
-}
+.toc-namewrap{position:relative;display:block}
 .toc-en{
   font-family:var(--serif);
   font-size:clamp(13px,2.2cqh,22px);
   color:var(--ink-2);
 }
-.toc-soon{
+/* 一句话简介 */
+.toc-blurb{
+  margin:clamp(4px,1cqh,12px) 0 0;
+  max-width:min(82%,15em);
+  text-align:center;
+  font-size:clamp(11.5px,1.75cqh,17px);
+  line-height:1.75;
+  color:var(--ink-2);
+}
+.toc-count{
   margin-top:auto;
-  font-family:var(--kai);
-  font-size:clamp(11px,1.6cqh,16px);
-  letter-spacing:.2em;
-  color:var(--ink-3);
-}
-.toc-tip{
-  position:absolute;
-  left:50%;
-  bottom:calc(clamp(8px,2cqh,26px) + 2.4em);
-  transform:translate(-50%,6px);
-  font-family:var(--mono);
-  font-size:clamp(9.5px,1.15cqh,13px);
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--zhu);
-  white-space:nowrap;
-  opacity:0;
-  transition:opacity var(--t-fast) var(--ease),transform var(--t-mid) var(--ease);
-}
-.toc-col:hover .toc-name{color:var(--zhu)}
-.toc-col:hover .toc-name::before{transform:scale(1)}
-.toc-col:hover .toc-tip{opacity:1;transform:translate(-50%,0)}
-
-/* ---------- 画心：一本合着的册页（入口） ---------- */
-.toc-album{
-  position:relative;
-  margin-top:auto;
-  width:min(70%,22cqh);
-  aspect-ratio:.74;
-  perspective:900px;
-  cursor:pointer;
-}
-.toc-album-cover{
-  position:absolute;
-  inset:0;
-  border-radius:2px 4px 4px 2px;
-  background-color:var(--brocade-base);
-  background-image:
-    linear-gradient(90deg,rgba(255,255,255,.06),transparent 30%,transparent 82%,rgba(0,0,0,.4)),
-    var(--brocade-img);
-  background-size:auto,18% 15%;
-  box-shadow:
-    /* 侧面露出的纸页厚度 */
-    3px 3px 0 -1px #cdbf9e,
-    5px 5px 0 -2px #bfb08e,
-    7px 7px 0 -3px #b2a382,
-    0 14px 22px -8px rgba(0,0,0,.65);
-  transform-origin:100% 50%;
-  transition:transform var(--t-mid) var(--ease),box-shadow var(--t-mid) var(--ease);
-}
-.toc-album-slip{
-  position:absolute;
-  left:14%;
-  top:9%;
-  width:20%;
-  height:48%;
-  display:grid;
-  place-items:center;
-  writing-mode:vertical-rl;
-  text-orientation:upright;
-  font-family:var(--kai);
-  font-size:clamp(10px,1.9cqh,20px);
-  letter-spacing:.24em;
-  color:#241c14;
-  background:linear-gradient(90deg,#d9ccae,#f4ebd4 40%,#efe4c8);
-  box-shadow:0 0 0 1px rgba(80,60,30,.4),inset 0 0 0 2px rgba(250,244,228,.9),0 2px 5px rgba(0,0,0,.4);
-}
-/* 悬停：封面从左边掀起一角 */
-.toc-album:hover .toc-album-cover,
-.toc-album:focus-visible .toc-album-cover{
-  transform:rotateY(14deg) translateY(-4px);
-  box-shadow:
-    3px 3px 0 -1px #cdbf9e,
-    5px 5px 0 -2px #bfb08e,
-    7px 7px 0 -3px #b2a382,
-    0 22px 30px -10px rgba(0,0,0,.7);
-}
-.toc-open{
-  margin-top:clamp(8px,1.6cqh,18px);
-  font-family:var(--mono);
+  font-family:var(--label);font-weight:600;
   font-size:clamp(9.5px,1.15cqh,13px);
   letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--zhu);
 }
-.toc-col:has(.toc-album) .toc-name::before{display:none}
-.toc-col:has(.toc-album):hover .toc-name{color:var(--ink)}
-.toc-col:has(.toc-album:hover) .toc-name{color:var(--zhu)}
+.toc-count.is-soon{font-family:var(--kai);text-transform:none;letter-spacing:.2em;font-size:clamp(11px,1.6cqh,16px);color:var(--ink-3)}
+/* 整栏都是入口：一个透明按钮盖住整栏（键盘也能聚焦） */
+.toc-hit{position:absolute;inset:0;z-index:2;cursor:default;border-radius:0}
+.toc-col[data-ready] .toc-hit{cursor:pointer}
+.toc-hit:focus-visible{outline:1px solid var(--zhu-soft);outline-offset:-6px}
+.toc-col[data-ready]:hover .toc-name,
+.toc-col[data-ready]:has(.toc-hit:focus-visible) .toc-name{color:var(--zhu)}

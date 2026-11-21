@@ -46,7 +46,7 @@ function originOf(el) {
   return [`${r.left + r.width / 2}px`, `${r.top + r.height / 2}px`];
 }
 
-async function enter(name, { sub = '', from = null, instant = false } = {}) {
+async function enter(name, { sub = '', from = null, instant = false, tint = '' } = {}) {
   if (busy || active) return;
   busy = true;
   const [ox, oy] = originOf(from);
@@ -57,7 +57,7 @@ async function enter(name, { sub = '', from = null, instant = false } = {}) {
   // 墨晕开（同时去下载场景）
   const loading = Promise.all([loadCss(name), import(new URL(`scenes/${name}/${name}.js`, base).href)]);
   if (!fast) {
-    ink.className = 'sr-ink';
+    ink.className = 'sr-ink' + (tint ? ' is-' + tint : '');
     void ink.offsetWidth;
     ink.classList.add('is-spread');
     await wait(560);
@@ -124,30 +124,33 @@ async function exit() {
   from?.focus?.({ preventScroll: true });
 }
 
-/* 入口 */
+/* 入口：[data-scene] 的元素；或目录里做好的一章（[data-chapter][data-ready]）。
+   章节入口平时由 features/toc-stamp 接管（盖印再进）；没有它时点一栏直接进 */
+const entryOf = (n) => n && document.querySelector(`[data-scene="${n}"],[data-chapter="${n}"][data-ready]`);
 document.addEventListener('click', (e) => {
+  if (!body.classList.contains('settled')) return;
   const el = e.target.closest?.('[data-scene]');
-  if (!el || !body.classList.contains('settled')) return;
-  e.preventDefault();
-  enter(el.dataset.scene, { from: el });
+  if (el) { e.preventDefault(); enter(el.dataset.scene, { from: el }); return; }
+  const col = !document.documentElement.dataset.stamp && e.target.closest?.('[data-chapter][data-ready]');
+  if (col) { e.preventDefault(); enter(col.dataset.chapter, { from: col }); }
 });
 back.addEventListener('click', exit);
 addEventListener('keydown', (e) => { if (e.key === 'Escape' && active) { e.preventDefault(); exit(); } });
 
-on(EV.SCENE_ENTER, ({ name, sub, from }) => enter(name, { sub, from }));
+on(EV.SCENE_ENTER, ({ name, sub, from, tint }) => enter(name, { sub, from, tint }));
 on(EV.SCENE_EXIT, exit);
 
 /* 直接打开 #works 或 #works/xxx：卷展开后直接落在场景里 */
 const [hName, hSub] = initialHash.slice(1).split('/');
 on(EV.OPENED, () => {
-  const entry = hName && document.querySelector(`[data-scene="${hName}"]`);
+  const entry = entryOf(hName);
   if (!entry) return;
   emit(EV.GOTO, { id: entry.closest('[data-panel]')?.id, instant: true });
   setTimeout(() => enter(hName, { sub: hSub || '', from: entry, instant: true }), 80);
 });
 on(EV.CONTENT_READY, () => {
   // 入口在段落内容里，载入后才存在；OPENED 可能先到
-  const entry = hName && document.querySelector(`[data-scene="${hName}"]`);
+  const entry = entryOf(hName);
   if (entry && !active && body.classList.contains('opened')) {
     emit(EV.GOTO, { id: entry.closest('[data-panel]')?.id, instant: true });
     setTimeout(() => enter(hName, { sub: hSub || '', from: entry, instant: true }), 80);
@@ -157,7 +160,7 @@ on(EV.CONTENT_READY, () => {
 /* 浏览器前进 / 后退：网址变成场景就进去，离开场景就退出 */
 const onNav = () => {
   const [n, sub] = location.hash.slice(1).split('/');
-  const entry = n && document.querySelector(`[data-scene="${n}"]`);
+  const entry = entryOf(n);
   if (entry && !active) {
     emit(EV.GOTO, { id: entry.closest('[data-panel]')?.id, instant: true });
     enter(n, { sub: sub || '', from: entry });

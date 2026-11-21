@@ -13,7 +13,7 @@
 
 .notes-y{
   margin:0 0 6px;
-  font-family:var(--mono);
+  font-family:var(--label);font-weight:600;
   font-weight:400;
   font-size:clamp(11px,1.3cqh,16px);
   letter-spacing:.24em;
@@ -42,7 +42,7 @@
   color:inherit;
 }
 .note time{
-  font-family:var(--mono);
+  font-family:var(--label);font-weight:600;
   font-size:clamp(10.5px,1.25cqh,15px);
   letter-spacing:.12em;
   color:var(--ink-3);

@@ -37,8 +37,8 @@ body.opened .lb-bar{height:var(--lb-open);transition-delay:100ms}
   transform:translate(-50%,-50%);
   margin:0;
   font-family:var(--mono);
-  font-size:10.5px;
-  letter-spacing:.22em;
+  font-size:12px;
+  letter-spacing:.18em;
   text-transform:uppercase;
   color:var(--chrome);
   white-space:nowrap;
@@ -46,4 +46,4 @@ body.opened .lb-bar{height:var(--lb-open);transition-delay:100ms}
   transition:opacity var(--t-slow) var(--ease);
 }
 body.settled .lb-hint{opacity:1}
-body.settled.is-moved .lb-hint{opacity:.35}
+body.settled.is-moved .lb-hint{opacity:.6}

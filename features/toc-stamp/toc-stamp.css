@@ -1,0 +1,100 @@
+/* ============================================================
+   toc-stamp · 章名落印
+   印：暗朱底、纸色字，两个字竖排；边是不规则的石印边（clip-path，静态）
+   印痕：同样的形状，朱色带斑驳缺墨（静态的噪声遮罩，只画一次）
+   动的只有 transform 和 opacity
+   ============================================================ */
+
+.toc-seal,
+.toc-imprint{
+  --s:clamp(17px,3.5cqh,36px);            /* 印上每个字的大小 */
+  position:absolute;
+  right:calc(100% + clamp(8px,1.4cqh,16px));
+  top:46%;
+  display:block;
+  pointer-events:none;
+  z-index:3;
+}
+.toc-seal-face{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.08em;
+  padding:.32em .26em .34em;
+  font-family:var(--kai);
+  font-size:var(--s);
+  line-height:1;
+  font-style:normal;
+  /* 石印边：微微不齐的八边形 */
+  clip-path:polygon(4% 1%,52% 0,97% 3%,100% 46%,98% 97%,47% 100%,2% 98%,0 52%);
+}
+.toc-seal-face i{font-style:normal;display:block}
+
+/* ---------- 浮在纸上方的印 ---------- */
+.toc-seal{
+  opacity:0;
+  transform:translateY(-6px) rotate(-9deg) scale(1.04);
+  transform-origin:50% 80%;
+  transition:opacity 200ms var(--ease),transform 200ms var(--ease-back);
+  filter:drop-shadow(0 6px 6px rgba(30,12,4,.35));
+}
+.toc-seal .toc-seal-face{
+  background:linear-gradient(160deg,#a8402a,#8e3019 60%,#7a2814);
+  color:#f3e4cf;
+  box-shadow:inset 0 0 0 1px rgba(255,230,200,.18);
+}
+.toc-col:hover .toc-seal,
+.toc-col:has(.toc-hit:focus-visible) .toc-seal{opacity:1;transform:translateY(0) rotate(-5deg)}
+
+/* 还没做的章：淡灰的空印 */
+.toc-col:not([data-ready]) .toc-seal{filter:none}
+.toc-col:not([data-ready]) .toc-seal .toc-seal-face{
+  background:transparent;
+  color:var(--ink-3);
+  box-shadow:inset 0 0 0 1.5px rgba(90,74,54,.45);
+  opacity:.75;
+}
+.toc-col.is-nudge .toc-seal{animation:stamp-nudge 300ms var(--ease)}
+@keyframes stamp-nudge{
+  0%{transform:translateY(0) rotate(-5deg)}
+  30%{transform:translateY(3px) rotate(-3deg)}
+  60%{transform:translateY(-1px) rotate(-6deg)}
+  100%{transform:translateY(0) rotate(-5deg)}
+}
+
+/* ---------- 盖下去 ---------- */
+.toc-col.is-stamping .toc-seal{opacity:1;animation:stamp-press 430ms cubic-bezier(.3,.7,.3,1) forwards}
+@keyframes stamp-press{
+  0%  {transform:translateY(0) rotate(-5deg) scale(1);opacity:1}
+  18% {transform:translateY(-5px) rotate(-5deg) scale(1.12);opacity:1}
+  42% {transform:translateY(1px) rotate(-5deg) scale(.95,.92);opacity:1}
+  60% {transform:translateY(0) rotate(-5deg) scale(1);opacity:1}
+  100%{transform:translateY(-12px) rotate(-7deg) scale(1.02);opacity:0}
+}
+/* 纸面跟着轻轻一沉 */
+.toc-col.is-stamping .toc-namewrap{animation:stamp-sink 300ms var(--ease) 70ms}
+@keyframes stamp-sink{50%{transform:translateY(1.5px)}}
+
+/* ---------- 印痕：盖完留在纸上 ---------- */
+.toc-imprint{
+  opacity:0;
+  transform:rotate(-5deg);
+  transition:opacity 180ms var(--ease);
+}
+.toc-imprint .toc-seal-face{
+  background:#a33a22;
+  color:var(--paper-hi);                   /* 白文印：字是纸色 */
+  -webkit-mask:var(--stamp-grain) 0 0/120px 120px;
+  mask:var(--stamp-grain) 0 0/120px 120px;
+}
+.toc-col.is-stamping .toc-imprint{opacity:.92;transition-delay:170ms}
+.toc-col.is-visited:not(.is-stamping) .toc-imprint{opacity:.32}
+.toc-col.is-visited:hover .toc-imprint{opacity:0}
+
+/* 斑驳的缺墨：一张静态的噪声图（只栅格化一次） */
+:root{
+  --stamp-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.6 2.1'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion:reduce){
+  .toc-seal,.toc-imprint{transition:none}
+  .toc-col.is-stamping .toc-seal,.toc-col.is-stamping .toc-namewrap,.toc-col.is-nudge .toc-seal{animation:none}
+}
