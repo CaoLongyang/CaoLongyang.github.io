@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T12:40:26.620Z",
+  "updated": "2026-11-21T12:49:33.489Z",
   "profile": {
     "name": "等史地",
     "url": "https://steamcommunity.com/profiles/76561198985681171/",
@@ -7,9 +7,9 @@
   },
   "stats": {
     "owned": 55,
-    "family": 4,
-    "played": 43,
-    "hours": 1006,
+    "family": 5,
+    "played": 44,
+    "hours": 1121,
     "hours2w": 53.4
   },
   "recent": [
@@ -48,6 +48,15 @@
       "family": true,
       "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/4348910/library_600x900.jpg",
       "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/4348910/header.jpg"
+    },
+    {
+      "appid": 105600,
+      "name": "Terraria",
+      "hours2w": 0,
+      "hours": 115.9,
+      "family": true,
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/105600/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/105600/header.jpg"
     }
   ],
   "top": [
@@ -67,6 +76,15 @@
       "last": "2026-10-03",
       "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/library_600x900.jpg",
       "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg"
+    },
+    {
+      "appid": 105600,
+      "name": "Terraria",
+      "hours": 115.9,
+      "last": "2026-11-21",
+      "family": true,
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/105600/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/105600/header.jpg"
     },
     {
       "appid": 646570,
@@ -140,14 +158,6 @@
       "last": "2025-12-04",
       "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/632360/library_600x900.jpg",
       "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/632360/header.jpg"
-    },
-    {
-      "appid": 1030300,
-      "name": "Hollow Knight: Silksong",
-      "hours": 18.8,
-      "last": "2026-10-29",
-      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1030300/library_600x900.jpg",
-      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1030300/header.jpg"
     }
   ],
   "family": [
@@ -155,6 +165,12 @@
       "appid": 2868840,
       "name": "Slay the Spire 2",
       "hours": 263.4,
+      "last": "2026-11-21"
+    },
+    {
+      "appid": 105600,
+      "name": "Terraria",
+      "hours": 115.9,
       "last": "2026-11-21"
     },
     {
