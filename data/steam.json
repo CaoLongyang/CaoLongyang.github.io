@@ -1,0 +1,19 @@
+{
+  "_sample": true,
+  "_note": "示例数据：第一次同步之后会被你真实的 Steam 数据替换。",
+  "updated": "2026-11-21T04:17:00.000Z",
+  "profile": null,
+  "stats": { "owned": 48, "played": 31, "hours": 812, "hours2w": 9.4 },
+  "recent": [
+    { "appid": 1426210, "name": "It Takes Two", "hours2w": 6.2, "hours": 34.5, "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/header.jpg" },
+    { "appid": 341800, "name": "Keep Talking and Nobody Explodes", "hours2w": 3.2, "hours": 12.1, "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/341800/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/341800/header.jpg" }
+  ],
+  "top": [
+    { "appid": 413150, "name": "Stardew Valley", "hours": 142.3, "last": "2026-10-02", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/header.jpg" },
+    { "appid": 620, "name": "Portal 2", "hours": 61.0, "last": "2026-08-14", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/620/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/620/header.jpg" },
+    { "appid": 1145360, "name": "Hades", "hours": 58.4, "last": "2026-06-30", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/header.jpg" },
+    { "appid": 1426210, "name": "It Takes Two", "hours": 34.5, "last": "2026-11-19", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/header.jpg" },
+    { "appid": 736260, "name": "Baba Is You", "hours": 22.8, "last": "2026-05-11", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/736260/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/736260/header.jpg" },
+    { "appid": 341800, "name": "Keep Talking and Nobody Explodes", "hours": 12.1, "last": "2026-11-20", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/341800/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/341800/header.jpg" }
+  ]
+}

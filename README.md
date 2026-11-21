@@ -40,3 +40,19 @@ js/home.js            首页里由数据生成的几块
 data/                 所有内容
 scroll/               原来的手卷网站（原样保留）
 ```
+
+## Steam 游戏自动同步
+
+游戏页（`studio/games/`）和首页「Games」那扇窗的数据来自 `data/steam.json`，由 GitHub Action 每天自动从 Steam 拉一次（`.github/workflows/sync-steam.yml`），有变化才提交。
+
+**第一次设置（约 5 分钟）：**
+
+1. **Steam 设为公开：** Steam → 个人资料 → 编辑个人资料 → 隐私设置：「我的个人资料」和「游戏详情」都设为**公开**。
+2. **拿 API Key：** 打开 https://steamcommunity.com/dev/apikey ，域名随便填（比如 `caolongyang.github.io`），复制得到的 Key。
+3. **拿 SteamID64：** 打开你的 Steam 个人主页，网址里 `/profiles/` 后面那串 17 位数字就是；如果网址是 `/id/自定义名`，用 https://steamid.io 查一下。
+4. **填进 GitHub：** 打开部署网站的仓库 → Settings → Secrets and variables → Actions → New repository secret，添加两个：`STEAM_API_KEY`、`STEAM_ID`。
+5. **跑第一次：** 仓库 → Actions → Sync Steam → Run workflow。一两分钟后，`data/steam.json` 就是你真实的数据了，页面上的「示例数据」标签会消失。
+
+**不想显示某些游戏：** 把它的 appid（商店网址 `store.steampowered.com/app/数字` 里的数字）写进 `data/steam.config.json` 的 `hide`。
+
+**本地手动同步：** `STEAM_API_KEY=… STEAM_ID=… node scripts/sync-steam.mjs`（Key 不要写进任何文件、不要提交）。

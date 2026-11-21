@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Games · Calvin Cao</title>
+<meta name="description" content="What Calvin Cao is playing — synced from Steam every day.">
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<script>
+  (function () {
+    var d = document.documentElement, t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    d.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (/[?&]font=manrope/.test(location.search)) d.classList.add('font-manrope');
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Manrope:wght@400;500;600&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../../assets/css/tokens.css">
+<link rel="stylesheet" href="../../assets/css/base.css">
+<link rel="stylesheet" href="../../features/theme/theme.css">
+<link rel="stylesheet" href="../../features/reveal/reveal.css">
+<link rel="stylesheet" href="../studio.css">
+<link rel="stylesheet" href="games.css">
+</head>
+<body class="studio">
+
+<header class="wrap nav">
+  <a class="brand" href="../../" aria-label="Calvin Cao — home"><span class="seal">曹</span>Calvin Cao</a>
+  <nav class="nav-links" aria-label="Main">
+    <a href="../../works/" data-en="Work" data-zh="作品">Work</a>
+    <a href="../../#writing" data-en="Writing" data-zh="文章">Writing</a>
+    <a href="../../#studio" aria-current="page" data-en="Off hours" data-zh="画室">Off hours</a>
+    <a href="../../#contact" data-en="Contact" data-zh="联系">Contact</a>
+  </nav>
+  <div class="nav-tools">
+    <button class="chip" type="button" data-lang-toggle aria-label="Language"></button>
+    <button class="chip" type="button" data-theme-toggle></button>
+  </div>
+</header>
+
+<main class="wrap">
+  <a class="s-back" href="../../#studio" data-en="← Back to the studio" data-zh="← 回到画室">← Back to the studio</a>
+
+  <section class="s-hero" style="view-transition-name:win-games">
+    <canvas data-painting="games" data-seed="22" aria-hidden="true"></canvas>
+    <div class="s-label">
+      <h1 class="serif" data-en="Games" data-zh="游戏">Games</h1>
+      <p data-synced></p>
+    </div>
+  </section>
+
+  <section class="s-sec" data-reveal aria-labelledby="now-h">
+    <h2 id="now-h" class="cap" data-en="Playing lately" data-zh="最近两周在玩">Playing lately</h2>
+    <div class="now" data-recent></div>
+  </section>
+
+  <section class="s-sec" data-reveal aria-labelledby="stats-h">
+    <h2 id="stats-h" class="sr-only">Stats</h2>
+    <dl class="stats" data-stats></dl>
+  </section>
+
+  <section class="s-sec" data-reveal aria-labelledby="top-h">
+    <h2 id="top-h" class="cap" data-en="Most played" data-zh="玩得最多">Most played</h2>
+    <ol class="wall" data-top></ol>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <span class="seal">曹</span><span data-en="Synced from Steam every day" data-zh="每天从 Steam 同步">Synced from Steam every day</span>
+  <span class="spacer"></span><a data-profile target="_blank" rel="noopener"></a>
+</footer>
+
+<script type="module">
+  import '../../features/lang/lang.js';
+  import '../../features/theme/theme.js';
+  import '../../features/painting/painting.js';
+  import './games.js';
+</script>
+</body>
+</html>

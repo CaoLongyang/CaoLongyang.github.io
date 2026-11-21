@@ -40,13 +40,16 @@ a.post:hover .post-title{color:var(--zhu)}
 .studio-title{font-size:clamp(30px,3vw,42px)}
 .studio-sub{margin-top:10px;color:var(--ink-2)}
 .windows{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
-.win{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;outline:none}
+.windows li{display:flex;justify-content:center}
+.win{display:flex;width:100%;flex-direction:column;align-items:center;gap:8px;text-align:center;outline:none}
 .moon{position:relative;width:min(100%,250px);aspect-ratio:1;border-radius:50%;padding:9px;border:1.4px solid var(--frame);margin-bottom:16px}
 .moon canvas{width:100%;height:100%;border-radius:50%;transition:transform 900ms var(--ease),filter 600ms var(--ease)}
 .win:hover canvas,.win:focus-visible canvas{transform:scale(1.07) rotate(-2deg);filter:saturate(1.15) brightness(1.04)}
 .win:focus-visible .moon{outline:2px solid var(--zhu);outline-offset:4px}
 .win-name{font-size:24px}
 .win-val{font-size:15px;color:var(--ink-2)}
+a.win .win-name::after{content:" →";color:var(--zhu);opacity:0;transition:opacity var(--t-fast)}
+a.win:hover .win-name::after{opacity:1}
 
 /* ---------- 手卷横幅 ---------- */
 .banner{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:34px 40px;border-radius:var(--radius);

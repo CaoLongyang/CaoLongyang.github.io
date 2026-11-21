@@ -1,0 +1,44 @@
+# 每天从 Steam 拉一次游戏数据，有变化就提交 data/steam.json（提交后 GitHub Pages 自动更新网站）
+# 需要在仓库 Settings → Secrets and variables → Actions 里添加：STEAM_API_KEY、STEAM_ID
+name: Sync Steam
+
+on:
+  schedule:
+    - cron: '17 20 * * *'      # 每天 UTC 20:17 = 马来西亚时间早上 4:17
+  workflow_dispatch:            # 也可以在 Actions 页面手动点「Run workflow」
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: sync-steam
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Pull from Steam
+        env:
+          STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+          STEAM_ID: ${{ secrets.STEAM_ID }}
+        run: node scripts/sync-steam.mjs
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- data/steam.json; then echo "nothing to commit"; exit 0; fi
+          git config user.name "steam-sync[bot]"
+          git config user.email "steam-sync@users.noreply.github.com"
+          git add data/steam.json
+          git commit -m "Sync Steam games"
+          git push
+      - name: Rebuild GitHub Pages
+        # 机器人的提交有时不会自动触发 Pages 重新部署，这里补一下（失败也不要紧）
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || true

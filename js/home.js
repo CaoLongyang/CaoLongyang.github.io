@@ -35,19 +35,25 @@ async function writing() {
 }
 
 async function studio() {
-  const s = await get('data/studio.json');
+  const [s0, steam] = await Promise.all([get('data/studio.json'), get('data/steam.json')]);
+  const s = s0 || {};
+  // 游戏这一扇：有 Steam 数据就用 Steam 的（每天自动同步），点进去是游戏页
+  const g = steam?.recent?.[0] || steam?.top?.[0];
+  if (g) s.games = { label: steam.recent?.length ? { en: 'Now playing', zh: '在玩' } : { en: 'Most played', zh: '玩得最多' },
+    title: g.name, meta: (g.hours2w ? g.hours2w : g.hours) + ' h', href: 'studio/games/' };
   const sec = document.getElementById('studio');
   const keys = [['books', 'Books', '书', 11], ['games', 'Games', '游戏', 22], ['anime', 'Anime', '动漫', 33], ['mood', 'Mood', '心情', 44]]
     .filter(([k]) => s?.[k]?.title);
   if (!keys.length) { sec.remove(); return; }
   const ul = sec.querySelector('[data-windows]');
   ul.innerHTML = keys.map(([k, en, zh, seed]) => { const x = s[k];
-    return `<li class="win" tabindex="0">
-      <span class="moon"><canvas data-scene="${k}" data-seed="${seed}" aria-hidden="true"></canvas></span>
+    const tag = x.href ? 'a' : 'div';
+    return `<li><${tag} class="win"${x.href ? ` href="${esc(x.href)}"` : ' tabindex="0"'}>
+      <span class="moon"><canvas data-scene="${k}" data-seed="${seed}" aria-hidden="true" style="view-transition-name:win-${k}"></canvas></span>
       <span class="win-name serif" ${both({ en, zh })}>${en}</span>
       <span class="cap" ${both(x.label)}>${esc(t(x.label))}</span>
       <span class="win-val">${esc(x.title)}${x.meta ? ' · ' + esc(x.meta) : ''}</span>
-    </li>`; }).join('');
+    </${tag}></li>`; }).join('');
   applyLang(sec);
   const io = new IntersectionObserver((es, ob) => es.forEach((e) => { if (e.isIntersecting) { paint(e.target, e.target.dataset.scene, +e.target.dataset.seed); ob.unobserve(e.target); } }), { rootMargin: '300px' });
   ul.querySelectorAll('canvas').forEach((c) => io.observe(c));
