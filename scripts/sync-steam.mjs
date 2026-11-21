@@ -9,7 +9,10 @@
 import { readFile, writeFile } from 'node:fs/promises';
 
 const KEY = process.env.STEAM_API_KEY;
-const ID = process.env.STEAM_ID;
+// STEAM_ID 可以填 17 位的 SteamID64，也可以直接填 Steam 里的「好友代码」（一串较短的数字），这里自动换算
+const RAW_ID = (process.env.STEAM_ID || '').trim();
+const ID = /^\d{1,10}$/.test(RAW_ID) ? (BigInt(RAW_ID) + 76561197960265728n).toString() : RAW_ID;
+if (ID !== RAW_ID) console.log('STEAM_ID 填的是好友代码，已自动换算成 SteamID64');
 // 诊断信息（不打印密钥本身）
 console.log(`STEAM_API_KEY：${KEY ? `已设置（${KEY.length} 位）` : '没有设置'}`);
 console.log(`STEAM_ID：${ID ? `已设置（${ID.length} 位${/^7656\d{13}$/.test(ID) ? '，格式正确' : '，格式不对：应该是 7656 开头的 17 位数字'}）` : '没有设置'}`);
