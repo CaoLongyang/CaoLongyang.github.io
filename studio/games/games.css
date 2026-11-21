@@ -36,6 +36,4 @@
   .stats div:nth-child(n+3){border-top:1px solid var(--rule)}
   .wall{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
-.g-fam{display:inline-block;margin-left:6px;padding:0 6px;border:1px solid var(--c-pine);color:var(--c-pine);border-radius:2px;font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.06em;vertical-align:2px;white-space:nowrap}
-:root[data-theme="dark"] .g-fam{border-color:#7fae95;color:#9cc7ae}
-.stats dd small{font-size:.5em;color:var(--ink-3);margin-left:4px}
+:root[data-theme="dark"] .stats dd small{font-size:.5em;color:var(--ink-3);margin-left:4px}

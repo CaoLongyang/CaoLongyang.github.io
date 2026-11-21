@@ -27,7 +27,7 @@ if (!data) {
       <figure class="g-img"><img src="${esc(g.header)}" alt="" loading="${i ? 'lazy' : 'eager'}" decoding="async" data-app="${g.appid}"></figure>
       <div class="now-text">
         ${i ? '' : `<span class="cap cap-zhu" ${both('Now playing', '正在玩')}>Now playing</span>`}
-        <h3 class="serif">${esc(g.name)}${g.family ? ` <span class="g-fam" ${both('Family', '家庭库')}>Family</span>` : ''}</h3>
+        <h3 class="serif">${esc(g.name)}</h3>
         <p><b>${h(g.hours2w)} h</b> <span ${both('in the last two weeks', '最近两周')}>in the last two weeks</span> · <span ${both(`${h(g.hours)} h total`, `一共 ${h(g.hours)} 小时`)}>${h(g.hours)} h total</span></p>
       </div>
     </article>`).join('')
@@ -36,8 +36,8 @@ if (!data) {
   // 统计
   const s = data.stats || {};
   const stat = (n, en, zh) => `<div><dt ${both(en, zh)}>${en}</dt><dd class="serif">${n}</dd></div>`;
-  const lib = s.family ? `${s.owned ?? '—'}<small> + ${s.family}</small>` : (s.owned ?? '—');
-  $('[data-stats]').innerHTML = stat(lib, s.family ? 'My library + family' : 'Games in library', s.family ? '自己的库 + 家庭库' : '游戏库') + stat(s.played ?? '—', 'Actually played', '真正玩过') +
+  const lib = (s.owned ?? 0) + (s.family ?? 0) || '—';
+  $('[data-stats]').innerHTML = stat(lib, 'Games in library', '游戏库') + stat(s.played ?? '—', 'Actually played', '真正玩过') +
     stat((s.hours ?? 0) + ' h', 'Hours in total', '总时长') + stat((s.hours2w ?? 0) + ' h', 'Last two weeks', '最近两周');
 
   // 玩得最多：竖版封面墙
@@ -47,7 +47,7 @@ if (!data) {
     <li class="tile">
       <figure class="g-cover"><img src="${esc(g.cover)}" alt="" loading="lazy" decoding="async" data-app="${g.appid}" data-fallback="${esc(g.header)}"></figure>
       <span class="tile-rank">${String(i + 1).padStart(2, '0')}</span>
-      <span class="tile-name">${esc(g.name)}${g.family ? ` <span class="g-fam" ${both('Family', '家庭库')}>Family</span>` : ''}</span>
+      <span class="tile-name">${esc(g.name)}</span>
       <span class="tile-bar" style="--w:${(g.hours / max * 100).toFixed(1)}%"></span>
       <span class="tile-hours">${h(g.hours)} h</span>
     </li>`).join('');
