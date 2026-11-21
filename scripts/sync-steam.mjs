@@ -22,6 +22,7 @@ if (KEY.length !== 32) console.warn('⚠ Steam API Key 一般是 32 位，请检
 const cfg = JSON.parse(await readFile('data/steam.config.json', 'utf8').catch(() => '{}'));
 const hide = new Set((cfg.hide || []).map(Number));
 const TOP = cfg.top ?? 12;
+const MIN_RECENT = cfg.minRecentHours ?? 5;   // 「最近在玩」只放总时长 ≥ 5 小时的游戏
 
 const api = async (path, params) => {
   const u = new URL(`https://api.steampowered.com/${path}`);
@@ -109,7 +110,7 @@ const out = {
     hours: Math.round(all.reduce((s, g) => s + g.hours, 0)),
     hours2w: Math.round(recentList.reduce((s, g) => s + g.hours2w, 0) * 10) / 10,
   },
-  recent: recentList,
+  recent: recentList.filter((g) => g.hours >= MIN_RECENT),
   top,
   family: familyList,
 };
