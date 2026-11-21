@@ -9,7 +9,7 @@ const both = (en, zh) => `data-en="${esc(en)}" data-zh="${esc(zh)}"`;
 const h = (x) => (x >= 100 ? Math.round(x) : x.toFixed(1).replace(/\.0$/, ''));
 const MONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-const data = await fetch('../../data/steam.json').then((r) => r.json()).catch(() => null);
+const data = await fetch('../../data/steam.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => null);
 const $ = (s) => document.querySelector(s);
 
 if (!data) {

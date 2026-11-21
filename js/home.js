@@ -5,7 +5,7 @@ import { t, applyLang } from '../features/lang/lang.js';
 import { paint } from '../features/painting/painting.js';
 import { watch } from '../features/reveal/reveal.js';
 
-const get = (p) => fetch(p).then((r) => (r.ok ? r.json() : null)).catch(() => null);
+const get = (p) => fetch(p, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null);
 const esc = (s = '') => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const both = (o) => `data-en="${esc(o?.en ?? o)}" data-zh="${esc(o?.zh ?? o?.en ?? o)}"`;
 const MONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
