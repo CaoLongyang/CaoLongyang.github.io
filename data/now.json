@@ -1,0 +1,8 @@
+{
+  "_note": "首页名字旁边的三滴墨。at = 在首屏里的位置（横、竖，0–1），r = 大小，dot = 心情颜色（从塞尚调色板里选）",
+  "drops": [
+    { "label": { "en": "Building", "zh": "在做" }, "value": { "en": "InboxPilot v2", "zh": "InboxPilot v2" }, "accent": true, "at": [0.16, 0.36], "r": 64, "href": "works/#inboxpilot" },
+    { "label": { "en": "Based in", "zh": "在" }, "value": { "en": "Kuala Lumpur", "zh": "吉隆坡" }, "at": [0.84, 0.28], "r": 60, "href": "#contact" },
+    { "label": { "en": "Mood", "zh": "心情" }, "value": { "en": "Calm", "zh": "平静" }, "dot": "#C9973F", "at": [0.86, 0.66], "r": 56, "href": "#studio" }
+  ]
+}

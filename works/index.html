@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Works · Calvin Cao</title>
+<meta name="description" content="Things Calvin Cao has built — shown as a folding screen.">
+<meta name="theme-color" content="#E3E8E1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<script>
+  (function () {
+    var d = document.documentElement, t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    d.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (/[?&]font=manrope/.test(location.search)) d.classList.add('font-manrope');
+    if (location.hash.length > 1) d.classList.add('has-detail');   // 直接打开某件作品：先不画屏风
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Manrope:wght@400;500;600&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../features/theme/theme.css">
+<link rel="stylesheet" href="../features/screen/screen.css">
+<link rel="stylesheet" href="works.css">
+</head>
+<body>
+
+<header class="wrap nav">
+  <a class="brand" href="../" aria-label="Calvin Cao — home"><span class="seal">曹</span>Calvin Cao</a>
+  <nav class="nav-links" aria-label="Main">
+    <a href="./" aria-current="page" data-en="Work" data-zh="作品">Work</a>
+    <a href="../#writing" data-en="Writing" data-zh="文章">Writing</a>
+    <a href="../#studio" data-en="Off hours" data-zh="画室">Off hours</a>
+    <a href="../#contact" data-en="Contact" data-zh="联系">Contact</a>
+  </nav>
+  <div class="nav-tools">
+    <button class="chip" type="button" data-lang-toggle aria-label="Language"></button>
+    <button class="chip" type="button" data-theme-toggle></button>
+  </div>
+</header>
+
+<main>
+  <!-- 屏风：往下滚，从合着之字形展开成四扇 -->
+  <section class="stage" aria-labelledby="works-h">
+    <div class="stage-sticky">
+      <div class="wrap stage-head">
+        <h1 id="works-h" class="serif works-title" data-en="Works" data-zh="作品">Works</h1>
+        <p class="works-sub" data-hint data-en="Four things I've built. Scroll to unfold the screen." data-zh="我做过的四样东西。往下滚，屏风会打开。">Four things I've built. Scroll to unfold the screen.</p>
+      </div>
+      <div class="wrap"><div class="screen-full" data-screen="full"></div></div>
+    </div>
+  </section>
+
+  <!-- 一件作品的详情：从那一扇铺开 -->
+  <section class="wrap detail" data-detail hidden aria-live="polite"></section>
+</main>
+
+<footer class="wrap foot">
+  <span class="seal">曹</span><span>© 2026 Calvin Cao</span>
+  <span class="spacer"></span><a href="../" data-en="Home" data-zh="首页">Home</a>
+</footer>
+
+<script type="module">
+  import '../features/lang/lang.js';
+  import '../features/theme/theme.js';
+  import './works.js';
+</script>
+</body>
+</html>

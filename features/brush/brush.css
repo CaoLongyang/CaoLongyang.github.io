@@ -1,0 +1,14 @@
+/* brush · 一笔飞白 */
+[data-brush]{width:min(540px,82vw);height:clamp(36px,4.2vw,56px);margin:4px auto 0;color:rgb(var(--wash))}
+.brush{width:100%;height:100%;overflow:visible}
+.brush-ink{opacity:calc(.85 * var(--wash-a))}
+.brush-bleed{opacity:0}
+.brush-hand{stroke-dasharray:1 1;stroke-dashoffset:1}
+.is-writing .brush-hand{animation:brush-write 1.15s cubic-bezier(.45,.05,.25,1) .55s forwards}
+.is-writing .brush-bleed{animation:brush-bleed 1.4s var(--ease) 1.2s forwards}
+@keyframes brush-write{to{stroke-dashoffset:0}}
+@keyframes brush-bleed{to{opacity:calc(.16 * var(--wash-a))}}
+@media (prefers-reduced-motion:reduce){
+  .brush-hand{stroke-dashoffset:0;animation:none!important}
+  .brush-bleed{opacity:calc(.16 * var(--wash-a));animation:none!important}
+}

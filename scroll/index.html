@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Calvin · 手卷</title>
+<meta name="description" content="Calvin's personal site — a handscroll that unrolls itself.">
+<meta name="theme-color" content="#0a0807">
+<script src="features/page-turn/page-turn.js"></script>
+
+<!-- core -->
+<link rel="stylesheet" href="core/tokens.css">
+<link rel="stylesheet" href="core/reset.css">
+
+<!-- features：每个功能一份样式，删掉哪个文件夹就少哪个功能 -->
+<link rel="stylesheet" href="features/stage/stage.css">
+<link rel="stylesheet" href="features/letterbox/letterbox.css">
+<link rel="stylesheet" href="features/roller/roller.css">
+<link rel="stylesheet" href="features/paper/paper.css">
+<link rel="stylesheet" href="features/twine/twine.css">
+<link rel="stylesheet" href="features/unroll/unroll.css">
+<link rel="stylesheet" href="features/lang-switch/lang-switch.css">
+<link rel="stylesheet" href="features/drag/drag.css">
+<link rel="stylesheet" href="features/scroll-fx/scroll-fx.css">
+<link rel="stylesheet" href="features/ink-reveal/ink-reveal.css">
+<link rel="stylesheet" href="features/page-turn/page-turn.css">
+<link rel="stylesheet" href="features/scene-router/scene-router.css">
+<link rel="stylesheet" href="features/burn/burn.css">
+<link rel="stylesheet" href="features/roll-up/roll-up.css">
+<link rel="stylesheet" href="features/toc-slip/toc-slip.css">
+<link rel="stylesheet" href="features/toc-stamp/toc-stamp.css">
+
+<!-- sections：这一轮只有扉页、目录、卷尾 -->
+<link rel="stylesheet" href="sections/track.css">
+<link rel="stylesheet" href="sections/about.css">
+<link rel="stylesheet" href="sections/toc.css">
+<link rel="stylesheet" href="sections/end.css">
+</head>
+<body>
+
+<div class="rail" data-rail>
+  <main class="scene">
+    <div class="tilt">
+
+      <div class="scroll" data-scroll>
+        <div class="roller" data-title="卷一"></div>
+        <div class="view">
+          <div class="paper">
+            <!-- 从右往左读：包首 → 扉页 → 目录 → 卷尾 -->
+            <div class="track" data-track>
+              <div class="track-head" aria-hidden="true"></div>
+              <section class="panel" id="about" data-panel data-src="sections/about.html"></section>
+              <section class="panel" id="toc"   data-panel data-src="sections/toc.html"></section>
+              <section class="panel" id="end"   data-panel data-src="sections/end.html"></section>
+            </div>
+          </div>
+        </div>
+        <div class="roller"></div>
+      </div>
+
+      <sc-twine></sc-twine>
+
+    </div>
+  </main>
+</div>
+
+<sc-letterbox data-hint-en="drag · wheel · ← →" data-hint-zh="拖动 · 滚轮 · ← →"></sc-letterbox>
+<sc-lang-switch></sc-lang-switch>
+<sc-toc-slip data-toc="sections/toc.html"></sc-toc-slip>
+
+<script type="module">
+  import './core/filters.js';
+  import './features/stage/stage.js';
+  import './features/letterbox/letterbox.js';
+  import './features/roller/roller.js';
+  import './features/paper/paper.js';
+  import './features/twine/twine.js';
+  import './features/lang-switch/lang-switch.js';
+  import './features/ink-reveal/ink-reveal.js';
+  import './features/drag/drag.js';
+  import './features/scroll-fx/scroll-fx.js';
+  import './features/roll-up/roll-up.js';
+  import './features/toc-slip/toc-slip.js';
+  import './features/toc-stamp/toc-stamp.js';
+  import './features/scene-router/scene-router.js';
+  import './features/unroll/unroll.js';
+  import './core/include.js';
+</script>
+</body>
+</html>

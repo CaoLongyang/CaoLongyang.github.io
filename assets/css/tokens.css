@@ -1,0 +1,63 @@
+/* ============================================================
+   assets/css/tokens.css · 全站唯一的数值来源
+   两种主题：天青（亮）/ 黑漆朱（暗）。朱红两边一样。
+   ============================================================ */
+
+:root{
+  /* 字体：只用两种。?font=manrope 可以临时换正文字体做对比 */
+  --serif:"Noto Serif SC","Source Han Serif SC","Songti SC",serif;
+  --sans:"Inter Tight","Noto Sans SC",system-ui,sans-serif;
+
+  --zhu:#A8401F;
+  --zhu-hi:#C24E28;
+  --mood:#C9973F;
+
+  /* 塞尚调色板：只用在画里 */
+  --c-ochre:#C9973F; --c-terra:#B4572E; --c-pine:#4E7A62; --c-ultra:#5A6B86; --c-ivory:#EFE6D2;
+
+  --radius:3px;
+  --page:1200px;          /* 内容最大宽度 */
+  --gutter:clamp(20px,6vw,120px);
+
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --ease-io:cubic-bezier(.6,.05,.3,1);
+  --t-fast:200ms; --t-mid:400ms; --t-slow:600ms;
+}
+html.font-manrope{--sans:"Manrope","Noto Sans SC",system-ui,sans-serif}
+
+/* ---------- 亮色 · 天青 ---------- */
+:root,
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#E3E8E1;
+  --paper:#EEF2EC;
+  --ink:#1A211D;
+  --ink-2:#3F4A44;
+  --ink-3:#5C6861;
+  --rule:#C3CDC5;
+  --frame:#5C6861;
+  --wash:26,33,29;          /* 淡墨的 rgb（配 alpha 用） */
+  --wash-a:1;
+  --btn:#1A211D; --btn-t:#EEF2EC;
+  --banner:#1A211D; --banner-t:#E3E8E1;
+  --hinge:#8A6A3C;
+  --studio:#EDE3D0;
+}
+
+/* ---------- 暗色 · 黑漆朱 ---------- */
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0B0B0C;
+  --paper:#141414;
+  --ink:#ECEBE6;
+  --ink-2:#BDBBB4;
+  --ink-3:#94928B;
+  --rule:#262626;
+  --frame:#5A5853;
+  --wash:226,224,216;
+  --wash-a:.75;
+  --btn:var(--zhu); --btn-t:#F3E9DA;
+  --banner:#161616; --banner-t:#ECEBE6;
+  --hinge:#8A6A3C;
+  --studio:#1A1714;
+}

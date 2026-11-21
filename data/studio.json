@@ -1,0 +1,7 @@
+{
+  "_note": "示例内容：画室入口（月洞窗）下面的一行字。title 换成你真的在读 / 在玩 / 在看的；留空的那一扇不显示。",
+  "books": { "label": { "en": "Now reading", "zh": "在读" }, "title": "Book title", "meta": "62%" },
+  "games": { "label": { "en": "Now playing", "zh": "在玩" }, "title": "Game title", "meta": "34 h" },
+  "anime": { "label": { "en": "Watching", "zh": "在看" }, "title": "Series title", "meta": "ep 8" },
+  "mood":  { "label": { "en": "This week", "zh": "这一周" }, "title": "Mostly ochre", "meta": "calm" }
+}

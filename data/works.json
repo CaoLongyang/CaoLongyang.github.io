@@ -3,7 +3,10 @@
     "id": "inboxpilot",
     "title": "InboxPilot",
     "year": "2026",
-    "tags": { "en": "AI agent · Hackathon", "zh": "AI 智能体 · 黑客松" },
+    "tags": {
+      "en": "AI agent · Hackathon",
+      "zh": "AI 智能体 · 黑客松"
+    },
     "status": "public",
     "link": "https://github.com/CaoLongyang/inboxpilot",
     "glyph": "M28 38 H128 V108 H28 Z M28 38 L78 76 L128 38 M146 52 H184 M146 72 H184 M146 92 H172 M138 52 l4 4 l6 -8 M138 72 l4 4 l6 -8",
@@ -26,13 +29,22 @@
         "起草前必须经过你的确认，写完再读回来核对一遍。",
         "为 Nebius × NVIDIA 全球 AI 黑客松而做，带 292 个测试。"
       ]
-    }
+    },
+    "short": {
+      "en": "AI email-to-action agent — asks before it sends.",
+      "zh": "把邮件变成行动的 AI 助理，发之前一定先问你。"
+    },
+    "mock": "dark",
+    "shots": []
   },
   {
     "id": "um-auto-attendance",
     "title": "UM Auto Attendance",
     "year": "2026",
-    "tags": { "en": "Automation · Python", "zh": "自动化 · Python" },
+    "tags": {
+      "en": "Automation · Python",
+      "zh": "自动化 · Python"
+    },
     "status": "public",
     "link": "https://github.com/CaoLongyang/UM-Auto-Attendance",
     "glyph": "M40 34 H160 V122 H40 Z M40 56 H160 M70 24 V42 M130 24 V42 M78 88 L94 104 L126 70",
@@ -53,13 +65,22 @@
         "用 Spectrum token 读取考勤日历，合并成每周固定的时段。",
         "自动跳过不属于你所在 OCC 分组的签到；遇到需要密码的签到，会暂停并提醒你。"
       ]
-    }
+    },
+    "short": {
+      "en": "Syncs your timetable and signs you in on time.",
+      "zh": "同步课表，到点自动签到。"
+    },
+    "mock": "light",
+    "shots": []
   },
   {
     "id": "campusloop",
     "title": "CampusLoop",
     "year": "2026",
-    "tags": { "en": "Sustainability · Team project", "zh": "可持续 · 团队项目" },
+    "tags": {
+      "en": "Sustainability · Team project",
+      "zh": "可持续 · 团队项目"
+    },
     "status": "private",
     "progress": true,
     "glyph": "M84 62 H124 V94 H84 Z M84 62 L104 50 L124 62 M58 80 A46 46 0 0 1 136 46 M136 46 L138 32 M136 46 L122 44 M150 80 A46 46 0 0 1 72 114 M72 114 L70 128 M72 114 L86 116",
@@ -80,13 +101,22 @@
         "十人团队、十二周排期，从至少 50 位同学的问卷调研开始。",
         "对应联合国可持续目标 SDG 12.5：先复用，再回收。仍在进行中。"
       ]
-    }
+    },
+    "short": {
+      "en": "A campus marketplace, built with a team.",
+      "zh": "和队友一起做的校园二手市场。"
+    },
+    "mock": "warm",
+    "shots": []
   },
   {
     "id": "handscroll",
     "title": "Handscroll",
     "year": "2026",
-    "tags": { "en": "This site · HTML CSS JS", "zh": "就是本站 · HTML CSS JS" },
+    "tags": {
+      "en": "This site · HTML CSS JS",
+      "zh": "就是本站 · HTML CSS JS"
+    },
     "status": "private",
     "glyph": "M40 30 V112 M160 30 V112 M40 36 C 80 44, 120 28, 160 36 M40 106 C 80 114, 120 98, 160 106 M66 62 H128 M66 78 H112",
     "summary": {
@@ -106,6 +136,13 @@
         "纸跟着手走，带惯性，停在接缝上；册页用 CSS 3D 翻页。",
         "场景只在你点开时才加载，手卷本身保持轻巧。"
       ]
-    }
+    },
+    "short": {
+      "en": "This site, as a Chinese handscroll.",
+      "zh": "这个网站的另一种样子：一卷手卷。"
+    },
+    "mock": "scroll",
+    "shots": [],
+    "href": "scroll/"
   }
 ]

@@ -1,0 +1,8 @@
+{
+  "_note": "示例内容：一句话一条，最新的放最前面。",
+  "items": [
+    { "date": "2026-11-20", "text": { "en": "A good puzzle makes you want to explain it to someone.", "zh": "好的谜题会让你忍不住想讲给别人听。" } },
+    { "date": "2026-11-14", "text": { "en": "Tools should ask before they act.", "zh": "工具应该先问，再动手。" } },
+    { "date": "2026-11-02", "text": { "en": "Most bugs are just two assumptions meeting.", "zh": "大多数 bug，只是两个假设撞在了一起。" } }
+  ]
+}

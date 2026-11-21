@@ -1,0 +1,16 @@
+/* ink-drops · 三滴淡墨 */
+[data-drops]{position:absolute;inset:0;pointer-events:none}
+.drop{position:absolute;left:0;top:0;width:calc(var(--r) * 2.24);height:calc(var(--r) * 2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  pointer-events:auto;will-change:transform;text-align:center;color:var(--ink)}
+/* 墨晕本身：边缘被纸吸开，形状不规则（SVG 滤镜只作用在这一层，字不受影响） */
+.drop::before{content:"";position:absolute;inset:0;border-radius:50%;z-index:-1;
+  background:radial-gradient(closest-side,rgba(var(--wash),calc(.07 * var(--wash-a))) 0%,rgba(var(--wash),calc(.095 * var(--wash-a))) 82%,rgba(var(--wash),0) 100%);
+  filter:url(#ink-soft);transition:transform var(--t-mid) var(--ease)}
+.drop:hover::before{transform:scale(1.06)}
+.drop-val{display:inline-flex;align-items:center;gap:7px;font-size:15px}
+.drop-val i{width:10px;height:10px;border-radius:50%}
+
+/* 手机 / 减少动效：不漂，排成一行放在按钮下面 */
+[data-drops].is-still{position:static;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin-top:28px;pointer-events:auto}
+[data-drops].is-still .drop{position:relative;transform:none!important;width:auto;height:auto;padding:14px 20px}
+[data-drops].is-still .drop::before{border-radius:46%}

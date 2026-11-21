@@ -1,90 +1,142 @@
 <!doctype html>
-<html lang="en" data-theme="night">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Calvin · 手卷</title>
-<meta name="description" content="Calvin's personal site — a handscroll that unrolls itself.">
-<meta name="theme-color" content="#0a0807">
-<script src="features/page-turn/page-turn.js"></script>
-
-<!-- core -->
-<link rel="stylesheet" href="core/tokens.css">
-<link rel="stylesheet" href="core/reset.css">
-
-<!-- features：每个功能一份样式，删掉哪个文件夹就少哪个功能 -->
-<link rel="stylesheet" href="features/stage/stage.css">
-<link rel="stylesheet" href="features/letterbox/letterbox.css">
-<link rel="stylesheet" href="features/roller/roller.css">
-<link rel="stylesheet" href="features/paper/paper.css">
-<link rel="stylesheet" href="features/twine/twine.css">
-<link rel="stylesheet" href="features/unroll/unroll.css">
-<link rel="stylesheet" href="features/lang-switch/lang-switch.css">
-<link rel="stylesheet" href="features/drag/drag.css">
-<link rel="stylesheet" href="features/scroll-fx/scroll-fx.css">
-<link rel="stylesheet" href="features/ink-reveal/ink-reveal.css">
-<link rel="stylesheet" href="features/page-turn/page-turn.css">
-<link rel="stylesheet" href="features/scene-router/scene-router.css">
-<link rel="stylesheet" href="features/burn/burn.css">
-<link rel="stylesheet" href="features/roll-up/roll-up.css">
-<link rel="stylesheet" href="features/toc-slip/toc-slip.css">
-<link rel="stylesheet" href="features/toc-stamp/toc-stamp.css">
-
-<!-- sections：这一轮只有扉页、目录、卷尾 -->
-<link rel="stylesheet" href="sections/track.css">
-<link rel="stylesheet" href="sections/about.css">
-<link rel="stylesheet" href="sections/toc.css">
-<link rel="stylesheet" href="sections/end.css">
+<title>Calvin Cao</title>
+<meta name="description" content="Calvin Cao — CS student at Universiti Malaya, building AI agents and designing games people solve together.">
+<meta name="theme-color" content="#E3E8E1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0B0C" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<script>
+  // 第一帧之前：定好主题和字体，避免闪一下；旧的手卷链接（#works、#toc…）跳到新地址
+  (function () {
+    var d = document.documentElement, t = null;
+    try { t = localStorage.getItem('theme'); } catch (e) {}
+    d.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    if (/[?&]font=manrope/.test(location.search)) d.classList.add('font-manrope');
+    var h = location.hash.slice(1);
+    if (/^works\//.test(h)) location.replace('works/#' + h.split('/')[1]);
+    else if (h === 'works') location.replace('works/');
+    else if (/^(toc|about|end)$/.test(h)) location.replace('scroll/#' + h);
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Manrope:wght@400;500;600&family=Noto+Serif+SC:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="features/theme/theme.css">
+<link rel="stylesheet" href="features/brush/brush.css">
+<link rel="stylesheet" href="features/ink-drops/ink-drops.css">
+<link rel="stylesheet" href="features/screen/screen.css">
+<link rel="stylesheet" href="features/reveal/reveal.css">
+<link rel="stylesheet" href="assets/css/home.css">
 </head>
 <body>
 
-<div class="rail" data-rail>
-  <main class="scene">
-    <div class="tilt">
+<!-- 共用的 SVG 滤镜：墨边被纸吸开 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="ink-soft" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="3" seed="5" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="10" result="d"/>
+    <feGaussianBlur in="d" stdDeviation="3"/>
+  </filter>
+</svg>
 
-      <div class="scroll" data-scroll>
-        <div class="roller" data-title="卷一"></div>
-        <div class="view">
-          <div class="paper">
-            <!-- 从右往左读：包首 → 扉页 → 目录 → 卷尾 -->
-            <div class="track" data-track>
-              <div class="track-head" aria-hidden="true"></div>
-              <section class="panel" id="about" data-panel data-src="sections/about.html"></section>
-              <section class="panel" id="toc"   data-panel data-src="sections/toc.html"></section>
-              <section class="panel" id="end"   data-panel data-src="sections/end.html"></section>
-            </div>
-          </div>
-        </div>
-        <div class="roller"></div>
+<header class="wrap nav">
+  <a class="brand" href="./" aria-label="Calvin Cao — home"><span class="seal">曹</span>Calvin Cao</a>
+  <nav class="nav-links" aria-label="Main">
+    <a href="works/" data-en="Work" data-zh="作品">Work</a>
+    <a href="#writing" data-en="Writing" data-zh="文章">Writing</a>
+    <a href="#studio" data-en="Off hours" data-zh="画室">Off hours</a>
+    <a href="#contact" data-en="Contact" data-zh="联系">Contact</a>
+  </nav>
+  <div class="nav-tools">
+    <button class="chip" type="button" data-lang-toggle aria-label="Language"></button>
+    <button class="chip" type="button" data-theme-toggle></button>
+  </div>
+</header>
+
+<main>
+  <!-- 首屏 -->
+  <section class="hero" aria-labelledby="hero-name">
+    <div class="hero-core">
+      <h1 id="hero-name" class="hero-name serif">Calvin Cao</h1>
+      <div data-brush></div>
+      <p class="hero-line" data-en="CS student at Universiti Malaya, building AI agents — and designing games people solve together." data-zh="马来亚大学计算机系学生，在做 AI 智能体，也在设计需要两个人一起解的游戏。">CS student at Universiti Malaya, building AI agents — and designing games people solve together.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#work" data-en="See my work ↓" data-zh="看看作品 ↓">See my work ↓</a>
+        <a class="btn btn-ghost" href="#contact" data-en="Get in touch" data-zh="联系我">Get in touch</a>
       </div>
-
-      <sc-twine></sc-twine>
-
     </div>
-  </main>
-</div>
+    <div data-drops data-src="data/now.json" data-avoid=".hero-core"></div>
+  </section>
 
-<sc-letterbox data-hint-en="drag · wheel · ← →" data-hint-zh="拖动 · 滚轮 · ← →"></sc-letterbox>
-<sc-lang-switch></sc-lang-switch>
-<sc-toc-slip data-toc="sections/toc.html"></sc-toc-slip>
+  <!-- 作品：小屏风 -->
+  <section class="wrap sec-work" id="work" aria-labelledby="work-h">
+    <div class="sec-head">
+      <h2 id="work-h" class="cap" data-en="Selected work" data-zh="作品">Selected work</h2>
+      <a href="works/" data-en="Open the screen →" data-zh="打开屏风 →">Open the screen →</a>
+    </div>
+    <div data-screen="mini" data-src="data/works.json" data-base="works/"></div>
+  </section>
+
+  <!-- 文章 + 想法 -->
+  <section class="wrap sec" id="writing" data-reveal aria-labelledby="writing-h">
+    <div class="sec-head">
+      <h2 id="writing-h" class="cap" data-en="Writing" data-zh="文章">Writing</h2>
+    </div>
+    <div class="writing-grid">
+      <ol class="posts" data-posts></ol>
+      <div class="thoughts">
+        <h3 class="cap" data-en="Thoughts" data-zh="想法">Thoughts</h3>
+        <ol data-thoughts></ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 画室入口：四扇月洞窗 -->
+  <section class="wrap sec" id="studio" data-reveal aria-labelledby="studio-h">
+    <div class="sec-head"><h2 class="cap" data-en="Off hours" data-zh="画室">Off hours</h2></div>
+    <div class="studio-head">
+      <p id="studio-h" class="serif studio-title" data-en="Step into the studio" data-zh="进画室看看">Step into the studio</p>
+      <p class="studio-sub" data-en="What I read, play, watch and feel — through the window." data-zh="我在读、在玩、在看什么，心情如何——隔着一扇窗。">What I read, play, watch and feel — through the window.</p>
+    </div>
+    <ul class="windows" data-windows></ul>
+  </section>
+
+  <!-- 手卷实验 -->
+  <section class="wrap sec" data-reveal>
+    <a class="banner" href="scroll/">
+      <span>
+        <span class="cap cap-zhu" data-en="Experiment" data-zh="实验">Experiment</span>
+        <span class="banner-title serif" data-en="This site, as a Chinese handscroll — fire, paper and all." data-zh="这个网站的另一种样子：一卷手卷，有火，有纸。">This site, as a Chinese handscroll — fire, paper and all.</span>
+      </span>
+      <span class="chip banner-go" data-en="Unroll it ↗" data-zh="展开 ↗">Unroll it ↗</span>
+    </a>
+  </section>
+
+  <!-- 联系 -->
+  <section class="wrap sec contact" id="contact" data-reveal aria-labelledby="contact-h">
+    <h2 id="contact-h" class="serif contact-title"><span data-en="Say hello —" data-zh="写信给我 ——">Say hello —</span> <a data-email></a></h2>
+    <p class="contact-links" data-links></p>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <span class="seal">曹</span><span>© 2026 Calvin Cao</span>
+  <span class="spacer"></span><a href="scroll/" data-en="The handscroll" data-zh="手卷">The handscroll</a>
+</footer>
 
 <script type="module">
-  import './core/filters.js';
-  import './features/stage/stage.js';
-  import './features/letterbox/letterbox.js';
-  import './features/roller/roller.js';
-  import './features/paper/paper.js';
-  import './features/twine/twine.js';
-  import './features/lang-switch/lang-switch.js';
-  import './features/ink-reveal/ink-reveal.js';
-  import './features/drag/drag.js';
-  import './features/scroll-fx/scroll-fx.js';
-  import './features/roll-up/roll-up.js';
-  import './features/toc-slip/toc-slip.js';
-  import './features/toc-stamp/toc-stamp.js';
-  import './features/scene-router/scene-router.js';
-  import './features/unroll/unroll.js';
-  import './core/include.js';
+  import './features/lang/lang.js';
+  import './features/theme/theme.js';
+  import './features/brush/brush.js';
+  import './features/ink-drops/ink-drops.js';
+  import './features/screen/screen.js';
+  import './features/reveal/reveal.js';
+  import './js/home.js';
 </script>
 </body>
 </html>

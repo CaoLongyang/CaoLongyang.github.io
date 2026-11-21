@@ -1,0 +1,79 @@
+/* ============================================================
+   screen · 屏风
+   四扇相接：铜合页、内框线、共用屏座；收着的扇一明一暗，看得出是折着的
+   ============================================================ */
+
+[data-screen]{--h:380px;--hot:2.6;position:relative}
+.screen-body{display:flex;height:var(--h);border:1.3px solid var(--frame);background:var(--paper)}
+.screen-base{height:8px;margin:0 12px;background:var(--frame);position:relative}
+.screen-base::before,.screen-base::after{content:"";position:absolute;top:8px;width:14px;height:14px;background:var(--frame)}
+.screen-base::before{left:6px}.screen-base::after{right:6px}
+
+.panel{position:relative;flex:1 1 0;min-width:0;overflow:hidden;display:grid;color:var(--ink);
+  transition:flex-grow 480ms var(--ease-io),background-color var(--t-mid) var(--ease)}
+.panel + .panel{border-left:1.3px solid var(--frame)}
+.panel.is-open{flex-grow:var(--hot)}
+/* 内框线 */
+.panel::before{content:"";position:absolute;inset:9px;border:1px solid color-mix(in srgb,var(--frame) 40%,transparent);pointer-events:none;z-index:2}
+/* 合页 */
+.panel + .panel::after{content:"";position:absolute;left:-1px;top:38px;width:6px;height:18px;border-radius:1px;background:var(--hinge);
+  box-shadow:0 calc(var(--h) - 96px) 0 var(--hinge);transform:translateX(-50%);z-index:3}
+/* 折面：收着的扇一明一暗 */
+.panel:not(.is-open):nth-child(odd){background:color-mix(in srgb,var(--paper) 94%,#000)}
+.panel:not(.is-open):nth-child(even){background:color-mix(in srgb,var(--paper) 97%,#000)}
+:root[data-theme="dark"] .panel:not(.is-open):nth-child(odd){background:color-mix(in srgb,var(--paper) 88%,#000)}
+
+.p-open,.p-closed{grid-area:1/1;transition:opacity 260ms var(--ease)}
+.p-open{display:grid;grid-template-columns:minmax(220px,1fr) minmax(0,1fr);gap:28px;padding:40px 36px;opacity:0;pointer-events:none}
+.p-closed{display:flex;flex-direction:column;align-items:center;padding:40px 0 30px;gap:18px}
+.panel.is-open .p-open{opacity:1;transition-delay:160ms;pointer-events:auto}
+.panel.is-open .p-closed{opacity:0}
+
+.p-text{display:flex;flex-direction:column;gap:10px;min-width:200px}
+.p-title{font-size:clamp(26px,2.4vw,34px);line-height:1.15;margin-top:8px}
+.p-short{font-size:15px;color:var(--ink-2);max-width:22em}
+.p-go{margin-top:auto;font-size:15px;color:var(--zhu);font-weight:600}
+.p-shot{border-radius:6px;overflow:hidden;min-height:0;align-self:stretch;transform:translateY(8px);transition:transform 600ms var(--ease)}
+.panel.is-open .p-shot{transform:none}
+.p-shot img{width:100%;height:100%;object-fit:cover}
+.p-vtitle{writing-mode:vertical-rl;text-orientation:mixed;font-size:22px;letter-spacing:.02em}
+.p-year{margin-top:auto;font-size:13px;color:var(--ink-3)}
+
+/* ---------- 占位截图 ---------- */
+.mock{position:relative;width:100%;height:100%;min-height:200px;display:block;border-radius:6px}
+.mock i{position:absolute;display:block;border-radius:4px}
+.mock-dark{background:#232733}
+.mock-dark .m-side{left:7%;top:9%;bottom:9%;width:26%;background:#2e3342}
+.mock-dark .m-line{left:40%;top:11%;width:52%;height:5%;background:#4b5366;border-radius:9px}
+.mock-dark .m-line.s{top:21%;width:38%;background:#3a4152}
+.mock-dark .m-row{left:40%;width:54%;height:24%;background:#2e3342;border-radius:6px}
+.mock-dark .m-row:nth-of-type(4){top:36%}.mock-dark .m-row:nth-of-type(5){top:66%}
+.mock-dark .m-tag{position:absolute;left:8%;top:22%;width:42%;height:18%;border-radius:9px}
+.mock-dark .m-tag.g{background:#7cc4a0}.mock-dark .m-tag.o{background:#e0a466}
+.mock-light{background:#fbf7f0;display:grid;grid-template-columns:repeat(5,1fr);gap:6%;padding:30% 6% 8%}
+.mock-light i{position:static;background:#e9dfcf}
+.mock-light .m-bar{position:absolute;left:6%;top:10%;width:36%;height:7%;background:#cbbda5}
+.mock-light .m-pill{position:absolute;right:6%;top:9%;width:20%;height:10%;background:#1b1713;border-radius:20px}
+.mock-light .m-cell:nth-of-type(4),.mock-light .m-cell:nth-of-type(11),.mock-light .m-cell:nth-of-type(13){background:#9cc7a7}
+.mock-warm{background:#efe6d8}
+.mock-warm .m-search{left:6%;right:6%;top:9%;height:10%;background:#fff;border-radius:20px}
+.mock-warm .m-card{top:30%;width:26%;height:56%;background:#fff;border-top:46px solid #d8c6a8}
+.mock-warm .m-card:nth-of-type(2){left:6%}.mock-warm .m-card:nth-of-type(3){left:37%;border-top-color:#b9c8c0}.mock-warm .m-card:nth-of-type(4){left:68%;border-top-color:#d9b5a5}
+.mock-scroll{background:#1a1512}
+.mock-scroll .m-rod{top:16%;bottom:16%;width:5%;background:#6b4a2a;border-radius:3px}
+.mock-scroll .m-rod:first-child{left:8%}.mock-scroll .m-rod:last-child{right:8%}
+.mock-scroll .m-sheet{left:13%;right:13%;top:22%;bottom:22%;background:#e2d5b8;border-radius:0;display:grid;place-items:center}
+.mock-scroll .m-sheet b{font-family:var(--serif);font-weight:400;font-size:clamp(18px,2.2vw,30px);color:#3a2a18}
+
+/* ---------- 手机：屏风变成一次一扇，左右滑 ---------- */
+@media (max-width:760px){
+  [data-screen]{--h:auto}
+  .screen-body{overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;border:0;background:none;gap:10px;scrollbar-width:none}
+  .screen-body::-webkit-scrollbar{display:none}
+  .panel{flex:0 0 82%;scroll-snap-align:center;border:1.3px solid var(--frame)!important;background:var(--paper)!important}
+  .panel + .panel::after{display:none}
+  .p-open{opacity:1;pointer-events:auto;grid-template-columns:1fr;padding:30px 24px}
+  .p-shot{height:180px;transform:none}
+  .p-closed{display:none}
+  .screen-base{display:none}
+}

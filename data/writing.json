@@ -1,0 +1,9 @@
+{
+  "_note": "示例内容：换成你自己的文章。url 留空表示还没有阅读页（下一轮做）。",
+  "posts": [
+    { "title": { "en": "Why a website should unroll", "zh": "为什么网站可以「展开」" }, "date": "2026-11", "minutes": 4,
+      "excerpt": { "en": "What a Chinese handscroll taught me about pacing a web page.", "zh": "一卷手卷教会我的网页节奏。" }, "url": "" },
+    { "title": { "en": "What an email agent should never do", "zh": "邮件助理永远不该做的事" }, "date": "2026-10", "minutes": 6, "url": "" },
+    { "title": { "en": "Notes on cooperative puzzles", "zh": "关于合作解谜的笔记" }, "date": "2026-09", "minutes": 5, "url": "" }
+  ]
+}

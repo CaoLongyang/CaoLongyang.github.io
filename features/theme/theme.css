@@ -1,0 +1,9 @@
+/* theme · 切换时从按钮处一圈晕开 */
+.vt-theme::view-transition-old(root),
+.vt-theme::view-transition-new(root){animation:none;mix-blend-mode:normal}
+.vt-theme::view-transition-new(root){animation:theme-spread 650ms var(--ease-io) both}
+@keyframes theme-spread{
+  from{clip-path:circle(0 at var(--vt-x,90%) var(--vt-y,40px))}
+  to{clip-path:circle(150vmax at var(--vt-x,90%) var(--vt-y,40px))}
+}
+[data-theme-toggle]{min-width:92px;justify-content:center}

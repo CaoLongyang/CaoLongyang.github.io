@@ -24,3 +24,4 @@ _dbg.html
 _open.html
 _zoom.html
 *.png
+!assets/**/*.png
