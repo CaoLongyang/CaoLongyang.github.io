@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-21T12:27:07.748Z",
+  "updated": "2026-11-21T12:40:26.620Z",
   "profile": {
     "name": "等史地",
     "url": "https://steamcommunity.com/profiles/76561198985681171/",
@@ -7,8 +7,9 @@
   },
   "stats": {
     "owned": 55,
-    "played": 39,
-    "hours": 679,
+    "family": 4,
+    "played": 43,
+    "hours": 1006,
     "hours2w": 53.4
   },
   "recent": [
@@ -17,6 +18,7 @@
       "name": "Slay the Spire 2",
       "hours2w": 23.2,
       "hours": 263.4,
+      "family": true,
       "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2868840/library_600x900.jpg",
       "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/2868840/header.jpg"
     },
@@ -25,6 +27,7 @@
       "name": "DARK SOULS™ III",
       "hours2w": 14.6,
       "hours": 47.8,
+      "family": true,
       "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/library_600x900.jpg",
       "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg"
     },
@@ -33,6 +36,7 @@
       "name": "Balatro",
       "hours2w": 13.1,
       "hours": 13.1,
+      "family": true,
       "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2379780/library_600x900.jpg",
       "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/2379780/header.jpg"
     },
@@ -41,11 +45,21 @@
       "name": "Probably Stolen",
       "hours2w": 2.5,
       "hours": 2.5,
+      "family": true,
       "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/4348910/library_600x900.jpg",
       "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/4348910/header.jpg"
     }
   ],
   "top": [
+    {
+      "appid": 2868840,
+      "name": "Slay the Spire 2",
+      "hours": 263.4,
+      "last": "2026-11-21",
+      "family": true,
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2868840/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/2868840/header.jpg"
+    },
     {
       "appid": 730,
       "name": "Counter-Strike 2",
@@ -61,6 +75,15 @@
       "last": "2026-11-03",
       "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/646570/library_600x900.jpg",
       "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/646570/header.jpg"
+    },
+    {
+      "appid": 374320,
+      "name": "DARK SOULS™ III",
+      "hours": 47.8,
+      "last": "2026-11-21",
+      "family": true,
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg"
     },
     {
       "appid": 250900,
@@ -125,22 +148,32 @@
       "last": "2026-10-29",
       "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1030300/library_600x900.jpg",
       "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1030300/header.jpg"
+    }
+  ],
+  "family": [
+    {
+      "appid": 2868840,
+      "name": "Slay the Spire 2",
+      "hours": 263.4,
+      "last": "2026-11-21"
     },
     {
-      "appid": 431960,
-      "name": "Wallpaper Engine",
-      "hours": 18.5,
-      "last": "2026-10-10",
-      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/431960/library_600x900.jpg",
-      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/431960/header.jpg"
+      "appid": 374320,
+      "name": "DARK SOULS™ III",
+      "hours": 47.8,
+      "last": "2026-11-21"
     },
     {
-      "appid": 1341290,
-      "name": "We Were Here Forever",
-      "hours": 16.8,
-      "last": "2026-07-14",
-      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1341290/library_600x900.jpg",
-      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1341290/header.jpg"
+      "appid": 2379780,
+      "name": "Balatro",
+      "hours": 13.1,
+      "last": "2026-11-21"
+    },
+    {
+      "appid": 4348910,
+      "name": "Probably Stolen",
+      "hours": 2.5,
+      "last": "2026-11-21"
     }
   ]
 }
