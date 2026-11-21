@@ -10,7 +10,11 @@ import { readFile, writeFile } from 'node:fs/promises';
 
 const KEY = process.env.STEAM_API_KEY;
 const ID = process.env.STEAM_ID;
-if (!KEY || !ID) { console.error('缺少 STEAM_API_KEY 或 STEAM_ID'); process.exit(1); }
+// 诊断信息（不打印密钥本身）
+console.log(`STEAM_API_KEY：${KEY ? `已设置（${KEY.length} 位）` : '没有设置'}`);
+console.log(`STEAM_ID：${ID ? `已设置（${ID.length} 位${/^7656\d{13}$/.test(ID) ? '，格式正确' : '，格式不对：应该是 7656 开头的 17 位数字'}）` : '没有设置'}`);
+if (!KEY || !ID) { console.error('✗ 缺少 STEAM_API_KEY 或 STEAM_ID：请在仓库 Settings → Secrets and variables → Actions → Repository secrets 里添加，名字要完全一样'); process.exit(1); }
+if (KEY.length !== 32) console.warn('⚠ Steam API Key 一般是 32 位，请检查有没有多复制空格或少复制字符');
 
 const cfg = JSON.parse(await readFile('data/steam.config.json', 'utf8').catch(() => '{}'));
 const hide = new Set((cfg.hide || []).map(Number));
@@ -20,6 +24,7 @@ const api = async (path, params) => {
   const u = new URL(`https://api.steampowered.com/${path}`);
   Object.entries({ key: KEY, steamid: ID, format: 'json', ...params }).forEach(([k, v]) => u.searchParams.set(k, v));
   const r = await fetch(u);
+  if (r.status === 401 || r.status === 403) throw new Error(`${path} → HTTP ${r.status}：API Key 无效，或这个 SteamID 的资料不公开`);
   if (!r.ok) throw new Error(`${path} → HTTP ${r.status}`);
   return r.json();
 };
