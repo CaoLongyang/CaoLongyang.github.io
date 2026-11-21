@@ -1,5 +1,6 @@
 {
-  "_note": "hide：不想在网站上显示的游戏 appid（在 Steam 商店网址里能看到，比如 store.steampowered.com/app/620 的 620）。top：「最常玩」显示几款。",
+  "_note": "hide：不想显示的游戏 appid（商店网址 store.steampowered.com/app/数字 里的数字）。top：「玩得最多」显示几款。family：家庭库里以前玩过、最近两周没碰的游戏，Steam 拉不到，可以手动写，例如 {\"appid\": 1245620, \"name\": \"ELDEN RING\", \"hours\": 80}；最近玩过的家庭库游戏会自动记下来，不用写。",
   "hide": [],
-  "top": 12
+  "top": 12,
+  "family": []
 }

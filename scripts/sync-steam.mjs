@@ -47,27 +47,55 @@ const [player, owned, recent] = await Promise.all([
 const p = player.response?.players?.[0];
 const games = (owned.response?.games || []).filter((g) => !hide.has(g.appid));
 if (!games.length) console.warn('没有拿到游戏列表：请确认 Steam「游戏详情」设为公开');
+const ownedIds = new Set(games.map((g) => g.appid));
+const today = new Date().toISOString().slice(0, 10);
 
 const recentList = (recent.response?.games || []).filter((g) => !hide.has(g.appid)).map((g) => ({
-  appid: g.appid, name: g.name, hours2w: hours(g.playtime_2weeks || 0), hours: hours(g.playtime_forever || 0), ...img(g.appid),
+  appid: g.appid, name: g.name, hours2w: hours(g.playtime_2weeks || 0), hours: hours(g.playtime_forever || 0),
+  ...(ownedIds.has(g.appid) ? {} : { family: true }), ...img(g.appid),
 }));
 
-const top = games.filter((g) => g.playtime_forever > 0).sort((a, b) => b.playtime_forever - a.playtime_forever).slice(0, TOP).map((g) => ({
-  appid: g.appid, name: g.name, hours: hours(g.playtime_forever),
-  last: g.rtime_last_played ? new Date(g.rtime_last_played * 1000).toISOString().slice(0, 10) : null, ...img(g.appid),
-}));
+/* 家庭库的游戏：Steam 的「拥有的游戏」接口不会返回它们，只有「最近两周玩过」里有。
+   所以每天把最近玩过、又不在自己库里的游戏记进 family 历史里（时长取见过的最大值），越攒越全。
+   以前玩过、最近没碰的家庭库游戏，可以手动写进 data/steam.config.json 的 family。 */
+const prevData = JSON.parse(await readFile('data/steam.json', 'utf8').catch(() => '{}'));
+const family = new Map();
+for (const g of prevData._sample ? [] : prevData.family || []) family.set(g.appid, g);
+for (const g of cfg.family || []) {
+  const id = Number(g.appid); if (!id || hide.has(id) || ownedIds.has(id)) continue;
+  const old = family.get(id);
+  family.set(id, { appid: id, name: g.name || old?.name || `App ${id}`, hours: Math.max(Number(g.hours) || 0, old?.hours || 0), last: old?.last || null, manual: true });
+}
+for (const g of recentList) {
+  if (!g.family) continue;
+  const old = family.get(g.appid);
+  family.set(g.appid, { appid: g.appid, name: g.name, hours: Math.max(g.hours, old?.hours || 0), last: today });
+}
+for (const id of hide) family.delete(id);
+const familyList = [...family.values()].sort((a, b) => b.hours - a.hours);
+
+const all = [
+  ...games.filter((g) => g.playtime_forever > 0).map((g) => ({
+    appid: g.appid, name: g.name, hours: hours(g.playtime_forever),
+    last: g.rtime_last_played ? new Date(g.rtime_last_played * 1000).toISOString().slice(0, 10) : null,
+  })),
+  ...familyList.filter((g) => g.hours > 0).map((g) => ({ appid: g.appid, name: g.name, hours: g.hours, last: g.last, family: true })),
+];
+const top = all.sort((a, b) => b.hours - a.hours).slice(0, TOP).map((g) => ({ ...g, ...img(g.appid) }));
 
 const out = {
   updated: new Date().toISOString(),
   profile: p ? { name: p.personaname, url: p.profileurl, avatar: p.avatarfull } : null,
   stats: {
     owned: games.length,
-    played: games.filter((g) => g.playtime_forever > 0).length,
-    hours: Math.round(games.reduce((s, g) => s + g.playtime_forever, 0) / 60),
+    family: familyList.length,
+    played: all.length,
+    hours: Math.round(all.reduce((s, g) => s + g.hours, 0)),
     hours2w: Math.round(recentList.reduce((s, g) => s + g.hours2w, 0) * 10) / 10,
   },
   recent: recentList,
   top,
+  family: familyList,
 };
 
 // 内容没变就不写（避免每天一次空提交）
@@ -76,4 +104,4 @@ const strip = (s) => s.replace(/"updated":\s*"[^"]*",?/, '');
 const next = JSON.stringify(out, null, 2) + '\n';
 if (prev && strip(prev) === strip(next)) { console.log('Steam 数据没有变化'); process.exit(0); }
 await writeFile('data/steam.json', next);
-console.log(`已更新：最近在玩 ${recentList.length} 款，最常玩 ${top.length} 款，共 ${out.stats.owned} 款`);
+console.log(`已更新：最近在玩 ${recentList.length} 款，最常玩 ${top.length} 款；自己的库 ${out.stats.owned} 款，家庭库记录了 ${out.stats.family} 款`);
