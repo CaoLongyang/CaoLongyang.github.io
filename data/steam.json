@@ -1,19 +1,146 @@
 {
-  "_sample": true,
-  "_note": "示例数据：第一次同步之后会被你真实的 Steam 数据替换。",
-  "updated": "2026-11-21T04:17:00.000Z",
-  "profile": null,
-  "stats": { "owned": 48, "played": 31, "hours": 812, "hours2w": 9.4 },
+  "updated": "2026-11-21T12:27:07.748Z",
+  "profile": {
+    "name": "等史地",
+    "url": "https://steamcommunity.com/profiles/76561198985681171/",
+    "avatar": "https://avatars.steamstatic.com/d3eb39d70f297a4191bea908797cd7972a77ad86_full.jpg"
+  },
+  "stats": {
+    "owned": 55,
+    "played": 39,
+    "hours": 679,
+    "hours2w": 53.4
+  },
   "recent": [
-    { "appid": 1426210, "name": "It Takes Two", "hours2w": 6.2, "hours": 34.5, "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/header.jpg" },
-    { "appid": 341800, "name": "Keep Talking and Nobody Explodes", "hours2w": 3.2, "hours": 12.1, "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/341800/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/341800/header.jpg" }
+    {
+      "appid": 2868840,
+      "name": "Slay the Spire 2",
+      "hours2w": 23.2,
+      "hours": 263.4,
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2868840/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/2868840/header.jpg"
+    },
+    {
+      "appid": 374320,
+      "name": "DARK SOULS™ III",
+      "hours2w": 14.6,
+      "hours": 47.8,
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/header.jpg"
+    },
+    {
+      "appid": 2379780,
+      "name": "Balatro",
+      "hours2w": 13.1,
+      "hours": 13.1,
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/2379780/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/2379780/header.jpg"
+    },
+    {
+      "appid": 4348910,
+      "name": "Probably Stolen",
+      "hours2w": 2.5,
+      "hours": 2.5,
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/4348910/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/4348910/header.jpg"
+    }
   ],
   "top": [
-    { "appid": 413150, "name": "Stardew Valley", "hours": 142.3, "last": "2026-10-02", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/header.jpg" },
-    { "appid": 620, "name": "Portal 2", "hours": 61.0, "last": "2026-08-14", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/620/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/620/header.jpg" },
-    { "appid": 1145360, "name": "Hades", "hours": 58.4, "last": "2026-06-30", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/header.jpg" },
-    { "appid": 1426210, "name": "It Takes Two", "hours": 34.5, "last": "2026-11-19", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1426210/header.jpg" },
-    { "appid": 736260, "name": "Baba Is You", "hours": 22.8, "last": "2026-05-11", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/736260/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/736260/header.jpg" },
-    { "appid": 341800, "name": "Keep Talking and Nobody Explodes", "hours": 12.1, "last": "2026-11-20", "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/341800/library_600x900.jpg", "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/341800/header.jpg" }
+    {
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "hours": 257.4,
+      "last": "2026-10-03",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/header.jpg"
+    },
+    {
+      "appid": 646570,
+      "name": "Slay the Spire",
+      "hours": 50.7,
+      "last": "2026-11-03",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/646570/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/646570/header.jpg"
+    },
+    {
+      "appid": 250900,
+      "name": "The Binding of Isaac: Rebirth",
+      "hours": 43,
+      "last": "2026-10-29",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/250900/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/250900/header.jpg"
+    },
+    {
+      "appid": 814380,
+      "name": "Sekiro™: Shadows Die Twice",
+      "hours": 41.4,
+      "last": "2025-04-12",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/header.jpg"
+    },
+    {
+      "appid": 1172620,
+      "name": "Sea of Thieves",
+      "hours": 41.4,
+      "last": "2025-02-23",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1172620/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1172620/header.jpg"
+    },
+    {
+      "appid": 641990,
+      "name": "The Escapists 2",
+      "hours": 25.9,
+      "last": "2025-07-13",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/641990/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/641990/header.jpg"
+    },
+    {
+      "appid": 322330,
+      "name": "Don't Starve Together",
+      "hours": 25.2,
+      "last": "2026-04-28",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/322330/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/322330/header.jpg"
+    },
+    {
+      "appid": 292030,
+      "name": "The Witcher 3: Wild Hunt — Remastered",
+      "hours": 24.3,
+      "last": "2025-05-08",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/header.jpg"
+    },
+    {
+      "appid": 632360,
+      "name": "Risk of Rain 2",
+      "hours": 22.3,
+      "last": "2025-12-04",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/632360/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/632360/header.jpg"
+    },
+    {
+      "appid": 1030300,
+      "name": "Hollow Knight: Silksong",
+      "hours": 18.8,
+      "last": "2026-10-29",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1030300/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1030300/header.jpg"
+    },
+    {
+      "appid": 431960,
+      "name": "Wallpaper Engine",
+      "hours": 18.5,
+      "last": "2026-10-10",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/431960/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/431960/header.jpg"
+    },
+    {
+      "appid": 1341290,
+      "name": "We Were Here Forever",
+      "hours": 16.8,
+      "last": "2026-07-14",
+      "cover": "https://cdn.cloudflare.steamstatic.com/steam/apps/1341290/library_600x900.jpg",
+      "header": "https://cdn.cloudflare.steamstatic.com/steam/apps/1341290/header.jpg"
+    }
   ]
 }
