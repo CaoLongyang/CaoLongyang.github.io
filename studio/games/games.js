@@ -7,6 +7,8 @@ import { watch } from '../../features/reveal/reveal.js';
 const esc = (s = '') => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const both = (en, zh) => `data-en="${esc(en)}" data-zh="${esc(zh)}"`;
 const h = (x) => (x >= 100 ? Math.round(x) : x.toFixed(1).replace(/\.0$/, ''));
+// 右上角的成就角标：拿了几个 / 一共几个；全拿到了换成朱红
+const ach = (g) => g.ach?.total ? `<span class="g-ach${g.ach.got === g.ach.total ? ' is-full' : ''}" title="Achievements · 成就"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2h8v2h2v2a3 3 0 0 1-3 3h-.2A4 4 0 0 1 9 10.9V12h2v2H5v-2h2v-1.1A4 4 0 0 1 5.2 9H5a3 3 0 0 1-3-3V4h2V2Zm0 3.5H3.5V6c0 .8.6 1.5 1.4 1.5H5A4 4 0 0 1 4 5.5Zm8 0a4 4 0 0 1-1 2H11c.8 0 1.5-.7 1.5-1.5v-.5H12Z"/></svg>${g.ach.got}/${g.ach.total}</span>` : '';
 const MONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 const data = await fetch('../../data/steam.json', { cache: 'no-cache' }).then((r) => r.json()).catch(() => null);
@@ -24,7 +26,7 @@ if (!data) {
   $('[data-recent]').style.gridTemplateColumns = recent.length > 1 ? `1.6fr repeat(${recent.length - 1}, 1fr)` : 'minmax(0, 720px)';
   $('[data-recent]').innerHTML = recent.length ? recent.map((g, i) => `
     <article class="now-card${i ? '' : ' is-lead'}">
-      <figure class="g-img"><img src="${esc(g.header)}" alt="" loading="${i ? 'lazy' : 'eager'}" decoding="async" data-app="${g.appid}"></figure>
+      <figure class="g-img">${ach(g)}<img src="${esc(g.header)}" alt="" loading="${i ? 'lazy' : 'eager'}" decoding="async" data-app="${g.appid}"></figure>
       <div class="now-text">
         ${i ? '' : `<span class="cap cap-zhu" ${both('Now playing', '正在玩')}>Now playing</span>`}
         <h3 class="serif">${esc(g.name)}</h3>
@@ -45,7 +47,7 @@ if (!data) {
   const max = Math.max(1, ...top.map((g) => g.hours));
   $('[data-top]').innerHTML = top.map((g, i) => `
     <li class="tile">
-      <figure class="g-cover"><img src="${esc(g.cover)}" alt="" loading="lazy" decoding="async" data-app="${g.appid}" data-fallback="${esc(g.header)}"></figure>
+      <figure class="g-cover">${ach(g)}<img src="${esc(g.cover)}" alt="" loading="lazy" decoding="async" data-app="${g.appid}" data-fallback="${esc(g.header)}"></figure>
       <span class="tile-rank">${String(i + 1).padStart(2, '0')}</span>
       <span class="tile-name">${esc(g.name)}</span>
       <span class="tile-bar" style="--w:${(g.hours / max * 100).toFixed(1)}%"></span>

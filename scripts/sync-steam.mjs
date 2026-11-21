@@ -83,6 +83,22 @@ const all = [
 ];
 const top = all.sort((a, b) => b.hours - a.hours).slice(0, TOP).map((g) => ({ ...g, ...img(g.appid) }));
 
+/* 成就：每款游戏单独问一次（只问排行和最近在玩里的那几款）。没有成就系统的游戏会报错，跳过即可 */
+const achOf = async (appid) => {
+  try {
+    const u = new URL('https://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v1/');
+    Object.entries({ key: KEY, steamid: ID, appid }).forEach(([k, v]) => u.searchParams.set(k, v));
+    const r = await fetch(u);
+    if (!r.ok) return null;
+    const list = (await r.json()).playerstats?.achievements || [];
+    return list.length ? { got: list.filter((x) => x.achieved).length, total: list.length } : null;
+  } catch { return null; }
+};
+const ids = [...new Set([...recentList, ...top].map((g) => g.appid))];
+const achs = Object.fromEntries(await Promise.all(ids.map(async (id) => [id, await achOf(id)])));
+for (const g of [...recentList, ...top]) if (achs[g.appid]) g.ach = achs[g.appid];
+console.log(`成就：${Object.values(achs).filter(Boolean).length} / ${ids.length} 款有成就数据`);
+
 const out = {
   updated: new Date().toISOString(),
   profile: p ? { name: p.personaname, url: p.profileurl, avatar: p.avatarfull } : null,

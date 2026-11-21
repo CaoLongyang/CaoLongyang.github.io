@@ -37,3 +37,9 @@
   .wall{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 :root[data-theme="dark"] .stats dd small{font-size:.5em;color:var(--ink-3);margin-left:4px}
+/* 成就角标 */
+.g-img,.g-cover{position:relative}
+.g-ach{position:absolute;top:8px;right:8px;z-index:2;display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:2px;
+  background:rgba(14,12,10,.78);color:#F3E9DA;font-size:11.5px;font-weight:600;letter-spacing:.02em;font-variant-numeric:tabular-nums;backdrop-filter:blur(4px)}
+.g-ach svg{width:11px;height:11px;fill:currentColor}
+.g-ach.is-full{background:var(--zhu)}
