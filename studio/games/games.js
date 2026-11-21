@@ -20,7 +20,7 @@ if (!data) {
   $('[data-synced]').innerHTML = `<span ${both(en, zh)}>${en}</span>${data._sample ? ` <span class="s-badge" ${both('Sample', '示例数据')}>Sample</span>` : ''}`;
 
   // 最近两周
-  const recent = (data.recent || []).slice(0, 3);
+  const recent = (data.recent || []).slice(0, 3);   // 页面上只放最近的 3 款
   $('[data-recent]').style.gridTemplateColumns = recent.length > 1 ? `1.6fr repeat(${recent.length - 1}, 1fr)` : 'minmax(0, 720px)';
   $('[data-recent]').innerHTML = recent.length ? recent.map((g, i) => `
     <article class="now-card${i ? '' : ' is-lead'}">

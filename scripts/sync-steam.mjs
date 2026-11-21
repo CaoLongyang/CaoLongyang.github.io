@@ -41,7 +41,7 @@ const img = (id) => ({
 const [player, owned, recent] = await Promise.all([
   api('ISteamUser/GetPlayerSummaries/v2/', { steamids: ID }),
   api('IPlayerService/GetOwnedGames/v1/', { include_appinfo: 1, include_played_free_games: 1 }),
-  api('IPlayerService/GetRecentlyPlayedGames/v1/', { count: 10 }),
+  api('IPlayerService/GetRecentlyPlayedGames/v1/', { count: 0 }),   // 0 = 最近两周玩过的全部
 ]);
 
 const p = player.response?.players?.[0];
